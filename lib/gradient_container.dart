@@ -1,26 +1,27 @@
-import 'package:flockspot_app/styled_text.dart';
+import 'package:flockspot_app/dice_roller.dart';
 import 'package:flutter/material.dart';
 
 const startAligment = Alignment.topLeft;
 const endAligment = Alignment.bottomRight;
 
 class GradientContainer extends StatelessWidget {
-  const GradientContainer({super.key});
+  const GradientContainer(this.color1, this.color2, {super.key});
+
+  final Color color1;
+  final Color color2;
+
   @override
   Widget build(context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Colors.blue,
-            Color.fromARGB(255, 0, 38, 68),
-          ],
+          colors: [color1, color2],
         ),
       ),
       child: const Center(
-        child: StyledText('Hello World!!!'),
+        child: DiceRoller(),
       ),
     );
   }
