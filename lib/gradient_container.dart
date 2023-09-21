@@ -1,3 +1,4 @@
+import 'package:flockspot_app/start_screen.dart';
 import 'package:flutter/material.dart';
 
 class GradientContainer extends StatelessWidget {
@@ -17,25 +18,8 @@ class GradientContainer extends StatelessWidget {
           ],
         ),
       ),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset('assets/images/quiz-logo.png'),
-            const SizedBox(
-              height: 20,
-            ),
-            OutlinedButton(
-              onPressed: () {},
-              child: const Text(
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                  'Start quiz'),
-            )
-          ],
-        ),
+      child: const Center(
+        child: Text('Test'),
       ),
     );
   }
