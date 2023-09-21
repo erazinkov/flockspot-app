@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
 
-import 'package:flockspot_app/gradient_container.dart';
-
 void main() {
   runApp(
-    const MaterialApp(
+    MaterialApp(
       home: Scaffold(
-        body: GradientContainer(
-          Colors.black,
-          Colors.white,
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue,
+                Colors.red,
+              ],
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/images/quiz-logo.png'),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text('123'),
+            ],
+          ),
         ),
       ),
     ),
