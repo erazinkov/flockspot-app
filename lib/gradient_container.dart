@@ -1,4 +1,3 @@
-import 'package:flockspot_app/start_screen.dart';
 import 'package:flutter/material.dart';
 
 class GradientContainer extends StatelessWidget {
