@@ -1,4 +1,6 @@
+import 'package:flockspot_app/data/questions.dart';
 import 'package:flockspot_app/questions_screen.dart';
+import 'package:flockspot_app/results_screen.dart';
 import 'package:flockspot_app/start_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<String> selectedAnswers = [];
   Widget? activeScreen;
 
   @override
@@ -22,8 +25,27 @@ class _QuizState extends State<Quiz> {
 
   void switchScreen() {
     setState(() {
-      activeScreen = const QuestionsScreen();
+      if (selectedAnswers.length == questions.length) {
+        activeScreen = StartScreen(switchScreen);
+        selectedAnswers = [];
+      } else {
+        activeScreen = QuestionsScreen(
+          onSelectAnswer: chooseAnswer,
+        );
+      }
     });
+  }
+
+  void chooseAnswer(String answer) {
+    selectedAnswers.add(answer);
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = ResultsScreen(
+          chosenAnswers: selectedAnswers,
+          restartQuiz: switchScreen,
+        );
+      });
+    }
   }
 
   @override
