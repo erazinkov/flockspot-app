@@ -8,6 +8,8 @@ class SummaryItem extends StatelessWidget {
 
   @override
   Widget build(context) {
+    final isCorrectAnswer = data['user_answer'] == data['correct_answer'];
+    final questionIndex = data['question_index'] as int;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -16,13 +18,11 @@ class SummaryItem extends StatelessWidget {
           height: 30,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: data['user_answer'] == data['correct_answer']
-                ? Colors.blue
-                : Colors.pink,
+            color: isCorrectAnswer ? Colors.blue : Colors.pink,
             borderRadius: BorderRadius.circular(100),
           ),
           child: Text(
-            ((data['question_index'] as int) + 1).toString(),
+            (questionIndex + 1).toString(),
           ),
         ),
         Expanded(
