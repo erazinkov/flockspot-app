@@ -1,7 +1,8 @@
+import 'package:first_app/flockspot.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(FlockSpot());
 }
 
 class MyApp extends StatelessWidget {
