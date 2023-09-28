@@ -25,7 +25,7 @@ class PhotosList extends StatelessWidget {
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: Opacity(
-                    opacity: 0.5,
+                    opacity: 0.75,
                     child: IconButton(
                       padding: const EdgeInsets.all(0.0),
                       icon: Image.asset(

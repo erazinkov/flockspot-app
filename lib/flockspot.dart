@@ -23,8 +23,9 @@ class _FlockSpot extends State<FlockSpot> {
       theme: ThemeData().copyWith(
         useMaterial3: true,
       ),
-      home: Scaffold(body: UserInfo()),
-      themeMode: ThemeMode.dark,
+      home: Scaffold(
+        body: UserInfo(),
+      ),
     );
   }
 }
