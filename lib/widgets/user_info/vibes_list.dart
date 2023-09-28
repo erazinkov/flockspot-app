@@ -6,16 +6,15 @@ class VibesList extends StatelessWidget {
   final List<String> vibes;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(4),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        children: [
-          ...vibes.map((vibe) {
-            return Vibe(text: vibe);
-          })
-        ],
-      ),
+    return Wrap(
+      spacing: 4,
+      runSpacing: 4,
+      alignment: WrapAlignment.center,
+      children: [
+        ...vibes.map((vibe) {
+          return Vibe(text: vibe);
+        })
+      ],
     );
   }
 }

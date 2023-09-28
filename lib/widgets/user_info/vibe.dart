@@ -5,34 +5,19 @@ class Vibe extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.all(4),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            shape: StadiumBorder(),
-          ),
-          onPressed: () {},
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black,
-            ),
-          ),
-        ));
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.all(20),
+        backgroundColor: Colors.white,
+      ),
+      onPressed: () {},
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 20,
+          color: Colors.black,
+        ),
+      ),
+    );
   }
-  // Widget build(BuildContext context) {
-  //   return Padding(
-  //     padding: EdgeInsets.all(4),
-  //     child: Container(
-  //       padding: EdgeInsets.all(8),
-  //       decoration: BoxDecoration(
-  //         color: Colors.white,
-  //         borderRadius: BorderRadius.circular(15),
-  //       ),
-  //       child: Text(text),
-  //     ),
-  //   );
-  // }
 }
