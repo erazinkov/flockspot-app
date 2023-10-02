@@ -45,7 +45,8 @@ Future<Photo> fetchPhoto() async {
 
 Future<User> fetchUser() async {
   final response =
-      await http.get(Uri.parse('http://localhost:3000/api/users/1'));
+      // await http.get(Uri.parse('http://localhost:3000/api/users/1'));
+      await http.get(Uri.parse('http://10.0.2.2:3000/api/users/1'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -205,6 +206,7 @@ class _MyAppState extends State<MyApp> {
                       // ),
                     ]);
                   } else if (snapshot.hasError) {
+                    print(snapshot.error);
                     return Text('${snapshot.error}');
                   }
 
