@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/models/meal.dart';
 import 'package:first_app/screens/categories.dart';
@@ -7,6 +9,9 @@ import 'package:first_app/screens/meals.dart';
 import 'package:first_app/screens/users.dart';
 import 'package:first_app/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../models/user.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
@@ -16,8 +21,24 @@ const kInitialFilters = {
   Filter.photo: false,
 };
 
+Future<User> fetchUser() async {
+  final response =
+      await http.get(Uri.parse('http://localhost:3000/api/users/1'));
+
+  if (response.statusCode == 200) {
+    print(response);
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return User.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load user');
+  }
+}
+
 class TabsScreen extends StatefulWidget {
-  TabsScreen({super.key});
+  const TabsScreen({super.key});
   @override
   State<TabsScreen> createState() {
     return _TabsScreen();
@@ -25,6 +46,14 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreen extends State<TabsScreen> {
+  late Future<User> futureUser;
+
+  @override
+  void initState() {
+    super.initState();
+    futureUser = fetchUser();
+  }
+
   int _selectedPageIndex = 0;
   final List<Meal> _favoriteMeals = [];
   Map<Filter, bool> _selectedFilters = kInitialFilters;
@@ -77,7 +106,7 @@ class _TabsScreen extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     final availableUsers = dummyUsers.where((user) {
-      if (_selectedFilters[Filter.photo]! && user.photos.isEmpty) {
+      if (_selectedFilters[Filter.photo]! && user.photo == '') {
         return false;
       }
       return true;
@@ -113,9 +142,18 @@ class _TabsScreen extends State<TabsScreen> {
     }
 
     if (_selectedPageIndex == 1) {
-      activePage = UsersScreen(
-        users: availableUsers,
-      );
+      activePage = UsersScreen(users: availableUsers);
+      // activePage = FutureBuilder<User>(
+      //   future: futureUser,
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasData) {
+      //       return Text((snapshot.data!.id).toString());
+      //     } else if (snapshot.hasError) {
+      //       return Text('${snapshot.error}');
+      //     }
+      //     return const CircularProgressIndicator();
+      //   },
+      // );
       activaPageTitle = 'Users';
     }
 

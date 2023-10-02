@@ -4,84 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:first_app/models/meal.dart';
 import 'package:first_app/models/category.dart';
 
-var dummyUsers = [
+const List<String> dummyVibes = [
+  'computing',
+  'swimming',
+  'puzzles',
+  'football',
+  'chess',
+  'reading',
+  'chess',
+  'travelling'
+];
+
+const dummyUsers = [
   User(
     id: 1,
-    firstName: 'TheFirstName',
-    lastName: 'TheLastNameIsVeryVeryVeryLong',
-    vibes: [
-      'computing',
-      'swimming',
-      'puzzles',
-      'football',
-      'chess',
-      'reading',
-      'chess',
-      'travelling'
-    ],
-    photos: [
-      'https://image.dummyjson.com/400x200/008080/ffffff',
-      'https://image.dummyjson.com/150',
-      'https://image.dummyjson.com/400x200/008080/ffffff',
-      'https://image.dummyjson.com/150',
-      'https://image.dummyjson.com/400x200/008080/ffffff',
-      'https://image.dummyjson.com/150',
-      'https://image.dummyjson.com/400x200/008080/ffffff',
-      'https://image.dummyjson.com/150',
-      'https://image.dummyjson.com/400x200/008080/ffffff',
-      'https://image.dummyjson.com/150',
-      'https://image.dummyjson.com/400x200/008080/ffffff',
-      'https://image.dummyjson.com/150',
-    ],
+    email: 'thefirstuser@gmail.com',
+    role: 'user',
+    firstName: 'TheFirstName1',
+    lastName: 'TheLastName1',
+    dateOfBirth: '01.01.2001',
+    photo:
+        'https://image.dummyjson.com/400x200/008080/ffffff,https://image.dummyjson.com/400x200/008080/ffffff,https://image.dummyjson.com/150x150/008080/ffffff',
+    nickName: 'NickName1',
   ),
   User(
     id: 2,
-    firstName: 'Alex',
-    lastName: 'Razinkov',
-    vibes: [],
-    photos: [],
-  ),
-  User(
-    id: 3,
-    firstName: 'Ivan',
-    lastName: 'Razinkov',
-    vibes: [],
-    photos: [],
-  ),
-  User(
-    id: 4,
-    firstName: 'George',
-    lastName: 'Razinkov',
-    vibes: [],
-    photos: [],
-  ),
-  User(
-    id: 5,
-    firstName: 'Andrew',
-    lastName: 'Razinkov',
-    vibes: [],
-    photos: [],
-  ),
-  User(
-    id: 6,
-    firstName: 'John',
-    lastName: 'Razinkov',
-    vibes: [],
-    photos: ['https://image.dummyjson.com/400x200/008080/ffffff'],
-  ),
-  User(
-    id: 7,
-    firstName: 'Egor',
-    lastName: 'Razinkov',
-    vibes: [],
-    photos: [],
-  ),
-  User(
-    id: 8,
-    firstName: 'Egor',
-    lastName: 'Razinkov',
-    vibes: [],
-    photos: [],
+    email: 'theseconduser@gmail.com',
+    role: 'user',
+    firstName: 'TheFirstName2',
+    lastName: 'TheLastName2',
+    dateOfBirth: '02.02.2001',
+    photo: '',
+    nickName: 'NickName2',
   ),
 ];
 

@@ -1,3 +1,4 @@
+import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/widgets/vibes.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -38,7 +39,7 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  ...widget.user.photos.asMap().entries.map(
+                  ...widget.user.photo.split(',').asMap().entries.map(
                     (entry) {
                       int index = entry.key;
                       return GestureDetector(
@@ -52,7 +53,8 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
                           child: FadeInImage(
                             fit: BoxFit.cover,
                             placeholder: MemoryImage(kTransparentImage),
-                            image: NetworkImage(widget.user.photos[index]),
+                            image: NetworkImage(
+                                widget.user.photo.split(',')[index]),
                           ),
                         ),
                       );
@@ -67,7 +69,8 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
                 FadeInImage(
                   // fit: BoxFit.cover,
                   placeholder: MemoryImage(kTransparentImage),
-                  image: NetworkImage(widget.user.photos[activeIndex]),
+                  image:
+                      NetworkImage(widget.user.photo.split(',')[activeIndex]),
                 ),
                 Positioned(
                   child: Container(
@@ -92,7 +95,7 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
               ],
             ),
           ),
-          Vibes(vibes: widget.user.vibes),
+          const Vibes(vibes: dummyVibes),
         ],
       ),
     );
