@@ -9,7 +9,16 @@ var dummyUsers = [
     id: 1,
     firstName: 'TheFirstName',
     lastName: 'TheLastNameIsVeryVeryVeryLong',
-    vibes: [],
+    vibes: [
+      'computing',
+      'swimming',
+      'puzzles',
+      'football',
+      'chess',
+      'reading',
+      'chess',
+      'travelling'
+    ],
     photos: [
       'https://image.dummyjson.com/400x200/008080/ffffff',
       'https://image.dummyjson.com/150',
@@ -23,12 +32,6 @@ var dummyUsers = [
       'https://image.dummyjson.com/150',
       'https://image.dummyjson.com/400x200/008080/ffffff',
       'https://image.dummyjson.com/150',
-      // 'https://image.dummyjson.com/400x200/008380/ffffff',
-      // 'https://image.dummyjson.com/400x200/008480/ffffff',
-      // 'https://image.dummyjson.com/400x200/008580/ffffff',
-      // 'https://image.dummyjson.com/400x200/008680/ffffff',
-      // 'https://image.dummyjson.com/400x200/008780/ffffff',
-      // 'https://image.dummyjson.com/400x200/008880/ffffff',
     ],
   ),
   User(

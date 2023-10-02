@@ -11,7 +11,7 @@ class MainDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
               Theme.of(context).colorScheme.primaryContainer,
@@ -20,7 +20,7 @@ class MainDrawer extends StatelessWidget {
             child: Row(
               children: [
                 Icon(
-                  Icons.fastfood,
+                  Icons.connect_without_contact,
                   size: 48,
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -28,7 +28,7 @@ class MainDrawer extends StatelessWidget {
                   width: 8,
                 ),
                 Text(
-                  'Cooking up!',
+                  'Flockspot!',
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -37,23 +37,23 @@ class MainDrawer extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.restaurant,
-              size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            title: Text(
-              'Meals',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24,
-                  ),
-            ),
-            onTap: () {
-              onSelectScreen('meals');
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(
+          //     Icons.restaurant,
+          //     size: 26,
+          //     color: Theme.of(context).colorScheme.onBackground,
+          //   ),
+          //   title: Text(
+          //     'Meals',
+          //     style: Theme.of(context).textTheme.titleSmall!.copyWith(
+          //           color: Theme.of(context).colorScheme.onBackground,
+          //           fontSize: 24,
+          //         ),
+          //   ),
+          //   onTap: () {
+          //     onSelectScreen('meals');
+          //   },
+          // ),
           ListTile(
             leading: Icon(
               Icons.settings,

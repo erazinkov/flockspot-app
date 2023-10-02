@@ -2,6 +2,7 @@ import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/models/meal.dart';
 import 'package:first_app/screens/categories.dart';
 import 'package:first_app/screens/filters.dart';
+import 'package:first_app/screens/home.dart';
 import 'package:first_app/screens/meals.dart';
 import 'package:first_app/screens/users.dart';
 import 'package:first_app/widgets/main_drawer.dart';
@@ -111,11 +112,16 @@ class _TabsScreen extends State<TabsScreen> {
       activaPageTitle = 'Your Favorites';
     }
 
-    if (_selectedPageIndex == 0) {
+    if (_selectedPageIndex == 1) {
       activePage = UsersScreen(
         users: availableUsers,
       );
       activaPageTitle = 'Users';
+    }
+
+    if (_selectedPageIndex == 0) {
+      activePage = HomeScreen();
+      activaPageTitle = 'Home';
     }
 
     return Scaffold(
@@ -133,17 +139,21 @@ class _TabsScreen extends State<TabsScreen> {
         },
         items: const [
           BottomNavigationBarItem(
+            icon: Icon(Icons.home_filled),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Users',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.set_meal),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Favorites',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.set_meal),
+          //   label: 'Categories',
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.star),
+          //   label: 'Favorites',
+          // ),
         ],
       ),
     );

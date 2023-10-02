@@ -1,3 +1,4 @@
+import 'package:first_app/widgets/vibes.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -91,7 +92,7 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
               ],
             ),
           ),
-          Text('Vibes block'),
+          Vibes(vibes: widget.user.vibes),
         ],
       ),
     );

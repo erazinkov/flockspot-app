@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
@@ -24,10 +22,12 @@ class UserGridItem extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          gradient: SweepGradient(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              Colors.pink.withOpacity(0.55),
-              Colors.pink.withOpacity(0.9),
+              Colors.green.withOpacity(0.55),
+              Colors.red.withOpacity(0.9),
             ],
           ),
         ),

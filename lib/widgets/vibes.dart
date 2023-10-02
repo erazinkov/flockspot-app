@@ -1,8 +1,8 @@
-import 'package:first_app/widgets/user_info/vibe.dart';
+import 'package:first_app/widgets/vibe_item.dart';
 import 'package:flutter/material.dart';
 
-class VibesList extends StatelessWidget {
-  const VibesList({super.key, required this.vibes});
+class Vibes extends StatelessWidget {
+  const Vibes({super.key, required this.vibes});
   final List<String> vibes;
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class VibesList extends StatelessWidget {
       alignment: WrapAlignment.center,
       children: [
         ...vibes.map((vibe) {
-          return Vibe(text: vibe);
+          return VibeItem(title: vibe);
         })
       ],
     );
