@@ -7,9 +7,9 @@ final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     brightness: Brightness.dark,
-    seedColor: Color.fromARGB(255, 12, 172, 20),
+    seedColor: const Color.fromARGB(255, 12, 172, 20),
   ),
-  textTheme: GoogleFonts.latoTextTheme(),
+  textTheme: GoogleFonts.interTextTheme(),
 );
 
 void main() {
@@ -23,7 +23,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: TabsScreen(),
+      home: const TabsScreen(),
     );
   }
 }
