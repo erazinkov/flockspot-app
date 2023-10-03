@@ -23,13 +23,31 @@ const kInitialFilters = {
 
 Future<User> fetchUser() async {
   final response =
-      await http.get(Uri.parse('http://localhost:3000/api/users/1'));
+      await http.get(Uri.parse('http://10.0.2.2:3000/api/users/1'));
 
   if (response.statusCode == 200) {
-    print(response);
     // If the server did return a 200 OK response,
     // then parse the JSON.
     return User.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load user');
+  }
+}
+
+// List<User> users = [];
+
+Future fetchUsers() async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:3000/api/users'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    List results = jsonDecode(response.body) as List;
+    final users = results.map((e) => User.fromJson(e)).toList();
+    return users;
+    // return List<User>.from(v);
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -47,11 +65,12 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreen extends State<TabsScreen> {
   late Future<User> futureUser;
-
+  late Future futureUsers;
   @override
   void initState() {
     super.initState();
     futureUser = fetchUser();
+    futureUsers = fetchUsers();
   }
 
   int _selectedPageIndex = 0;
@@ -105,12 +124,13 @@ class _TabsScreen extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final availableUsers = dummyUsers.where((user) {
-      if (_selectedFilters[Filter.photo]! && user.photo == '') {
-        return false;
-      }
-      return true;
-    }).toList();
+    // final availableUsers = [];
+    // final availableUsers = dummyUsers.where((user) {
+    //   if (_selectedFilters[Filter.photo]! && user.photo.split(',').isEmpty) {
+    //     return false;
+    //   }
+    //   return true;
+    // }).toList();
 
     final availableMeals = dummyMeals.where((meal) {
       if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
@@ -142,18 +162,34 @@ class _TabsScreen extends State<TabsScreen> {
     }
 
     if (_selectedPageIndex == 1) {
-      activePage = UsersScreen(users: availableUsers);
-      // activePage = FutureBuilder<User>(
-      //   future: futureUser,
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       return Text((snapshot.data!.id).toString());
-      //     } else if (snapshot.hasError) {
-      //       return Text('${snapshot.error}');
-      //     }
-      //     return const CircularProgressIndicator();
-      //   },
-      // );
+      // activePage = UsersScreen(users: availableUsers);
+      activePage = FutureBuilder<dynamic>(
+        future: futureUsers,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            // return Text((snapshot.data!.id).toString());
+            final availableUsers = snapshot.data!.where((user) {
+              if (_selectedFilters[Filter.photo]! && user.photo == null) {
+                return false;
+              }
+              return true;
+            }).toList();
+            return UsersScreen(users: availableUsers);
+          } else if (snapshot.hasError) {
+            // final availableUsers = dummyUsers.where((user) {
+            //   if (_selectedFilters[Filter.photo]! && user.photo.split(',').isEmpty) {
+            //     return false;
+            //   }
+            //   return true;
+            // }).toList();
+            // return UsersScreen(users: availableUsers);
+            return Text('${snapshot.error}');
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
       activaPageTitle = 'Users';
     }
 

@@ -1,18 +1,3 @@
-// class User {
-//   final int id;
-//   final String firstName;
-//   final String lastName;
-//   final List<String> photos;
-//   final List<String> vibes;
-//   User({
-//     required this.id,
-//     required this.firstName,
-//     required this.lastName,
-//     required this.vibes,
-//     required this.photos,
-//   });
-// }
-
 class User {
   final int id;
   final String email;
@@ -20,7 +5,7 @@ class User {
   final String firstName;
   final String lastName;
   final String dateOfBirth;
-  final String photo;
+  final String? photo;
   final String nickName;
 
   const User({
@@ -30,7 +15,7 @@ class User {
     required this.firstName,
     required this.lastName,
     required this.dateOfBirth,
-    required this.photo,
+    this.photo,
     required this.nickName,
   });
 
@@ -46,4 +31,11 @@ class User {
       nickName: json['nickName'],
     );
   }
+}
+
+class Users {
+  final List<User> users;
+  const Users({
+    required this.users,
+  });
 }

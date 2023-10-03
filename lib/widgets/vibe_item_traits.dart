@@ -14,19 +14,20 @@ class VibeItemTrait extends StatelessWidget {
       children: [
         Text(
           description ?? kInitialDescription,
-          style: const TextStyle(fontSize: 28, color: Colors.white),
+          style: const TextStyle(fontSize: 18, color: Colors.white),
         ),
         const SizedBox(
-          width: 6,
+          height: 6,
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer),
           onPressed: () {
             Navigator.pop(context);
           },
           child: const Text(
             'Ok',
-            style: TextStyle(fontSize: 28, color: Colors.white),
+            style: TextStyle(fontSize: 18, color: Colors.white),
           ),
         )
       ],

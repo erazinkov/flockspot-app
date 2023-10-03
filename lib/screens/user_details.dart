@@ -39,7 +39,7 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  ...widget.user.photo.split(',').asMap().entries.map(
+                  ...widget.user.photo!.split(',').asMap().entries.map(
                     (entry) {
                       int index = entry.key;
                       return GestureDetector(
@@ -54,7 +54,7 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
                             fit: BoxFit.cover,
                             placeholder: MemoryImage(kTransparentImage),
                             image: NetworkImage(
-                                widget.user.photo.split(',')[index]),
+                                widget.user.photo!.split(',')[index]),
                           ),
                         ),
                       );
@@ -70,7 +70,7 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
                   // fit: BoxFit.cover,
                   placeholder: MemoryImage(kTransparentImage),
                   image:
-                      NetworkImage(widget.user.photo.split(',')[activeIndex]),
+                      NetworkImage(widget.user.photo!.split(',')[activeIndex]),
                 ),
                 Positioned(
                   child: Container(
