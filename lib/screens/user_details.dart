@@ -47,14 +47,17 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
                           _selectActive(index);
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          width: 65,
-                          height: 65,
-                          child: FadeInImage(
-                            fit: BoxFit.cover,
-                            placeholder: MemoryImage(kTransparentImage),
-                            image: NetworkImage(
-                                widget.user.photo!.split(',')[index]),
+                          margin: const EdgeInsets.symmetric(horizontal: 2),
+                          width: 44,
+                          height: 44,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: FadeInImage(
+                              fit: BoxFit.cover,
+                              placeholder: MemoryImage(kTransparentImage),
+                              image: NetworkImage(
+                                  widget.user.photo!.split(',')[index]),
+                            ),
                           ),
                         ),
                       );
@@ -76,8 +79,9 @@ class _UserDetailsScreen extends State<UserDetailsScreen> {
                   child: Container(
                     width: double.infinity,
                     color: Colors.black54,
+                    margin: EdgeInsets.all(44),
                     padding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 44),
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 24),
                     child: Text(
                       '${widget.user.firstName} ${widget.user.lastName}',
                       maxLines: 1,

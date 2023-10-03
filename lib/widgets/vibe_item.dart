@@ -1,4 +1,4 @@
-import 'package:first_app/widgets/vibe_item_traits.dart';
+import 'package:first_app/widgets/vibe_item_trait.dart';
 import 'package:flutter/material.dart';
 
 class VibeItem extends StatelessWidget {
