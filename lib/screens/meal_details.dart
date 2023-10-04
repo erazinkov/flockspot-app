@@ -1,5 +1,6 @@
 import 'package:first_app/models/meal.dart';
 import 'package:first_app/providers/favorites_provider.dart';
+import 'package:first_app/providers/filters_povider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,8 @@ class MealDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isFavorite = ref.watch(favoriteMealsProvider).contains(meal);
+
     Widget content = SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -66,16 +69,17 @@ class MealDetailsScreen extends ConsumerWidget {
         title: Text(meal.title),
         actions: [
           IconButton(
-              onPressed: () {
-                final wasAdded = ref
-                    .read(favoriteMealsProvider.notifier)
-                    .toggleMealFavoriteStatus(meal);
-                ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(wasAdded ? 'Meal added' : 'Meal removed'),
-                ));
-              },
-              icon: Icon(Icons.star))
+            onPressed: () {
+              final wasAdded = ref
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleMealFavoriteStatus(meal);
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(wasAdded ? 'Meal added' : 'Meal removed'),
+              ));
+            },
+            icon: Icon(isFavorite ? Icons.star : Icons.star_border),
+          )
         ],
       ),
       body: content,
