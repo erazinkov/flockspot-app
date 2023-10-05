@@ -1,4 +1,4 @@
-enum CategoryType {
+enum Categories {
   vegetables,
   fruit,
   meat,
@@ -13,5 +13,5 @@ enum CategoryType {
 
 class Category {
   Category({required this.type});
-  final CategoryType type;
+  final Categories type;
 }
