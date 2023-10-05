@@ -4,7 +4,6 @@ import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/models/meal.dart';
 import 'package:first_app/screens/categories.dart';
 import 'package:first_app/screens/filters.dart';
-import 'package:first_app/screens/flocks.dart';
 import 'package:first_app/screens/home.dart';
 import 'package:first_app/screens/meals.dart';
 import 'package:first_app/screens/users.dart';
@@ -64,16 +63,14 @@ class TabsScreen extends StatefulWidget {
   }
 }
 
-var availableUsers = [...dummyUsers];
-
 class _TabsScreen extends State<TabsScreen> {
   late Future<User> futureUser;
   late Future futureUsers;
   @override
   void initState() {
     super.initState();
-    // futureUser = fetchUser();
-    // futureUsers = fetchUsers();
+    futureUser = fetchUser();
+    futureUsers = fetchUsers();
   }
 
   int _selectedPageIndex = 0;
@@ -125,106 +122,112 @@ class _TabsScreen extends State<TabsScreen> {
     }
   }
 
-  void _removeFlock(User user) {
-    final flockIndex = availableUsers.indexOf(user);
-    setState(() {
-      availableUsers.remove(user);
-    });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Flock deleted.'),
-      action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () {
-            setState(() {
-              availableUsers.insert(flockIndex, user);
-            });
-          }),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
-    var activaPageTitle = 'Home';
-    Widget activePage = HomeScreen();
+    // final availableUsers = [];
+    // final availableUsers = dummyUsers.where((user) {
+    //   if (_selectedFilters[Filter.photo]! && user.photo.split(',').isEmpty) {
+    //     return false;
+    //   }
+    //   return true;
+    // }).toList();
 
-    switch (_selectedPageIndex) {
-      case 0:
-        activePage = HomeScreen();
-        activaPageTitle = 'Home';
-      case 1:
-        activePage = FlocksScreen(
-          users: availableUsers,
-          onRemove: (user) {
-            _removeFlock(user);
-          },
-        );
-        activaPageTitle = 'Flocks';
-      case 2:
-        activePage = HomeScreen();
-        activaPageTitle = 'Chat';
-      case 3:
-        activePage = HomeScreen();
-        activaPageTitle = 'User';
-      default:
-        activePage = HomeScreen();
-        activaPageTitle = 'Home';
+    final availableMeals = dummyMeals.where((meal) {
+      if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
+        return false;
+      }
+      if (_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree) {
+        return false;
+      }
+      if (_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian) {
+        return false;
+      }
+      if (_selectedFilters[Filter.vegan]! && !meal.isVegan) {
+        return false;
+      }
+      return true;
+    }).toList();
+
+    Widget activePage = CategoriesScreen(
+      onToggleFavorite: _toggleMealFavoriteState,
+      availableMeals: availableMeals,
+    );
+    var activaPageTitle = 'Categories';
+    if (_selectedPageIndex == 2) {
+      activePage = MealsScreen(
+        meals: _favoriteMeals,
+        onToggleFavorite: _toggleMealFavoriteState,
+      );
+      activaPageTitle = 'Your Favorites';
+    }
+
+    if (_selectedPageIndex == 1) {
+      // activePage = UsersScreen(users: availableUsers);
+      activePage = FutureBuilder<dynamic>(
+        future: futureUsers,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            // return Text((snapshot.data!.id).toString());
+            final availableUsers = snapshot.data!.where((user) {
+              if (_selectedFilters[Filter.photo]! && user.photo == null) {
+                return false;
+              }
+              return true;
+            }).toList();
+            return UsersScreen(users: availableUsers);
+          } else if (snapshot.hasError) {
+            // final availableUsers = dummyUsers.where((user) {
+            //   if (_selectedFilters[Filter.photo]! && user.photo.split(',').isEmpty) {
+            //     return false;
+            //   }
+            //   return true;
+            // }).toList();
+            // return UsersScreen(users: availableUsers);
+            return Text('${snapshot.error}');
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+      activaPageTitle = 'Users';
+    }
+
+    if (_selectedPageIndex == 0) {
+      activePage = HomeScreen();
+      activaPageTitle = 'Home';
     }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(activaPageTitle),
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-              icon: const ImageIcon(
-                size: 32,
-                color: Colors.white,
-                AssetImage('assets/icons/settings.png'),
-              ),
-              onPressed: () => Scaffold.of(context).openEndDrawer(),
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            ),
-          ),
-        ],
       ),
-      endDrawer: MainDrawer(onSelectScreen: _setScreen),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+      ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.white,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         currentIndex: _selectedPageIndex,
         onTap: (index) {
           _selectPage(index);
         },
         items: const [
           BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/icons/home.png'),
-            ),
+            icon: Icon(Icons.home_filled),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/icons/flocks.png'),
-            ),
-            label: 'Flocks',
+            icon: Icon(Icons.person),
+            label: 'Users',
           ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/icons/chat.png'),
-            ),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/icons/chat.png'),
-            ),
-            label: 'Chat',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.set_meal),
+          //   label: 'Categories',
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.star),
+          //   label: 'Favorites',
+          // ),
         ],
       ),
     );

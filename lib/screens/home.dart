@@ -10,24 +10,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Center(
+    Widget content = const Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             'Uh oh ... nothing here!',
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
+            style: TextStyle(color: Colors.white, fontSize: 28),
           ),
           const SizedBox(
             height: 16,
           ),
           Text(
             'Try selecting another tab!',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
+            style: TextStyle(color: Colors.white, fontSize: 28),
           ),
         ],
       ),

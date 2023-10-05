@@ -64,8 +64,6 @@ class TabsScreen extends StatefulWidget {
   }
 }
 
-var availableUsers = [...dummyUsers];
-
 class _TabsScreen extends State<TabsScreen> {
   late Future<User> futureUser;
   late Future futureUsers;
@@ -125,26 +123,9 @@ class _TabsScreen extends State<TabsScreen> {
     }
   }
 
-  void _removeFlock(User user) {
-    final flockIndex = availableUsers.indexOf(user);
-    setState(() {
-      availableUsers.remove(user);
-    });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Flock deleted.'),
-      action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () {
-            setState(() {
-              availableUsers.insert(flockIndex, user);
-            });
-          }),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
+    final availableUsers = dummyUsers;
     var activaPageTitle = 'Home';
     Widget activePage = HomeScreen();
 
@@ -155,9 +136,6 @@ class _TabsScreen extends State<TabsScreen> {
       case 1:
         activePage = FlocksScreen(
           users: availableUsers,
-          onRemove: (user) {
-            _removeFlock(user);
-          },
         );
         activaPageTitle = 'Flocks';
       case 2:

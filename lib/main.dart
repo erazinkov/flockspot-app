@@ -7,7 +7,17 @@ final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     brightness: Brightness.dark,
-    seedColor: const Color.fromARGB(255, 12, 172, 20),
+    surface: Colors.black,
+    onSurface: Colors.white,
+    primary: Colors.white,
+    onPrimary: Colors.white,
+    secondary: Colors.grey,
+    onSecondary: Colors.black,
+    background: Colors.black,
+    onBackground: Colors.grey,
+    error: Colors.grey,
+    onError: Colors.grey,
+    seedColor: const Color.fromARGB(255, 0, 0, 0),
   ),
   textTheme: GoogleFonts.interTextTheme(),
 );
