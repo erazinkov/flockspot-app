@@ -151,7 +151,7 @@ class _TabsScreen extends State<TabsScreen> {
     switch (_selectedPageIndex) {
       case 0:
         activePage = HomeScreen();
-        activaPageTitle = 'Home';
+        activaPageTitle = 'Home'.toUpperCase();
       case 1:
         activePage = FlocksScreen(
           users: availableUsers,
@@ -159,7 +159,7 @@ class _TabsScreen extends State<TabsScreen> {
             _removeFlock(user);
           },
         );
-        activaPageTitle = 'Flocks';
+        activaPageTitle = 'your flocks'.toUpperCase();
       case 2:
         activePage = HomeScreen();
         activaPageTitle = 'Chat';
@@ -168,7 +168,7 @@ class _TabsScreen extends State<TabsScreen> {
         activaPageTitle = 'User';
       default:
         activePage = HomeScreen();
-        activaPageTitle = 'Home';
+        activaPageTitle = 'Home'.toUpperCase();
     }
 
     return Scaffold(
@@ -191,11 +191,6 @@ class _TabsScreen extends State<TabsScreen> {
       endDrawer: MainDrawer(onSelectScreen: _setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.white,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         currentIndex: _selectedPageIndex,
         onTap: (index) {
           _selectPage(index);
@@ -211,7 +206,7 @@ class _TabsScreen extends State<TabsScreen> {
             icon: ImageIcon(
               AssetImage('assets/icons/flocks.png'),
             ),
-            label: 'Flocks',
+            label: 'Your Flocks',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(

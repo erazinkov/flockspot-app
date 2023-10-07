@@ -14,10 +14,11 @@ class MainDrawer extends StatelessWidget {
           DrawerHeader(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+              gradient: LinearGradient(colors: [
+                Colors.grey,
+                Colors.white,
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            ),
             child: Row(
               children: [
                 Icon(

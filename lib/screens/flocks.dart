@@ -1,5 +1,5 @@
 import 'package:first_app/screens/user_details.dart';
-import 'package:first_app/widgets/flock_item%20copy.dart';
+import 'package:first_app/widgets/flock_item.dart';
 import 'package:first_app/widgets/user_grid_item.dart';
 import 'package:flutter/material.dart';
 

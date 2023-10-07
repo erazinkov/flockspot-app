@@ -3,23 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-final theme = ThemeData(
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    surface: Colors.black,
-    onSurface: Colors.white,
-    primary: Colors.white,
-    onPrimary: Colors.white,
-    secondary: Colors.grey,
-    onSecondary: Colors.black,
-    background: Colors.black,
-    onBackground: Colors.grey,
-    error: Colors.grey,
-    onError: Colors.grey,
-    seedColor: const Color.fromARGB(255, 0, 0, 0),
-  ),
-  textTheme: GoogleFonts.interTextTheme(),
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.black,
+  primary: Colors.black,
+  onPrimary: const Color.fromRGBO(255, 255, 255, 0.5),
+  onPrimaryContainer: Colors.white,
+  onSecondary: Colors.white,
+  onSecondaryContainer: Colors.white,
+  surface: Colors.black,
+  onSurface: Colors.amber,
 );
 
 void main() {
@@ -32,7 +24,29 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: theme,
+      theme: ThemeData().copyWith(
+        textTheme: GoogleFonts.interTextTheme(),
+        useMaterial3: true,
+        colorScheme: kColorScheme,
+        scaffoldBackgroundColor: kColorScheme.primary,
+        appBarTheme: const AppBarTheme().copyWith(
+          titleTextStyle: const TextStyle().copyWith(
+            color: kColorScheme.onPrimary,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+          centerTitle: true,
+          backgroundColor: kColorScheme.primary,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData().copyWith(
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          backgroundColor: kColorScheme.primary,
+          selectedItemColor: kColorScheme.onPrimaryContainer,
+          unselectedItemColor: kColorScheme.onPrimary,
+        ),
+      ),
       home: const TabsScreen(),
     );
   }
