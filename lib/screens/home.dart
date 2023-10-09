@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
     super.key,
-    this.title,
   });
-
-  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +15,7 @@ class HomeScreen extends StatelessWidget {
             'Uh oh ... nothing here!',
             style: TextStyle(color: Colors.white, fontSize: 28),
           ),
-          const SizedBox(
+          SizedBox(
             height: 16,
           ),
           Text(
@@ -29,13 +26,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
 
-    if (title == null) return content;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title!),
-      ),
-      body: content,
-    );
+    return content;
   }
 }

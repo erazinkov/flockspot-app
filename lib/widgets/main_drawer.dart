@@ -1,3 +1,4 @@
+import 'package:first_app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -30,7 +31,7 @@ class MainDrawer extends StatelessWidget {
                   width: 8,
                 ),
                 Text(
-                  'Flockspot!',
+                  'Settings',
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -38,21 +39,6 @@ class MainDrawer extends StatelessWidget {
                 )
               ],
             ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.settings,
-              size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            title: Text(
-              'Settings',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontSize: 24,
-                  ),
-            ),
-            onTap: () {},
           ),
         ],
       ),
