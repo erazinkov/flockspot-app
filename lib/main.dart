@@ -30,6 +30,9 @@ class App extends StatelessWidget {
         colorScheme: kColorScheme,
         scaffoldBackgroundColor: kColorScheme.primary,
         appBarTheme: const AppBarTheme().copyWith(
+          iconTheme: const IconThemeData().copyWith(
+            color: kColorScheme.onPrimaryContainer,
+          ),
           titleTextStyle: const TextStyle().copyWith(
             color: kColorScheme.onPrimary,
             fontSize: 14,

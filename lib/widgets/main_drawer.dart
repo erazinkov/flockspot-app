@@ -8,33 +8,33 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.black87,
       child: Column(
         children: [
           DrawerHeader(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-                Colors.grey,
-                Colors.white,
-              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                Color.fromRGBO(255, 255, 255, 0.5),
+                Color.fromRGBO(255, 255, 255, 0.05),
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
             ),
             child: Row(
               children: [
                 Icon(
-                  Icons.settings,
-                  size: 48,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  Icons.connect_without_contact,
+                  size: 36,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
                 const SizedBox(
                   width: 8,
                 ),
                 Text(
-                  'Settings',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                  'Flockspot!',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                 )
               ],
             ),
@@ -43,17 +43,17 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(
               Icons.settings,
               size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
             title: Text(
-              'S1',
+              'Filters',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontSize: 24,
                   ),
             ),
             onTap: () {
-              onSelectScreen('settings');
+              onSelectScreen('filters');
             },
           ),
         ],

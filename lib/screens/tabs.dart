@@ -1,24 +1,11 @@
-import 'dart:convert';
-
-import 'package:first_app/data/dummy_data.dart';
-import 'package:first_app/models/meal.dart';
-import 'package:first_app/screens/categories.dart';
-import 'package:first_app/screens/filters.dart';
-import 'package:first_app/screens/flocks.dart';
-import 'package:first_app/screens/home.dart';
-import 'package:first_app/screens/meals.dart';
-import 'package:first_app/screens/settings.dart';
-import 'package:first_app/screens/users.dart';
-import 'package:first_app/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:first_app/widgets/main_drawer.dart';
+import 'package:first_app/screens/home.dart';
+import 'package:first_app/screens/flocks.dart';
+import 'package:first_app/screens/filters.dart';
 
-import '../models/user.dart';
-
-const kInitialSettings = {
-  Setting.one: false,
-  Setting.two: false,
-  Setting.three: false,
+const kInitialFilters = {
+  Filter.one: false,
 };
 
 class TabsScreen extends StatefulWidget {
@@ -30,9 +17,9 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreen extends State<TabsScreen> {
-  int _selectedPageIndex = 1;
+  int _selectedPageIndex = 0;
 
-  Map<Setting, bool> _selectedSettings = kInitialSettings;
+  Map<Filter, bool> _selectedFilters = kInitialFilters;
 
   // void _showInfoMessage(String message) {
   //   ScaffoldMessenger.of(context).clearSnackBars();
@@ -49,16 +36,16 @@ class _TabsScreen extends State<TabsScreen> {
 
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
-    if (identifier == 'settings') {
-      final result = await Navigator.of(context).push<Map<Setting, bool>>(
+    if (identifier == 'filters') {
+      final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (ctx) => SettingsScreen(
-            currentSettings: _selectedSettings,
+          builder: (ctx) => FiltersScreen(
+            currentFilters: _selectedFilters,
           ),
         ),
       );
       setState(() {
-        _selectedSettings = result ?? kInitialSettings;
+        _selectedFilters = result ?? kInitialFilters;
       });
     }
   }

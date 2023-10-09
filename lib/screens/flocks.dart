@@ -1,11 +1,8 @@
 import 'dart:convert';
 
 import 'package:first_app/models/flock.dart';
-import 'package:first_app/screens/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/user.dart';
 
 class FlocksScreen extends StatefulWidget {
   const FlocksScreen({super.key});
@@ -25,15 +22,15 @@ class _FlocksScreenState extends State<FlocksScreen> {
     _loadItems();
   }
 
-  void _selectUser(BuildContext context, User user) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (ctx) => UserDetailsScreen(
-                title: user.firstName,
-                user: user,
-              )),
-    );
+  void _showInfoMessage(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+  }
+
+  void _selectItem(BuildContext context, Flock flock) {
+    _showInfoMessage('Flock ${flock.id} selected.');
   }
 
   void _loadItems() async {
@@ -118,11 +115,14 @@ class _FlocksScreenState extends State<FlocksScreen> {
             key: ValueKey(_flockItems[index].id),
             child: Card(
                 child: InkWell(
-                    onTap: () {},
-                    splashColor: Theme.of(context).primaryColor,
+                    onTap: () {
+                      _selectItem(context, _flockItems[index]);
+                    },
+                    splashColor:
+                        Theme.of(context).colorScheme.onPrimaryContainer,
                     borderRadius: BorderRadius.circular(16),
                     child: Card(
-                        color: const Color.fromRGBO(255, 255, 255, 0.05),
+                        color: const Color.fromRGBO(255, 255, 255, 0.2),
                         child: Padding(
                           padding: const EdgeInsets.all(16),
                           child: Row(
