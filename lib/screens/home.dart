@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     locationData = await location.getLocation();
 
     setState(() {
-      _isGettingLocation = true;
+      _isGettingLocation = false;
     });
 
     print(locationData.latitude);
@@ -58,14 +58,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     if (_isGettingLocation) {
-      previewContent = const CircularProgressIndicator();
+      previewContent = CircularProgressIndicator(
+          color: Theme.of(context).colorScheme.onPrimaryContainer);
     }
 
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          previewContent,
+          SizedBox(
+            height: 32,
+            child: previewContent,
+          ),
           const SizedBox(
             height: 16,
           ),
@@ -73,7 +77,13 @@ class _HomeScreenState extends State<HomeScreen> {
             'Try selecting another tab!',
             style: TextStyle(color: Colors.white, fontSize: 28),
           ),
+          const SizedBox(
+            height: 16,
+          ),
           TextButton(
+              style: const ButtonStyle().copyWith(
+                  backgroundColor: const MaterialStatePropertyAll(
+                      Color.fromRGBO(255, 255, 255, 0.2))),
               onPressed: _getCurrentLocation,
               child: Text('Get current location!',
                   style: const TextStyle().copyWith(
