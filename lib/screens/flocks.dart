@@ -11,15 +11,31 @@ class FlocksScreen extends StatefulWidget {
   State<FlocksScreen> createState() => _FlocksScreenState();
 }
 
-class _FlocksScreenState extends State<FlocksScreen> {
+class _FlocksScreenState extends State<FlocksScreen>
+    with SingleTickerProviderStateMixin {
   List<Flock> _flockItems = [];
   var _isLoading = true;
   String? _error;
+  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _loadItems();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: 0,
+      upperBound: 1,
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   void _showInfoMessage(String message) {
@@ -85,6 +101,13 @@ class _FlocksScreenState extends State<FlocksScreen> {
       setState(() {
         _flockItems.insert(index, item);
       });
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 3),
+          content: Text('Item deleted.'),
+        ));
+      }
     }
   }
 
@@ -105,47 +128,59 @@ class _FlocksScreenState extends State<FlocksScreen> {
       );
     }
     if (_flockItems.isNotEmpty) {
-      content = ListView.builder(
-        itemCount: _flockItems.length,
-        itemBuilder: (ctx, index) {
-          return Dismissible(
-            onDismissed: (direction) {
-              _removeItem(_flockItems[index]);
-            },
-            key: ValueKey(_flockItems[index].id),
-            child: Card(
-                child: InkWell(
-                    onTap: () {
-                      _selectItem(context, _flockItems[index]);
-                    },
-                    splashColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                    borderRadius: BorderRadius.circular(16),
-                    child: Card(
-                        color: const Color.fromRGBO(255, 255, 255, 0.2),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            children: [
-                              Text(_flockItems[index].id.toString(),
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer)),
-                              const SizedBox(
-                                width: 16,
+      content = AnimatedBuilder(
+          animation: _animationController,
+          child: ListView.builder(
+            itemCount: _flockItems.length,
+            itemBuilder: (ctx, index) {
+              return Dismissible(
+                onDismissed: (direction) {
+                  _removeItem(_flockItems[index]);
+                },
+                key: ValueKey(_flockItems[index].id),
+                child: Card(
+                    child: InkWell(
+                        onTap: () {
+                          _selectItem(context, _flockItems[index]);
+                        },
+                        splashColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                        borderRadius: BorderRadius.circular(16),
+                        child: Card(
+                            color: const Color.fromRGBO(255, 255, 255, 0.2),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                children: [
+                                  Text(_flockItems[index].id.toString(),
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer)),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Text(_flockItems[index].flockSize.toString(),
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer)),
+                                ],
                               ),
-                              Text(_flockItems[index].flockSize.toString(),
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer)),
-                            ],
-                          ),
-                        )))),
-          );
-        },
-      );
+                            )))),
+              );
+            },
+          ),
+          builder: (content, child) => SlideTransition(
+                position: Tween(
+                  begin: const Offset(0, 0.3),
+                  end: const Offset(0, 0),
+                ).animate(CurvedAnimation(
+                  parent: _animationController,
+                  curve: Curves.linear,
+                )),
+                child: child,
+              ));
     }
 
     if (_error != null) {
