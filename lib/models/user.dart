@@ -1,22 +1,44 @@
+import 'package:first_app/models/flock_users.dart';
+import 'package:first_app/models/user_availability.dart';
+import 'package:first_app/models/user_position.dart';
+import 'package:first_app/models/vibe.dart';
+
+enum UserRole {
+  User,
+  Admin,
+  PlaceOwner,
+  Ambassador,
+}
+
 class User {
-  final int id;
-  final String email;
-  final String role;
+  final int id; //@id @default(autoincrement())
+  final String email; //@unique
+  final UserRole role; //@default(User)
   final String firstName;
   final String lastName;
-  final String dateOfBirth;
+  final DateTime dateOfBirth;
+  final String? nickName;
+  final UserPosition? position;
+  final List<UserAvailability> availabilities;
+  final List<FlockUsers> flocks;
+  final List<Vibe> vibes; //@relation("UserVibes")
+  final List<Vibe> ownVibes; //@relation("OwnVibes")
   final String? photo;
-  final String nickName;
 
   const User({
     required this.id,
     required this.email,
-    required this.role,
+    this.role = UserRole.User,
     required this.firstName,
     required this.lastName,
     required this.dateOfBirth,
+    this.nickName,
+    this.position,
+    required this.availabilities,
+    required this.flocks,
+    required this.vibes,
+    required this.ownVibes,
     this.photo,
-    required this.nickName,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -27,15 +49,13 @@ class User {
       firstName: json['firstName'],
       lastName: json['lastName'],
       dateOfBirth: json['dateOfBirth'],
-      photo: json['photo'],
       nickName: json['nickName'],
+      position: json['position'],
+      availabilities: json['availabilities'],
+      flocks: json['flocks'],
+      vibes: json['vibes'],
+      ownVibes: json['ownVibes'],
+      photo: json['photo'],
     );
   }
-}
-
-class Users {
-  final List<User> users;
-  const Users({
-    required this.users,
-  });
 }
