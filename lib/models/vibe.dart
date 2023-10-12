@@ -35,4 +35,20 @@ class Vibe {
     required this.places,
     required this.users,
   });
+
+  factory Vibe.fromJson(Map<String, dynamic> json) {
+    return Vibe(
+      id: json['id'],
+      name: json['name'],
+      status: json['status'],
+      description: json['description'],
+      optimalFlockSize: json['optimalFlockSize'],
+      creatorId: json['creatorId'],
+      creator: json['creator'],
+      locations: json['locations'],
+      events: json['events'],
+      places: json['places'],
+      users: json['users'],
+    );
+  }
 }

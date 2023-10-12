@@ -27,4 +27,19 @@ class Event {
     required this.vibes,
     required this.flocks,
   });
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return Event(
+      id: json['id'],
+      title: json['title'],
+      startAt: json['startAt'],
+      endAt: json['endAt'],
+      description: json['description'],
+      preview: json['preview'],
+      placeId: json['placeId'],
+      place: json['place'],
+      vibes: json['vibes'],
+      flocks: json['flocks'],
+    );
+  }
 }

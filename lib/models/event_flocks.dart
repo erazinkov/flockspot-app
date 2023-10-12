@@ -19,4 +19,14 @@ class EventFlocks {
     required this.eventId,
     required this.event,
   });
+
+  factory EventFlocks.fromJson(Map<String, dynamic> json) {
+    return EventFlocks(
+      time: json['time'],
+      flockId: json['flockId'],
+      flock: json['flock'],
+      eventId: json['eventId'],
+      event: json['event'],
+    );
+  }
 }

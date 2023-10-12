@@ -30,4 +30,16 @@ class Availability {
     required this.userAvailabilities,
     required this.placeAvailabilities,
   });
+
+  factory Availability.fromJson(Map<String, dynamic> json) {
+    return Availability(
+      id: json['id'],
+      startAt: json['startAt'],
+      endAt: json['endAt'],
+      dayOfWeek: json['dayOfWeek'],
+      suggestedInFlocks: json['suggestedInFlocks'],
+      userAvailabilities: json['userAvailabilities'],
+      placeAvailabilities: json['placeAvailabilities'],
+    );
+  }
 }

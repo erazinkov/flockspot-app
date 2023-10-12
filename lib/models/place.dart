@@ -1,7 +1,9 @@
 import 'package:first_app/models/event.dart';
 import 'package:first_app/models/flock.dart';
+import 'package:first_app/models/location.dart';
 import 'package:first_app/models/meet.dart';
 import 'package:first_app/models/place_availability.dart';
+import 'package:first_app/models/vibe.dart';
 
 class Place {
   final int id; //@id @default(autoincrement())
@@ -34,4 +36,22 @@ class Place {
     required this.suggestedInFlocks,
     required this.availabilities,
   });
+
+  factory Place.fromJson(Map<String, dynamic> json) {
+    return Place(
+      id: json['id'],
+      title: json['title'],
+      isPublic: json['isPublic'],
+      isApproved: json['isApproved'],
+      description: json['description'],
+      preview: json['preview'],
+      locationId: json['locationId'],
+      location: json['location'],
+      vibes: json['vibes'],
+      meets: json['meets'],
+      events: json['events'],
+      suggestedInFlocks: json['suggestedInFlocks'],
+      availabilities: json['availabilities'],
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:first_app/models/availability.dart';
 import 'package:first_app/models/place.dart';
 
 class PlaceAvailability {
@@ -14,4 +15,13 @@ class PlaceAvailability {
     required this.placeId,
     required this.place,
   });
+
+  factory PlaceAvailability.fromJson(Map<String, dynamic> json) {
+    return PlaceAvailability(
+      availabilityId: json['availabilityId'],
+      availability: json['availability'],
+      placeId: json['placeId'],
+      place: json['place'],
+    );
+  }
 }

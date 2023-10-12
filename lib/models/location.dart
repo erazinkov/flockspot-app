@@ -13,4 +13,13 @@ class Location {
     required this.vibes,
     required this.places,
   });
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      id: json['id'],
+      name: json['name'],
+      vibes: json['vibes'],
+      places: json['places'],
+    );
+  }
 }
