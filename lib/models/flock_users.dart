@@ -13,7 +13,7 @@ class FlockUsers {
   final User
       user; //@relation(fields: [userId], references: [id], onDelete: Cascade)
   final int flockId;
-  final Flock
+  final Flock?
       flock; //@relation(fields: [flockId], references: [id], onDelete: Cascade)
 
   //@@id([userId, flockId])
@@ -23,7 +23,7 @@ class FlockUsers {
     required this.userId,
     required this.user,
     required this.flockId,
-    required this.flock,
+    this.flock,
   });
 
   factory FlockUsers.fromJson(Map<String, dynamic> json) {

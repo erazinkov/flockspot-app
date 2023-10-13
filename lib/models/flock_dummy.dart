@@ -1,3 +1,4 @@
+import 'package:first_app/models/availability.dart';
 import 'package:first_app/models/event_flocks.dart';
 import 'package:first_app/models/flock_users.dart';
 import 'package:first_app/models/meet.dart';
