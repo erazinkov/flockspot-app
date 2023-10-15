@@ -1,5 +1,8 @@
 import 'package:first_app/models/flock_dummy.dart';
 import 'package:first_app/models/flock_users.dart';
+import 'package:first_app/models/location.dart';
+import 'package:first_app/models/meet.dart';
+import 'package:first_app/models/place.dart';
 import 'package:first_app/models/user.dart';
 import 'package:first_app/models/vibe.dart';
 
@@ -51,7 +54,7 @@ List<User> dummyUsers = [
   ),
 ];
 
-const dummyFlocks1 = Flock(
+const dummyFlock = Flock(
   id: 1,
   flockSize: 1,
   meets: [],
@@ -61,24 +64,67 @@ const dummyFlocks1 = Flock(
   suggestedTimes: [],
 );
 
+var dummyLocation =
+    Location(id: 0, name: 'Portugal', vibes: dummyVibes, places: []);
+
+final dummyPlace = Place(
+  id: 0,
+  title: 'lisbon',
+  isPublic: true,
+  locationId: 0,
+  location: dummyLocation,
+  vibes: dummyVibes,
+  meets: [],
+  events: [],
+  suggestedInFlocks: [],
+  availabilities: [],
+);
+
+final dummyMeets = [
+  Meet(
+    id: 0,
+    time: DateTime(2017, 9, 7, 17, 30),
+    flockId: 0,
+    flock: dummyFlock,
+    placeId: 0,
+    place: dummyPlace,
+  ),
+  Meet(
+    id: 1,
+    time: DateTime(2017, 9, 7, 17, 30),
+    flockId: 0,
+    flock: dummyFlock,
+    placeId: 0,
+    place: dummyPlace,
+  ),
+  Meet(
+    id: 2,
+    time: DateTime(2017, 9, 7, 17, 30),
+    flockId: 0,
+    flock: dummyFlock,
+    placeId: 0,
+    place: dummyPlace,
+  ),
+];
+
 List<FlockUsers> dummyFlockUsers = [
   FlockUsers(
     userId: 0,
     user: dummyUsers[0],
     flockId: 0,
-    flock: dummyFlocks1,
+    flock: dummyFlock,
   ),
   FlockUsers(
     userId: 1,
     user: dummyUsers[1],
     flockId: 0,
-    flock: dummyFlocks1,
+    flock: dummyFlock,
   ),
   FlockUsers(
     userId: 2,
     user: dummyUsers[0],
     flockId: 0,
-    flock: dummyFlocks1,
+    flock: dummyFlock,
   ),
 ];
 
@@ -86,7 +132,7 @@ List<Flock> dummyFlocks = [
   Flock(
     id: 0,
     flockSize: 1,
-    meets: [],
+    meets: dummyMeets,
     suggestedPlaces: [],
     users: dummyFlockUsers,
     events: [],
@@ -95,7 +141,7 @@ List<Flock> dummyFlocks = [
   Flock(
     id: 1,
     flockSize: 1,
-    meets: [],
+    meets: dummyMeets,
     suggestedPlaces: [],
     users: dummyFlockUsers,
     events: [],
@@ -104,10 +150,37 @@ List<Flock> dummyFlocks = [
   Flock(
     id: 2,
     flockSize: 1,
-    meets: [],
+    meets: dummyMeets,
     suggestedPlaces: [],
     users: dummyFlockUsers,
     events: [],
     suggestedTimes: [],
   )
+];
+
+List<Vibe> dummyVibes = [
+  const Vibe(
+    id: 0,
+    name: 'digital',
+    locations: [],
+    events: [],
+    places: [],
+    users: [],
+  ),
+  const Vibe(
+    id: 1,
+    name: 'artists',
+    locations: [],
+    events: [],
+    places: [],
+    users: [],
+  ),
+  const Vibe(
+    id: 2,
+    name: 'spanish',
+    locations: [],
+    events: [],
+    places: [],
+    users: [],
+  ),
 ];
