@@ -64,15 +64,14 @@ class _FlocksScreenState extends State<FlocksScreen> {
                                 ],
                               ),
                               PopupMenuButton(
-                                child: SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: Icon(
-                                    Icons.more_horiz,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer,
-                                  ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0),
+                                  child: ImageIcon(
+                                      const AssetImage('assets/icons/menu.png'),
+                                      size: 24,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer),
                                 ),
                                 onSelected: (value) {},
                                 itemBuilder: (context) {
