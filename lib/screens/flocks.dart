@@ -66,7 +66,7 @@ class _FlocksScreenState extends State<FlocksScreen> {
       });
     } catch (error) {
       setState(() {
-        _error = 'Somethig went wrong.';
+        _error = 'Something went wrong.';
       });
     }
   }

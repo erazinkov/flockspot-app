@@ -1,3 +1,4 @@
+import 'package:first_app/models/availability.dart';
 import 'package:first_app/models/flock_dummy.dart';
 import 'package:first_app/models/flock_users.dart';
 import 'package:first_app/models/location.dart';
@@ -29,12 +30,12 @@ List<User> dummyUsers = [
   User(
     id: 0,
     email: 'test@email.com',
-    firstName: 'firstNameUser0',
-    lastName: 'lastNameUser0',
+    firstName: 'Elena',
+    lastName: 'Alexandrova',
     dateOfBirth: DateTime(2017, 9, 7, 17, 30),
     availabilities: [],
     flocks: [],
-    vibes: [],
+    vibes: dummyVibes,
     ownVibes: [],
     photo:
         'https://image.dummyjson.com/150,https://image.dummyjson.com/400x200/008080/ffffff?text=Hello+Peter,https://image.dummyjson.com/400x200/008080/ffffff?text=Hello+Peter,https://image.dummyjson.com/400x200/008080/ffffff?text=Hello+Peter,https://image.dummyjson.com/400x200/008080/ffffff?text=Hello+Peter,https://image.dummyjson.com/400x200/282828',
@@ -126,6 +127,35 @@ List<FlockUsers> dummyFlockUsers = [
     flockId: 0,
     flock: dummyFlock,
   ),
+  FlockUsers(
+    userId: 2,
+    user: dummyUsers[0],
+    flockId: 0,
+    flock: dummyFlock,
+  ),
+  FlockUsers(
+    userId: 2,
+    user: dummyUsers[0],
+    flockId: 0,
+    flock: dummyFlock,
+  ),
+  FlockUsers(
+    userId: 2,
+    user: dummyUsers[0],
+    flockId: 0,
+    flock: dummyFlock,
+  ),
+];
+
+List<Availability> dummySuggestedTimes = [
+  Availability(
+      id: 0,
+      startAt: DateTime.now(),
+      endAt: DateTime.now(),
+      dayOfWeek: DayOfWeek.Mon,
+      suggestedInFlocks: [],
+      userAvailabilities: [],
+      placeAvailabilities: []),
 ];
 
 List<Flock> dummyFlocks = [
@@ -136,7 +166,7 @@ List<Flock> dummyFlocks = [
     suggestedPlaces: [],
     users: dummyFlockUsers,
     events: [],
-    suggestedTimes: [],
+    suggestedTimes: dummySuggestedTimes,
   ),
   Flock(
     id: 1,
@@ -178,6 +208,30 @@ List<Vibe> dummyVibes = [
   const Vibe(
     id: 2,
     name: 'spanish',
+    locations: [],
+    events: [],
+    places: [],
+    users: [],
+  ),
+  const Vibe(
+    id: 0,
+    name: 'hip-hop',
+    locations: [],
+    events: [],
+    places: [],
+    users: [],
+  ),
+  const Vibe(
+    id: 1,
+    name: 'yoga',
+    locations: [],
+    events: [],
+    places: [],
+    users: [],
+  ),
+  const Vibe(
+    id: 2,
+    name: 'dancing',
     locations: [],
     events: [],
     places: [],
