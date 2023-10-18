@@ -1,4 +1,5 @@
 import 'package:first_app/models/event.dart';
+import 'package:first_app/models/flock_dummy.dart';
 import 'package:first_app/models/location.dart';
 import 'package:first_app/models/place.dart';
 import 'package:first_app/models/user.dart';
@@ -9,32 +10,57 @@ enum VibeStatus {
 }
 
 class Vibe {
-  final int id; //@id @default(autoincrement())
+  final int? id; //@id @default(autoincrement())
   final String name; //@unique
   final VibeStatus? status; //@default(Unapproved)
+  final String? icon;
+  final String? background;
   final String? description;
   final int? optimalFlockSize;
   final int? creatorId;
   final User?
       creator; //@relation("OwnVibes", fields: [creatorId], references: [id], onDelete: SetNull)
-  final List<Location> locations;
-  final List<Event> events;
-  final List<Place> places;
-  final List<User> users; //@relation("UserVibes")
+  final List<Location>? locations;
+  final List<Event>? events;
+  final List<Place>? places;
+  final List<Flock>? flocks;
+  final List<User>? users; //@relation("UserVibes")
 
   const Vibe({
-    required this.id,
+    this.id,
     required this.name,
     this.status = VibeStatus.Unapproved,
+    this.icon,
+    this.background,
     this.description,
     this.optimalFlockSize,
     this.creatorId,
     this.creator,
-    required this.locations,
-    required this.events,
-    required this.places,
-    required this.users,
+    this.locations,
+    this.events,
+    this.places,
+    this.flocks,
+    this.users,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'status': status == VibeStatus.Approved ? 'Approved' : 'Unapproved',
+      'icon': icon ?? '',
+      // 'background': background,
+      // 'description': description,
+      // 'optimalFlockSize': optimalFlockSize,
+      // 'creatorId': creatorId,
+      // 'creator': creator,
+      // 'locations': locations,
+      // 'events': events,
+      // 'places': places,
+      // 'flocks': flocks,
+      // 'users': users,
+    };
+  }
 
   factory Vibe.fromJson(Map<String, dynamic> json) {
     return Vibe(

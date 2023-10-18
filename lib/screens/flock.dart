@@ -5,35 +5,6 @@ import 'package:flutter/material.dart';
 
 enum Screen { flock, chat }
 
-// (String, String) formattedSuggestedTime(Availability suggestedTime) {
-//   String dayOfWeek = 'unknown';
-//   switch (suggestedTime.dayOfWeek) {
-//     case DayOfWeek.Sun:
-//       dayOfWeek = 'sunday';
-//     case DayOfWeek.Mon:
-//       dayOfWeek = 'monday';
-//     case DayOfWeek.Tue:
-//       dayOfWeek = 'tuesday';
-//     case DayOfWeek.Wed:
-//       dayOfWeek = 'wednesday';
-//     case DayOfWeek.Thu:
-//       dayOfWeek = 'thursday';
-//     case DayOfWeek.Fri:
-//       dayOfWeek = 'friday';
-//     case DayOfWeek.Sat:
-//       dayOfWeek = 'saturday';
-//     default:
-//       dayOfWeek = 'unknown';
-//   }
-//   String startAt =
-//       '${suggestedTime.startAt.hour}:${suggestedTime.startAt.minute}';
-
-//   return (
-//     dayOfWeek,
-//     startAt,
-//   );
-// }
-
 class FlockScreen extends StatefulWidget {
   const FlockScreen({super.key, required this.flock});
 
@@ -44,7 +15,7 @@ class FlockScreen extends StatefulWidget {
 }
 
 class _FlockScreenState extends State<FlockScreen> {
-  Screen selectedScreen = Screen.flock;
+  Screen _selectedScreen = Screen.flock;
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -309,7 +280,7 @@ class _FlockScreenState extends State<FlockScreen> {
       ),
     );
 
-    if (selectedScreen == Screen.chat) {
+    if (_selectedScreen == Screen.chat) {
       content = Center(
         child: Text('Chat...',
             style: TextStyle(
@@ -353,7 +324,7 @@ class _FlockScreenState extends State<FlockScreen> {
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: selectedScreen == Screen.flock
+                            color: _selectedScreen == Screen.flock
                                 ? Theme.of(context).colorScheme.primary
                                 : Theme.of(context).colorScheme.onPrimary),
                       ),
@@ -366,15 +337,15 @@ class _FlockScreenState extends State<FlockScreen> {
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: selectedScreen == Screen.chat
+                              color: _selectedScreen == Screen.chat
                                   ? Theme.of(context).colorScheme.primary
                                   : Theme.of(context).colorScheme.onPrimary)),
                     ))
               ],
-              selected: <Screen>{selectedScreen},
+              selected: <Screen>{_selectedScreen},
               onSelectionChanged: (Set<Screen> newSelection) {
                 setState(() {
-                  selectedScreen = newSelection.first;
+                  _selectedScreen = newSelection.first;
                 });
               },
             ),
