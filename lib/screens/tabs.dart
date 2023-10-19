@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:first_app/widgets/main_drawer.dart';
 import 'package:first_app/screens/home.dart';
-import 'package:first_app/screens/flocks_dummy.dart';
+import 'package:first_app/screens/flocks.dart';
 import 'package:first_app/screens/filters.dart';
 
 const kInitialFilters = {
@@ -17,7 +17,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreen extends State<TabsScreen> {
-  int _selectedPageIndex = 1;
+  int _selectedPageIndex = 0;
 
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 

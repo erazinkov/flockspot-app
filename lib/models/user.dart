@@ -11,22 +11,22 @@ enum UserRole {
 }
 
 class User {
-  final int id; //@id @default(autoincrement())
+  final int? id; //@id @default(autoincrement())
   final String email; //@unique
-  final UserRole role; //@default(User)
+  final UserRole? role; //@default(User)
   final String firstName;
   final String lastName;
   final DateTime dateOfBirth;
   final String? nickName;
   final UserPosition? position;
-  final List<UserAvailability> availabilities;
-  final List<FlockUsers> flocks;
-  final List<Vibe> vibes; //@relation("UserVibes")
-  final List<Vibe> ownVibes; //@relation("OwnVibes")
+  final List<UserAvailability>? availabilities;
+  final List<FlockUsers>? flocks;
+  final List<Vibe>? vibes; //@relation("UserVibes")
+  final List<Vibe>? ownVibes; //@relation("OwnVibes")
   final String? photo;
 
   const User({
-    required this.id,
+    this.id,
     required this.email,
     this.role = UserRole.User,
     required this.firstName,
@@ -34,12 +34,23 @@ class User {
     required this.dateOfBirth,
     this.nickName,
     this.position,
-    required this.availabilities,
-    required this.flocks,
-    required this.vibes,
-    required this.ownVibes,
+    this.availabilities,
+    this.flocks,
+    this.vibes,
+    this.ownVibes,
     this.photo,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'firstName': firstName,
+      'lastName': lastName,
+      'dateOfBirth': dateOfBirth.toString(),
+      'nickName': nickName,
+    };
+  }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

@@ -1,5 +1,5 @@
 import 'package:first_app/models/event.dart';
-import 'package:first_app/models/flock_dummy.dart';
+import 'package:first_app/models/flock.dart';
 
 class EventFlocks {
   final DateTime time;

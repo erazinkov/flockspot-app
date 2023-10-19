@@ -1,4 +1,4 @@
-import 'package:first_app/models/flock_dummy.dart';
+import 'package:first_app/models/flock.dart';
 import 'package:first_app/models/user.dart';
 
 enum FlockUserStatus {

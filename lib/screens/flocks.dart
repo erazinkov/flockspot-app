@@ -1,8 +1,13 @@
-import 'dart:convert';
-
+import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/models/flock.dart';
+import 'package:first_app/models/user.dart';
+import 'package:first_app/models/vibe.dart';
+import 'package:first_app/screens/flock.dart';
+import 'package:first_app/widgets/flock_item.dart';
+import 'package:first_app/widgets/vibe_item.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class FlocksScreen extends StatefulWidget {
   const FlocksScreen({super.key});
@@ -12,152 +17,82 @@ class FlocksScreen extends StatefulWidget {
 }
 
 class _FlocksScreenState extends State<FlocksScreen> {
-  List<Flock> _flockItems = [];
-  var _isLoading = true;
-  String? _error;
+  final List<Flock> _flockItems = dummyFlocks;
+  final List<Vibe> _vibeItems = dummyVibes;
+
+  void _loadItems() async {
+    final url =
+        Uri.parse('http://10.0.2.2:3000/api/flocks/paging?take=10&skip=0');
+
+    final response = await http.get(url);
+
+    print(response.body);
+  }
+
+  void _addItemUser() async {
+    final url = Uri.parse('http://10.0.2.2:3000/api/users');
+    final v = User(
+      email: '123',
+      firstName: '123',
+      lastName: '123',
+      dateOfBirth: DateTime.now(),
+    );
+
+    // final response = await http.post(url,
+    //     headers: {
+    //       'Content-type': 'application/json',
+    //     },
+    //     body: json.encode(v.toJson()));
+    // print(response.body);
+    // print(response.statusCode);
+    print(json.encode(v.toJson()));
+  }
+
+  void _addItem() async {
+    final url = Uri.parse('http://10.0.2.2:3000/api/vibes');
+    final v = Vibe(
+        name: 'Singing',
+        status: VibeStatus.Approved,
+        icon: 'string',
+        users: []);
+
+    final response = await http.post(url,
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: json.encode(v.toJson()));
+    print(response.body);
+    print(response.statusCode);
+    print(json.encode(v.toJson()));
+  }
 
   @override
   void initState() {
     super.initState();
-    _loadItems();
-  }
-
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  }
-
-  void _selectItem(BuildContext context, Flock flock) {
-    _showInfoMessage('Flock ${flock.id} selected.');
-  }
-
-  void _loadItems() async {
-    final url = Uri.parse('http://10.0.2.2:3000/api/flocks');
-    try {
-      final response = await http.get(url);
-      if (response.statusCode >= 400) {
-        setState(() {
-          _error = 'Failed to fetch data.';
-        });
-      }
-
-      if (response.body == 'null') {
-        setState(() {
-          _isLoading = false;
-        });
-        return;
-      }
-
-      List<Flock> listData = (json.decode(response.body) as List)
-          .map((data) => Flock.fromJson(data))
-          .toList();
-
-      final List<Flock> loadedItems = [];
-
-      for (final item in listData) {
-        loadedItems.add(item);
-      }
-
-      setState(() {
-        _flockItems = loadedItems;
-        _isLoading = false;
-      });
-    } catch (error) {
-      setState(() {
-        _error = 'Something went wrong.';
-      });
-    }
-  }
-
-  void _removeItem(Flock item) async {
-    final index = _flockItems.indexOf(item);
-
-    setState(() {
-      _flockItems.remove(item);
-    });
-
-    final url = Uri.parse('http://10.0.2.2:3000/api/flocks/${item.id}');
-
-    final response = await http.delete(url);
-    if (response.statusCode >= 400) {
-      setState(() {
-        _flockItems.insert(index, item);
-      });
-    }
+    // _addItemUser();
+    // _loadItems();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Center(
-      child: Text(
-        'No items...',
-        style: TextStyle(
-            fontSize: 24,
-            color: Theme.of(context).colorScheme.onPrimaryContainer),
-      ),
-    );
-    if (_isLoading) {
-      content = Center(
-        child: CircularProgressIndicator(
-            color: Theme.of(context).colorScheme.onPrimaryContainer),
-      );
-    }
-    if (_flockItems.isNotEmpty) {
-      content = ListView.builder(
-        itemCount: _flockItems.length,
-        itemBuilder: (ctx, index) {
-          return Dismissible(
-            onDismissed: (direction) {
-              _removeItem(_flockItems[index]);
+    Widget content = ListView.builder(
+      itemCount: _flockItems.length,
+      itemBuilder: (ctx, index) {
+        return Dismissible(
+          key: ValueKey(_flockItems[index].id),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => FlockScreen(
+                  flock: _flockItems[index],
+                ),
+              ));
             },
-            key: ValueKey(_flockItems[index].id),
-            child: Card(
-                child: InkWell(
-                    onTap: () {
-                      _selectItem(context, _flockItems[index]);
-                    },
-                    splashColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                    borderRadius: BorderRadius.circular(16),
-                    child: Card(
-                        color: const Color.fromRGBO(255, 255, 255, 0.2),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            children: [
-                              Text(_flockItems[index].id.toString(),
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer)),
-                              const SizedBox(
-                                width: 16,
-                              ),
-                              Text(_flockItems[index].flockSize.toString(),
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer)),
-                            ],
-                          ),
-                        )))),
-          );
-        },
-      );
-    }
-
-    if (_error != null) {
-      content = Center(
-        child: Text(
-          _error!,
-          style: TextStyle(
-              fontSize: 24,
-              color: Theme.of(context).colorScheme.onPrimaryContainer),
-        ),
-      );
-    }
+            child: FlockItem(flock: _flockItems[index]),
+          ),
+        );
+      },
+    );
 
     return content;
   }

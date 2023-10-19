@@ -1,5 +1,5 @@
 import 'package:first_app/models/event.dart';
-import 'package:first_app/models/flock.dart';
+import 'package:first_app/models/flock_temp.dart';
 import 'package:first_app/models/location.dart';
 import 'package:first_app/models/meet.dart';
 import 'package:first_app/models/place_availability.dart';

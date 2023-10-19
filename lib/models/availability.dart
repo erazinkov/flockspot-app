@@ -1,4 +1,4 @@
-import 'package:first_app/models/flock_dummy.dart';
+import 'package:first_app/models/flock.dart';
 import 'package:first_app/models/place_availability.dart';
 import 'package:first_app/models/user_availability.dart';
 import 'package:intl/intl.dart';

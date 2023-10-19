@@ -1,4 +1,4 @@
-import 'package:first_app/models/flock_dummy.dart';
+import 'package:first_app/models/flock.dart';
 import 'package:first_app/widgets/vibe_item.dart';
 import 'package:flutter/material.dart';
 
@@ -23,14 +23,14 @@ class FlockItem extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          for (int i = 0; i < flock.users.length; i++)
+                          for (int i = 0; i < flock.users!.length; i++)
                             Align(
                                 alignment: Alignment.centerLeft,
                                 widthFactor: 0.5,
                                 child: CircleAvatar(
                                   radius: 24,
                                   backgroundImage: NetworkImage(
-                                    flock.users[i].user.photo!.split(',')[0],
+                                    flock.users![i].photo!.split(',')[0],
                                   ),
                                 ))
                         ],
@@ -86,47 +86,47 @@ class FlockItem extends StatelessWidget {
                   const SizedBox(
                     height: 32,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (int i = 0;
-                            i < flock.meets[0].place.vibes.length;
-                            i++)
-                          VibeItem(vibe: flock.meets[0].place.vibes[i]),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                              '${flock.meets.length.toString()} meets'
-                                  .toUpperCase(),
-                              style: const TextStyle(
-                                  color: Color.fromRGBO(255, 255, 255, 0.5),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500)),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(flock.meets[0].place.title.toUpperCase(),
-                              style: const TextStyle(
-                                  color: Color.fromRGBO(255, 255, 255, 0.2),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500)),
-                        ],
-                      ),
-                      const Icon(
-                        Icons.circle,
-                        size: 8,
-                        color: Color.fromRGBO(255, 51, 0, 1),
-                      ),
-                    ],
-                  ),
+                  // SingleChildScrollView(
+                  //   scrollDirection: Axis.horizontal,
+                  //   child: Row(
+                  //     children: [
+                  //       for (int i = 0;
+                  //           i < flock.meets[0].place.vibes.length;
+                  //           i++)
+                  //         VibeItem(vibe: flock.meets[0].place.vibes[i]),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 16),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Row(
+                  //       children: [
+                  //         Text(
+                  //             '${flock.meets.length.toString()} meets'
+                  //                 .toUpperCase(),
+                  //             style: const TextStyle(
+                  //                 color: Color.fromRGBO(255, 255, 255, 0.5),
+                  //                 fontSize: 14,
+                  //                 fontWeight: FontWeight.w500)),
+                  //         const SizedBox(
+                  //           width: 8,
+                  //         ),
+                  //         Text(flock.meets[0].place.title.toUpperCase(),
+                  //             style: const TextStyle(
+                  //                 color: Color.fromRGBO(255, 255, 255, 0.2),
+                  //                 fontSize: 14,
+                  //                 fontWeight: FontWeight.w500)),
+                  //       ],
+                  //     ),
+                  //     const Icon(
+                  //       Icons.circle,
+                  //       size: 8,
+                  //       color: Color.fromRGBO(255, 51, 0, 1),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             )));

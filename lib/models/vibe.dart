@@ -1,5 +1,5 @@
 import 'package:first_app/models/event.dart';
-import 'package:first_app/models/flock_dummy.dart';
+import 'package:first_app/models/flock.dart';
 import 'package:first_app/models/location.dart';
 import 'package:first_app/models/place.dart';
 import 'package:first_app/models/user.dart';
@@ -58,7 +58,7 @@ class Vibe {
       // 'events': events,
       // 'places': places,
       // 'flocks': flocks,
-      // 'users': users,
+      'users': users?.map((e) => e.toJson()).toList(),
     };
   }
 

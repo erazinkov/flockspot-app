@@ -1,5 +1,5 @@
 import 'package:first_app/models/availability.dart';
-import 'package:first_app/models/flock_dummy.dart';
+import 'package:first_app/models/flock.dart';
 import 'package:first_app/widgets/vibe_item.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +57,7 @@ class _FlockScreenState extends State<FlockScreen> {
                           height: 8,
                         ),
                         Text(
-                          '${widget.flock.meets[0].place.title}, ${widget.flock.meets[0].place.location.name}'
+                          '${widget.flock.meets![0].place.title}, ${widget.flock.meets![0].place.location.name}'
                               .toUpperCase(),
                           style: const TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 0.7),
@@ -72,10 +72,11 @@ class _FlockScreenState extends State<FlockScreen> {
                           child: Row(
                             children: [
                               for (int i = 0;
-                                  i < widget.flock.meets[0].place.vibes.length;
+                                  i < widget.flock.meets![0].place.vibes.length;
                                   i++)
                                 VibeItem(
-                                    vibe: widget.flock.meets[0].place.vibes[i]),
+                                    vibe:
+                                        widget.flock.meets![0].place.vibes[i]),
                             ],
                           ),
                         ),
@@ -117,7 +118,7 @@ class _FlockScreenState extends State<FlockScreen> {
                                 Row(
                                   children: [
                                     for (int i = 0;
-                                        i < widget.flock.users.length;
+                                        i < widget.flock.users!.length;
                                         i++)
                                       Align(
                                           alignment: Alignment.centerLeft,
@@ -125,7 +126,7 @@ class _FlockScreenState extends State<FlockScreen> {
                                           child: CircleAvatar(
                                             radius: 24,
                                             backgroundImage: NetworkImage(
-                                              widget.flock.users[i].user.photo!
+                                              widget.flock.users![i].photo!
                                                   .split(',')[0],
                                             ),
                                           ))
@@ -177,14 +178,14 @@ class _FlockScreenState extends State<FlockScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                    '${widget.flock.suggestedTimes[0].formattedDayOfWeek} ${widget.flock.suggestedTimes[0].formattedStartAt}',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimaryContainer,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400)),
+                                // Text(
+                                //     '${widget.flock.suggestedTimes[0].formattedDayOfWeek} ${widget.flock.suggestedTimes[0].formattedStartAt}',
+                                //     style: TextStyle(
+                                //         color: Theme.of(context)
+                                //             .colorScheme
+                                //             .onPrimaryContainer,
+                                //         fontSize: 16,
+                                //         fontWeight: FontWeight.w400)),
                                 const SizedBox(
                                   width: 8,
                                 ),
@@ -240,7 +241,7 @@ class _FlockScreenState extends State<FlockScreen> {
                       child: Wrap(
                         spacing: 8,
                         children: [
-                          for (int i = 0; i < widget.flock.users.length; i++)
+                          for (int i = 0; i < widget.flock.users!.length; i++)
                             SizedBox(
                               width: 96,
                               child: Column(
@@ -249,7 +250,7 @@ class _FlockScreenState extends State<FlockScreen> {
                                   CircleAvatar(
                                     radius: 48,
                                     backgroundImage: NetworkImage(
-                                      widget.flock.users[i].user.photo!
+                                      widget.flock.users![i].photo!
                                           .split(',')[0],
                                     ),
                                   ),
@@ -259,7 +260,7 @@ class _FlockScreenState extends State<FlockScreen> {
                                   Text(
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    '${widget.flock.users[i].user.firstName} ${widget.flock.users[i].user.lastName[0]}.'
+                                    '${widget.flock.users![i].firstName} ${widget.flock.users![i].lastName[0]}.'
                                         .toUpperCase(),
                                     style: const TextStyle(
                                         color:

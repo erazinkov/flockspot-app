@@ -1,5 +1,5 @@
 import 'package:first_app/models/availability.dart';
-import 'package:first_app/models/flock_dummy.dart';
+import 'package:first_app/models/flock.dart';
 import 'package:first_app/models/flock_users.dart';
 import 'package:first_app/models/location.dart';
 import 'package:first_app/models/meet.dart';
@@ -57,12 +57,11 @@ List<User> dummyUsers = [
 
 const dummyFlock = Flock(
   id: 1,
+  name: 'FlockName1',
   flockSize: 1,
   meets: [],
   suggestedPlaces: [],
   users: [],
-  events: [],
-  suggestedTimes: [],
 );
 
 var dummyLocation =
@@ -161,30 +160,29 @@ List<Availability> dummySuggestedTimes = [
 List<Flock> dummyFlocks = [
   Flock(
     id: 0,
+    name: 'FlockName0',
     flockSize: 1,
     meets: dummyMeets,
     suggestedPlaces: [],
-    users: dummyFlockUsers,
-    events: [],
-    suggestedTimes: dummySuggestedTimes,
+    users: dummyUsers,
   ),
   Flock(
     id: 1,
+    name: 'FlockName1',
     flockSize: 1,
     meets: dummyMeets,
     suggestedPlaces: [],
-    users: dummyFlockUsers,
-    events: [],
-    suggestedTimes: [],
+    users: dummyUsers,
   ),
   Flock(
     id: 2,
+    name: 'FlockName2',
     flockSize: 1,
     meets: dummyMeets,
     suggestedPlaces: [],
-    users: dummyFlockUsers,
-    events: [],
-    suggestedTimes: [],
+    users: dummyUsers,
+    // events: [],
+    // suggestedTimes: [],
   )
 ];
 
