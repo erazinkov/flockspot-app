@@ -43,25 +43,6 @@ class Vibe {
     this.users,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'status': status == VibeStatus.Approved ? 'Approved' : 'Unapproved',
-      'icon': icon ?? '',
-      // 'background': background,
-      // 'description': description,
-      // 'optimalFlockSize': optimalFlockSize,
-      // 'creatorId': creatorId,
-      // 'creator': creator,
-      // 'locations': locations,
-      // 'events': events,
-      // 'places': places,
-      // 'flocks': flocks,
-      'users': users?.map((e) => e.toJson()).toList(),
-    };
-  }
-
   factory Vibe.fromJson(Map<String, dynamic> json) {
     return Vibe(
       id: json['id'],

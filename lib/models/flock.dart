@@ -36,14 +36,6 @@ class Flock {
     this.suggestedAvailability,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'flockSize': flockSize,
-      'name': name,
-    };
-  }
-
   factory Flock.fromJson(Map<String, dynamic> json) {
     return Flock(
       id: json['id'],

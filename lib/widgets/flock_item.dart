@@ -9,6 +9,34 @@ class FlockItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget content = Row(children: [
+      Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          shape: BoxShape.circle,
+        ),
+      )
+    ]);
+
+    if (flock.users != null) {
+      content = Row(
+        children: [
+          for (int i = 0; i < flock.users!.length; i++)
+            Align(
+                alignment: Alignment.centerLeft,
+                widthFactor: 0.5,
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundImage: NetworkImage(
+                    flock.users![i].photo!.split(',')[0],
+                  ),
+                ))
+        ],
+      );
+    }
+
     return Card(
         color: const Color.fromRGBO(255, 255, 255, 0.1),
         child: Padding(
@@ -21,20 +49,7 @@ class FlockItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          for (int i = 0; i < flock.users!.length; i++)
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                widthFactor: 0.5,
-                                child: CircleAvatar(
-                                  radius: 24,
-                                  backgroundImage: NetworkImage(
-                                    flock.users![i].photo!.split(',')[0],
-                                  ),
-                                ))
-                        ],
-                      ),
+                      content,
                       PopupMenuButton(
                         child: Padding(
                           padding: const EdgeInsets.all(0),
@@ -90,14 +105,13 @@ class FlockItem extends StatelessWidget {
                   //   scrollDirection: Axis.horizontal,
                   //   child: Row(
                   //     children: [
-                  //       for (int i = 0;
-                  //           i < flock.meets[0].place.vibes.length;
-                  //           i++)
-                  //         VibeItem(vibe: flock.meets[0].place.vibes[i]),
+                  //       for (int i = 0; i < flock.vibes!.length; i++)
+                  //         // VibeItem(vibe: flock.meets[0].place.vibes[i]),
+                  //         Text('123')
                   //     ],
                   //   ),
                   // ),
-                  // const SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //   children: [

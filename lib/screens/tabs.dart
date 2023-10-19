@@ -67,7 +67,7 @@ class _TabsScreen extends State<TabsScreen> {
         activaPageTitle = 'chat'.toUpperCase();
       default:
         activePage = const HomeScreen();
-        activaPageTitle = 'Home'.toUpperCase();
+        activaPageTitle = 'home'.toUpperCase();
     }
 
     return Scaffold(
