@@ -20,7 +20,6 @@ class FlockItem extends StatelessWidget {
       )
     ]);
 
-    // if (flock.users != null) {
     if (flock.users!.isNotEmpty) {
       content = Row(
         children: [
@@ -30,14 +29,12 @@ class FlockItem extends StatelessWidget {
                 widthFactor: 0.5,
                 child: CircleAvatar(
                   radius: 24,
-                  backgroundImage: NetworkImage(
-                    flock.users![i].user.photo!.split(',')[0],
-                  ),
+                  backgroundImage:
+                      NetworkImage(flock.users![i].user.photo!.split(',')[0]),
                 ))
         ],
       );
     }
-    // }
 
     return Card(
         color: const Color.fromRGBO(255, 255, 255, 0.1),
