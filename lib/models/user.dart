@@ -16,7 +16,7 @@ class User {
   final UserRole? role; //@default(User)
   final String firstName;
   final String lastName;
-  final String birthdate;
+  final DateTime birthdate;
   final String? nickName;
   final UserPosition? position;
   final List<UserAvailability>? availabilities;
@@ -48,14 +48,14 @@ class User {
       // role: json['role'],
       firstName: json['firstName'],
       lastName: json['lastName'],
-      birthdate: json['birthdate'].toString(),
+      birthdate: DateTime.parse(json['birthdate']),
       // nickName: json['nickName'],
       // position: json['position'],
       // availabilities: json['availabilities'],
       // flocks: json['flocks'],
       // vibes: json['vibes'],
       // ownVibes: json['ownVibes'],
-      // photo: json['photo'],
+      photo: json['photo'] ?? '',
     );
   }
 }

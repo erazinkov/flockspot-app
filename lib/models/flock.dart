@@ -53,9 +53,11 @@ class Flock {
           .map((e) => Vibe.fromJson(e))
           .toList(),
       meets: json['meets'],
-      users: (json['users'] as List<dynamic>)
-          .map((e) => FlockUsers.fromJson(e))
-          .toList(),
+      users: json['users'] != null
+          ? (json['users'] as List<dynamic>)
+              .map((e) => FlockUsers.fromJson(e))
+              .toList()
+          : <FlockUsers>[],
       suggestedPlaces: json['suggestedPlaces'],
       suggestedAvailability: json['suggestedAvailability'],
     );

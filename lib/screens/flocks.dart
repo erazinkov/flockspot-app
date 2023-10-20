@@ -28,12 +28,12 @@ class _FlocksScreenState extends State<FlocksScreen> {
           _isLoading = false;
         }));
 
-    // for (int i = 0; i < _loadedItems[0].users!.length; i++) {
-    // 2023-10-03T07:21:13.933Z
-    final d = _loadedItems[0].users![0].user.birthdate;
-    print(DateTime.parse(d));
-    // print(_loadedItems[0].users![i].user.birthdate);
-    // }
+    for (int i = 0; i < _loadedItems[0].users!.length; i++) {
+      // 2023-10-03T07:21:13.933Z
+      final d = _loadedItems[0].users![i].user.birthdate;
+      print(d);
+      // print(_loadedItems[0].users![i].user.birthdate);
+    }
   }
 
   @override

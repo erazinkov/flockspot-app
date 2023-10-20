@@ -21,22 +21,22 @@ class FlockItem extends StatelessWidget {
     ]);
 
     // if (flock.users != null) {
-    // if (flock.users!.isNotEmpty) {
-    //   content = Row(
-    //     children: [
-    //       for (int i = 0; i < flock.users!.length; i++)
-    //         Align(
-    //             alignment: Alignment.centerLeft,
-    //             widthFactor: 0.5,
-    //             child: CircleAvatar(
-    //               radius: 24,
-    //               backgroundImage: NetworkImage(
-    //                 flock.users![i].photo!.split(',')[0],
-    //               ),
-    //             ))
-    //     ],
-    //   );
-    // }
+    if (flock.users!.isNotEmpty) {
+      content = Row(
+        children: [
+          for (int i = 0; i < flock.users!.length; i++)
+            Align(
+                alignment: Alignment.centerLeft,
+                widthFactor: 0.5,
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundImage: NetworkImage(
+                    flock.users![i].user.photo!.split(',')[0],
+                  ),
+                ))
+        ],
+      );
+    }
     // }
 
     return Card(
