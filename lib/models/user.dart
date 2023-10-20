@@ -16,7 +16,7 @@ class User {
   final UserRole? role; //@default(User)
   final String firstName;
   final String lastName;
-  final DateTime dateOfBirth;
+  final String birthdate;
   final String? nickName;
   final UserPosition? position;
   final List<UserAvailability>? availabilities;
@@ -31,7 +31,7 @@ class User {
     this.role = UserRole.User,
     required this.firstName,
     required this.lastName,
-    required this.dateOfBirth,
+    required this.birthdate,
     this.nickName,
     this.position,
     this.availabilities,
@@ -41,32 +41,21 @@ class User {
     this.photo,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'email': email,
-      'firstName': firstName,
-      'lastName': lastName,
-      'dateOfBirth': dateOfBirth.toString(),
-      'nickName': nickName,
-    };
-  }
-
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
       email: json['email'],
-      role: json['role'],
+      // role: json['role'],
       firstName: json['firstName'],
       lastName: json['lastName'],
-      dateOfBirth: json['dateOfBirth'],
-      nickName: json['nickName'],
-      position: json['position'],
-      availabilities: json['availabilities'],
-      flocks: json['flocks'],
-      vibes: json['vibes'],
-      ownVibes: json['ownVibes'],
-      photo: json['photo'],
+      birthdate: json['birthdate'].toString(),
+      // nickName: json['nickName'],
+      // position: json['position'],
+      // availabilities: json['availabilities'],
+      // flocks: json['flocks'],
+      // vibes: json['vibes'],
+      // ownVibes: json['ownVibes'],
+      // photo: json['photo'],
     );
   }
 }

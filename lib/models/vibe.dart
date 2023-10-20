@@ -47,7 +47,9 @@ class Vibe {
     return Vibe(
       id: json['id'],
       name: json['name'],
-      status: json['status'],
+      status: json['status'] == VibeStatus.Approved
+          ? VibeStatus.Approved
+          : VibeStatus.Unapproved,
       description: json['description'],
       optimalFlockSize: json['optimalFlockSize'],
       creatorId: json['creatorId'],

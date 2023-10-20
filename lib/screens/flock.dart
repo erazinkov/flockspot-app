@@ -117,19 +117,19 @@ class _FlockScreenState extends State<FlockScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    for (int i = 0;
-                                        i < widget.flock.users!.length;
-                                        i++)
-                                      Align(
-                                          alignment: Alignment.centerLeft,
-                                          widthFactor: 0.5,
-                                          child: CircleAvatar(
-                                            radius: 24,
-                                            backgroundImage: NetworkImage(
-                                              widget.flock.users![i].photo!
-                                                  .split(',')[0],
-                                            ),
-                                          ))
+                                    // for (int i = 0;
+                                    //     i < widget.flock.users!.length;
+                                    //     i++)
+                                    //   Align(
+                                    //       alignment: Alignment.centerLeft,
+                                    //       widthFactor: 0.5,
+                                    //       child: CircleAvatar(
+                                    //         radius: 24,
+                                    //         backgroundImage: NetworkImage(
+                                    //           widget.flock.users![i].user.photo!
+                                    //               .split(',')[0],
+                                    //         ),
+                                    //       ))
                                   ],
                                 ),
                                 PopupMenuButton(
@@ -247,27 +247,27 @@ class _FlockScreenState extends State<FlockScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
-                                    radius: 48,
-                                    backgroundImage: NetworkImage(
-                                      widget.flock.users![i].photo!
-                                          .split(',')[0],
-                                    ),
-                                  ),
+                                  // CircleAvatar(
+                                  //   radius: 48,
+                                  //   backgroundImage: NetworkImage(
+                                  //     widget.flock.users![i].user.photo!
+                                  //         .split(',')[0],
+                                  //   ),
+                                  // ),
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  Text(
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    '${widget.flock.users![i].firstName} ${widget.flock.users![i].lastName[0]}.'
-                                        .toUpperCase(),
-                                    style: const TextStyle(
-                                        color:
-                                            Color.fromRGBO(255, 255, 255, 0.5),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                  // Text(
+                                  //   maxLines: 1,
+                                  //   overflow: TextOverflow.ellipsis,
+                                  //   '${widget.flock.users![i].user.firstName} ${widget.flock.users![i].user.lastName![0]}.'
+                                  //       .toUpperCase(),
+                                  //   style: const TextStyle(
+                                  //       color:
+                                  //           Color.fromRGBO(255, 255, 255, 0.5),
+                                  //       fontSize: 14,
+                                  //       fontWeight: FontWeight.w500),
+                                  // ),
                                 ],
                               ),
                             ),

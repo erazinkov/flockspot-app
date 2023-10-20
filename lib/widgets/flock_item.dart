@@ -20,22 +20,24 @@ class FlockItem extends StatelessWidget {
       )
     ]);
 
-    if (flock.users != null) {
-      content = Row(
-        children: [
-          for (int i = 0; i < flock.users!.length; i++)
-            Align(
-                alignment: Alignment.centerLeft,
-                widthFactor: 0.5,
-                child: CircleAvatar(
-                  radius: 24,
-                  backgroundImage: NetworkImage(
-                    flock.users![i].photo!.split(',')[0],
-                  ),
-                ))
-        ],
-      );
-    }
+    // if (flock.users != null) {
+    // if (flock.users!.isNotEmpty) {
+    //   content = Row(
+    //     children: [
+    //       for (int i = 0; i < flock.users!.length; i++)
+    //         Align(
+    //             alignment: Alignment.centerLeft,
+    //             widthFactor: 0.5,
+    //             child: CircleAvatar(
+    //               radius: 24,
+    //               backgroundImage: NetworkImage(
+    //                 flock.users![i].photo!.split(',')[0],
+    //               ),
+    //             ))
+    //     ],
+    //   );
+    // }
+    // }
 
     return Card(
         color: const Color.fromRGBO(255, 255, 255, 0.1),
@@ -101,16 +103,16 @@ class FlockItem extends StatelessWidget {
                   const SizedBox(
                     height: 32,
                   ),
-                  // SingleChildScrollView(
-                  //   scrollDirection: Axis.horizontal,
-                  //   child: Row(
-                  //     children: [
-                  //       for (int i = 0; i < flock.vibes!.length; i++)
-                  //         // VibeItem(vibe: flock.meets[0].place.vibes[i]),
-                  //         Text('123')
-                  //     ],
-                  //   ),
-                  // ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        // for (int i = 0; i < flock.vibes!.length; i++)
+                        for (int i = 0; i < flock.vibes!.length; i++)
+                          VibeItem(vibe: flock.vibes![i]),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 16),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

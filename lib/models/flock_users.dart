@@ -8,7 +8,7 @@ enum FlockUserStatus {
 }
 
 class FlockUsers {
-  final FlockUserStatus status; //@default(Pending)
+  final dynamic status; //@default(Pending)
   final int userId;
   final User
       user; //@relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -30,9 +30,9 @@ class FlockUsers {
     return FlockUsers(
       status: json['status'],
       userId: json['userId'],
-      user: json['user'],
+      user: User.fromJson(json['user']),
       flockId: json['flockId'],
-      flock: json['flock'],
+      // flock: json['flock'],
     );
   }
 }

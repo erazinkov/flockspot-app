@@ -30,7 +30,9 @@ class Meet {
   factory Meet.fromJson(Map<String, dynamic> json) {
     return Meet(
       id: json['id'],
-      status: json['status'],
+      status: json['status'] == MeetStatus.Active
+          ? MeetStatus.Active
+          : MeetStatus.Archived,
       time: json['time'],
       flockId: json['flockId'],
       flock: json['flock'],

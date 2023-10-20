@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:first_app/models/availability.dart';
 import 'package:first_app/models/event.dart';
+import 'package:first_app/models/flock_users.dart';
+import 'package:first_app/models/location.dart';
 import 'package:first_app/models/meet.dart';
 import 'package:first_app/models/place.dart';
 import 'package:first_app/models/user.dart';
@@ -11,14 +15,14 @@ class Flock {
   final String? name;
   final DateTime? nearestDate;
   final int? locationId;
-  final int? location;
+  final Location? location;
   final int? aroundEventId;
   final Event? aroundEvent;
   final List<Vibe>? vibes;
-  final List<Meet>? meets;
-  final List<User>? users;
-  final List<Place>? suggestedPlaces;
-  final List<Availability>? suggestedAvailability;
+  final List<dynamic>? meets;
+  final List<FlockUsers>? users;
+  final List<dynamic>? suggestedPlaces;
+  final List<dynamic>? suggestedAvailability;
 
   const Flock({
     this.id,
@@ -42,12 +46,16 @@ class Flock {
       flockSize: json['flockSize'],
       name: json['name'],
       locationId: json['locationId'],
-      location: json['location'],
+      location: Location.fromJson(json['location']),
       aroundEventId: json['aroundEventId'],
       aroundEvent: json['aroundEvent'],
-      vibes: json['vibes'],
+      vibes: (json['vibes'] as List<dynamic>)
+          .map((e) => Vibe.fromJson(e))
+          .toList(),
       meets: json['meets'],
-      users: json['users'],
+      users: (json['users'] as List<dynamic>)
+          .map((e) => FlockUsers.fromJson(e))
+          .toList(),
       suggestedPlaces: json['suggestedPlaces'],
       suggestedAvailability: json['suggestedAvailability'],
     );

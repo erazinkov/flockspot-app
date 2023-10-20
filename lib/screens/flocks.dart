@@ -1,5 +1,6 @@
 import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/models/flock.dart';
+import 'package:first_app/models/location.dart';
 import 'package:first_app/models/user.dart';
 import 'package:first_app/models/vibe.dart';
 import 'package:first_app/screens/flock.dart';
@@ -20,19 +21,19 @@ class FlocksScreen extends StatefulWidget {
 class _FlocksScreenState extends State<FlocksScreen> {
   var _isLoading = true;
   late List<Flock> _loadedItems = [];
-  // late List<Flock> _flockItems;
-  // final List<Vibe> _vibeItems = dummyVibes;
 
   void _loadItems() async {
     _loadedItems = (await ApiService().getFlocks())!;
-    // Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {
-    // _isLoading = false;
-    // print(_loadedItems[0].vibes);
-    // }));
-    setState(() {
-      _isLoading = false;
-    });
-    print(_loadedItems[0].vibes);
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {
+          _isLoading = false;
+        }));
+
+    // for (int i = 0; i < _loadedItems[0].users!.length; i++) {
+    // 2023-10-03T07:21:13.933Z
+    final d = _loadedItems[0].users![0].user.birthdate;
+    print(DateTime.parse(d));
+    // print(_loadedItems[0].users![i].user.birthdate);
+    // }
   }
 
   @override
