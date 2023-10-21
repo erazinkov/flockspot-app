@@ -1,7 +1,8 @@
-import 'package:first_app/models/availability.dart';
+// import 'package:first_app/models/availability.dart';
 import 'package:first_app/models/flock.dart';
 import 'package:first_app/widgets/vibe_item.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 enum Screen { flock, chat }
 
@@ -47,7 +48,7 @@ class _FlockScreenState extends State<FlockScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Attending Yoga workshop',
+                          widget.flock.meets![0].event!.title,
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.onSecondary,
                               fontSize: 40,
@@ -57,7 +58,7 @@ class _FlockScreenState extends State<FlockScreen> {
                           height: 8,
                         ),
                         Text(
-                          '${widget.flock.meets![0].place.title}, ${widget.flock.meets![0].place.location.name}'
+                          '${widget.flock.meets![0].address}, ${widget.flock.meets![0].event?.address}'
                               .toUpperCase(),
                           style: const TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 0.7),
@@ -72,11 +73,9 @@ class _FlockScreenState extends State<FlockScreen> {
                           child: Row(
                             children: [
                               for (int i = 0;
-                                  i < widget.flock.meets![0].place.vibes.length;
+                                  i < widget.flock.vibes!.length;
                                   i++)
-                                VibeItem(
-                                    vibe:
-                                        widget.flock.meets![0].place.vibes[i]),
+                                VibeItem(vibe: widget.flock.vibes![i]),
                             ],
                           ),
                         ),
@@ -103,6 +102,7 @@ class _FlockScreenState extends State<FlockScreen> {
                     height: 24,
                   ),
                   Card(
+                    margin: const EdgeInsets.all(0),
                     color: const Color.fromRGBO(255, 255, 255, 0.1),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -117,19 +117,18 @@ class _FlockScreenState extends State<FlockScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    // for (int i = 0;
-                                    //     i < widget.flock.users!.length;
-                                    //     i++)
-                                    //   Align(
-                                    //       alignment: Alignment.centerLeft,
-                                    //       widthFactor: 0.5,
-                                    //       child: CircleAvatar(
-                                    //         radius: 24,
-                                    //         backgroundImage: NetworkImage(
-                                    //           widget.flock.users![i].user.photo!
-                                    //               .split(',')[0],
-                                    //         ),
-                                    //       ))
+                                    for (int i = 0;
+                                        i < widget.flock.users!.length;
+                                        i++)
+                                      Align(
+                                          alignment: Alignment.centerLeft,
+                                          widthFactor: 0.5,
+                                          child: CircleAvatar(
+                                            radius: 24,
+                                            backgroundImage: NetworkImage(widget
+                                                .flock.users![i].user.photo!
+                                                .split(',')[0]),
+                                          ))
                                   ],
                                 ),
                                 PopupMenuButton(
@@ -178,14 +177,17 @@ class _FlockScreenState extends State<FlockScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // Text(
-                                //     '${widget.flock.suggestedTimes[0].formattedDayOfWeek} ${widget.flock.suggestedTimes[0].formattedStartAt}',
-                                //     style: TextStyle(
-                                //         color: Theme.of(context)
-                                //             .colorScheme
-                                //             .onPrimaryContainer,
-                                //         fontSize: 16,
-                                //         fontWeight: FontWeight.w400)),
+                                Text(
+                                    DateFormat('EEEE hh:mm')
+                                        .format(widget
+                                            .flock.meets![0].event!.startAt)
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimaryContainer,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400)),
                                 const SizedBox(
                                   width: 8,
                                 ),
@@ -247,27 +249,27 @@ class _FlockScreenState extends State<FlockScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  // CircleAvatar(
-                                  //   radius: 48,
-                                  //   backgroundImage: NetworkImage(
-                                  //     widget.flock.users![i].user.photo!
-                                  //         .split(',')[0],
-                                  //   ),
-                                  // ),
+                                  CircleAvatar(
+                                    radius: 48,
+                                    backgroundImage: NetworkImage(
+                                      widget.flock.users![i].user.photo!
+                                          .split(',')[0],
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  // Text(
-                                  //   maxLines: 1,
-                                  //   overflow: TextOverflow.ellipsis,
-                                  //   '${widget.flock.users![i].user.firstName} ${widget.flock.users![i].user.lastName![0]}.'
-                                  //       .toUpperCase(),
-                                  //   style: const TextStyle(
-                                  //       color:
-                                  //           Color.fromRGBO(255, 255, 255, 0.5),
-                                  //       fontSize: 14,
-                                  //       fontWeight: FontWeight.w500),
-                                  // ),
+                                  Text(
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    '${widget.flock.users![i].user.firstName} ${widget.flock.users![i].user.lastName![0]}.'
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromRGBO(255, 255, 255, 0.5),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ],
                               ),
                             ),

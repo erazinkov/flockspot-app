@@ -1,4 +1,5 @@
 import 'package:first_app/models/vibe.dart';
+import 'package:first_app/widgets/vibe_modal.dart';
 import 'package:flutter/material.dart';
 
 class VibeItem extends StatelessWidget {
@@ -8,18 +9,32 @@ class VibeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 8, top: 8, right: 12, bottom: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Theme.of(context).colorScheme.onSecondary,
-      ),
-      child: Text(
-        vibe.name,
-        style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontSize: 34,
-            fontWeight: FontWeight.w500),
+    return InkWell(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return VibeModal(
+              name: vibe.name,
+              description: vibe.description ?? '',
+              background: vibe.background,
+            );
+          },
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.only(left: 8, top: 8, right: 12, bottom: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.onSecondary,
+        ),
+        child: Text(
+          '${vibe.icon} ${vibe.name}',
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 34,
+              fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }

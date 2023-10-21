@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:first_app/models/availability.dart';
 import 'package:first_app/models/event.dart';
 import 'package:first_app/models/flock_users.dart';
 import 'package:first_app/models/location.dart';
 import 'package:first_app/models/meet.dart';
 import 'package:first_app/models/place.dart';
-import 'package:first_app/models/user.dart';
 import 'package:first_app/models/vibe.dart';
 
 class Flock {
@@ -19,10 +16,10 @@ class Flock {
   final int? aroundEventId;
   final Event? aroundEvent;
   final List<Vibe>? vibes;
-  final List<dynamic>? meets;
+  final List<Meet>? meets;
   final List<FlockUsers>? users;
-  final List<dynamic>? suggestedPlaces;
-  final List<dynamic>? suggestedAvailability;
+  final List<Place>? suggestedPlaces;
+  final List<Availability>? suggestedAvailability;
 
   const Flock({
     this.id,
@@ -52,14 +49,26 @@ class Flock {
       vibes: (json['vibes'] as List<dynamic>)
           .map((e) => Vibe.fromJson(e))
           .toList(),
-      meets: json['meets'],
+      meets: json['meets'] != null
+          ? (json['meets'] as List<dynamic>)
+              .map((e) => Meet.fromJson(e))
+              .toList()
+          : <Meet>[],
       users: json['users'] != null
           ? (json['users'] as List<dynamic>)
               .map((e) => FlockUsers.fromJson(e))
               .toList()
           : <FlockUsers>[],
-      suggestedPlaces: json['suggestedPlaces'],
-      suggestedAvailability: json['suggestedAvailability'],
+      // suggestedPlaces: json['suggestedPlaces'] != null
+      //     ? (json['suggestedPlaces'] as List<dynamic>)
+      //         .map((e) => Place.fromJson(e))
+      //         .toList()
+      //     : <Place>[],
+      // suggestedAvailability: json['suggestedAvailability'] != null
+      //     ? (json['ssuggestedAvailability'] as List<dynamic>)
+      //         .map((e) => Availability.fromJson(e))
+      //         .toList()
+      //     : <Availability>[],
     );
   }
 }

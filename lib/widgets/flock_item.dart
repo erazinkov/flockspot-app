@@ -13,8 +13,8 @@ class FlockItem extends StatelessWidget {
       Container(
         width: 48,
         height: 48,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
           shape: BoxShape.circle,
         ),
       )
@@ -100,46 +100,48 @@ class FlockItem extends StatelessWidget {
                   const SizedBox(
                     height: 32,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        // for (int i = 0; i < flock.vibes!.length; i++)
-                        for (int i = 0; i < flock.vibes!.length; i++)
-                          VibeItem(vibe: flock.vibes![i]),
-                      ],
+                  SizedBox(
+                    width: double.infinity,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          for (int i = 0; i < flock.vibes!.length; i++)
+                            VibeItem(vibe: flock.vibes![i]),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Row(
-                  //       children: [
-                  //         Text(
-                  //             '${flock.meets.length.toString()} meets'
-                  //                 .toUpperCase(),
-                  //             style: const TextStyle(
-                  //                 color: Color.fromRGBO(255, 255, 255, 0.5),
-                  //                 fontSize: 14,
-                  //                 fontWeight: FontWeight.w500)),
-                  //         const SizedBox(
-                  //           width: 8,
-                  //         ),
-                  //         Text(flock.meets[0].place.title.toUpperCase(),
-                  //             style: const TextStyle(
-                  //                 color: Color.fromRGBO(255, 255, 255, 0.2),
-                  //                 fontSize: 14,
-                  //                 fontWeight: FontWeight.w500)),
-                  //       ],
-                  //     ),
-                  //     const Icon(
-                  //       Icons.circle,
-                  //       size: 8,
-                  //       color: Color.fromRGBO(255, 51, 0, 1),
-                  //     ),
-                  //   ],
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                              '${flock.meets?.length.toString()} meets'
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(255, 255, 255, 0.5),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500)),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(flock.meets![0].address!.toUpperCase(),
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(255, 255, 255, 0.2),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      const Icon(
+                        Icons.circle,
+                        size: 8,
+                        color: Color.fromRGBO(255, 51, 0, 1),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             )));

@@ -3,5 +3,5 @@ class ApiConstants {
   // static String flocksEndpoint = '/flocks';
   static String flocksEndpoint = '/flocks/paging?take=10&skip=0';
   static String token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJlZ29ycmF6aW5rb3ZAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2OTc4MDQ3MjUsImV4cCI6MTcwMDM5NjcyNX0.fdCFXnLNKTbmWEqXrqvp9riH5VwbgZC9XNJRSeiKp58';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJlZ29yQGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3OTA4NTcxLCJleHAiOjE2OTc5OTQ5NzF9.LV3r6I2gyp7pnuP8IWmi159kZDNZNhsCfb-xf2_1qck';
 }

@@ -1,3 +1,4 @@
+import 'package:first_app/models/event.dart';
 import 'package:first_app/models/flock.dart';
 import 'package:first_app/models/place.dart';
 
@@ -7,24 +8,30 @@ enum MeetStatus {
 }
 
 class Meet {
-  final int id;
-  final MeetStatus status; //@default(Active)
+  final int? id;
+  final MeetStatus? status; //@default(Active)
   final DateTime time;
   final int flockId;
-  final Flock
+  final String? address;
+  final int? placeId;
+  final int? eventId;
+  final Event? event;
+  final Flock?
       flock; //@relation(fields: [flockId], references: [id], onDelete: Cascade)
-  final int placeId;
-  final Place
+  final Place?
       place; //@relation(fields: [placeId], references: [id], onDelete: Cascade)
 
   const Meet({
-    required this.id,
+    this.id,
     this.status = MeetStatus.Active,
     required this.time,
     required this.flockId,
-    required this.flock,
-    required this.placeId,
-    required this.place,
+    this.address,
+    this.placeId,
+    this.eventId,
+    this.event,
+    this.flock,
+    this.place,
   });
 
   factory Meet.fromJson(Map<String, dynamic> json) {
@@ -33,11 +40,13 @@ class Meet {
       status: json['status'] == MeetStatus.Active
           ? MeetStatus.Active
           : MeetStatus.Archived,
-      time: json['time'],
+      time: DateTime.parse(json['time']),
       flockId: json['flockId'],
-      flock: json['flock'],
-      placeId: json['placeId'],
-      place: json['place'],
+      address: json['address'],
+      event: Event.fromJson(json['event']),
+      // flock: json['flock'],
+      // placeId: json['placeId'],
+      // place: json['place'],
     );
   }
 }

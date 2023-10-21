@@ -10,8 +10,6 @@ var kColorScheme = ColorScheme.fromSeed(
   onPrimaryContainer: Colors.white,
   onSecondary: Colors.white,
   onSecondaryContainer: Colors.white,
-  surface: Colors.black,
-  onSurface: Colors.amber,
 );
 
 void main() {

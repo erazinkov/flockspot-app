@@ -27,13 +27,6 @@ class _FlocksScreenState extends State<FlocksScreen> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {
           _isLoading = false;
         }));
-
-    for (int i = 0; i < _loadedItems[0].users!.length; i++) {
-      // 2023-10-03T07:21:13.933Z
-      final d = _loadedItems[0].users![i].user.birthdate;
-      print(d);
-      // print(_loadedItems[0].users![i].user.birthdate);
-    }
   }
 
   @override

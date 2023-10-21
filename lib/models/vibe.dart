@@ -50,6 +50,8 @@ class Vibe {
       status: json['status'] == VibeStatus.Approved
           ? VibeStatus.Approved
           : VibeStatus.Unapproved,
+      icon: json['icon'],
+      background: json['background'],
       description: json['description'],
       optimalFlockSize: json['optimalFlockSize'],
       creatorId: json['creatorId'],
