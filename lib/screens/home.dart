@@ -1,9 +1,4 @@
-import 'package:first_app/services/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:io';
-import 'package:first_app/models/flock.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({

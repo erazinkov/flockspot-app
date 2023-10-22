@@ -1,15 +1,8 @@
-import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/models/flock.dart';
-import 'package:first_app/models/location.dart';
-import 'package:first_app/models/user.dart';
-import 'package:first_app/models/vibe.dart';
 import 'package:first_app/screens/flock.dart';
 import 'package:first_app/services/api_service.dart';
 import 'package:first_app/widgets/flock_item.dart';
-import 'package:first_app/widgets/vibe_item.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class FlocksScreen extends StatefulWidget {
   const FlocksScreen({super.key});

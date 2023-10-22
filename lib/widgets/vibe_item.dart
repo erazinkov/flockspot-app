@@ -12,13 +12,16 @@ class VibeItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         showModalBottomSheet(
+          isScrollControlled: true,
           context: context,
           builder: (context) {
-            return VibeModal(
-              name: vibe.name,
-              description: vibe.description ?? '',
-              background: vibe.background,
-            );
+            return Wrap(children: [
+              VibeModal(
+                name: vibe.name,
+                description: vibe.description ?? '',
+                background: vibe.background,
+              ),
+            ]);
           },
         );
       },

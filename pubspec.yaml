@@ -69,6 +69,7 @@ flutter:
     - assets/icons/chat.png
     - assets/icons/settings.png
     - assets/icons/menu.png
+    - assets/icons/flock.png
     - assets/images/photo-0.jpeg
     - assets/images/photo-1.jpeg
     - assets/images/photo-2.jpeg
