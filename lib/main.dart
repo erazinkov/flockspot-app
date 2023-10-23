@@ -1,3 +1,4 @@
+import 'package:first_app/screens/auth.dart';
 import 'package:first_app/screens/tabs.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,8 @@ class App extends StatelessWidget {
           unselectedItemColor: kColorScheme.onPrimary,
         ),
       ),
-      home: const TabsScreen(),
+      // home: const TabsScreen(),
+      home: AuthScreen(),
     );
   }
 }

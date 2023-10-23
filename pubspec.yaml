@@ -70,6 +70,7 @@ flutter:
     - assets/icons/settings.png
     - assets/icons/menu.png
     - assets/icons/flock.png
+    - assets/images/background.png
     - assets/images/photo-0.jpeg
     - assets/images/photo-1.jpeg
     - assets/images/photo-2.jpeg
@@ -93,6 +94,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: TTChocolate
+      fonts:
+        - asset: fonts/TT-Chocolates-Trial-Medium.otf
   # fonts:
   #   - family: Schyler
   #     fonts:

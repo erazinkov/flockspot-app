@@ -1,4 +1,3 @@
-// import 'package:first_app/models/availability.dart';
 import 'package:first_app/models/flock.dart';
 import 'package:first_app/widgets/vibe_item.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ class FlockScreen extends StatefulWidget {
 
 class _FlockScreenState extends State<FlockScreen> {
   Screen _selectedScreen = Screen.flock;
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -262,7 +262,7 @@ class _FlockScreenState extends State<FlockScreen> {
                                   Text(
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    '${widget.flock.users![i].user.firstName} ${widget.flock.users![i].user.lastName![0]}.'
+                                    '${widget.flock.users![i].user.firstName} ${widget.flock.users![i].user.lastName[0]}.'
                                         .toUpperCase(),
                                     style: const TextStyle(
                                         color:

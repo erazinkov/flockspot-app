@@ -7,6 +7,14 @@ class FlockItem extends StatelessWidget {
 
   final Flock flock;
 
+  String _Uri(int i) {
+    if (flock.users![i].user.photo!.split(',')[0] == '') {
+      return 'https://via.placeholder.com/600/92c952';
+    }
+
+    return flock.users![i].user.photo!.split(',')[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget content = Row(children: [
@@ -29,8 +37,7 @@ class FlockItem extends StatelessWidget {
                 widthFactor: 0.5,
                 child: CircleAvatar(
                   radius: 24,
-                  backgroundImage:
-                      NetworkImage(flock.users![i].user.photo!.split(',')[0]),
+                  backgroundImage: NetworkImage(_Uri(i)),
                 ))
         ],
       );
