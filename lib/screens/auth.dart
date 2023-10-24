@@ -13,6 +13,8 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreen extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -24,10 +26,10 @@ class _AuthScreen extends State<AuthScreen> {
           children: [
             Expanded(
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/background.png'),
-                        fit: BoxFit.contain)),
+                        image: const AssetImage('assets/images/background.png'),
+                        fit: isPortrait ? BoxFit.contain : BoxFit.cover)),
                 child: Center(
                   child: Text(
                     'flocks',
@@ -46,7 +48,7 @@ class _AuthScreen extends State<AuthScreen> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => SignScreen(),
+                        builder: (ctx) => SigninScreen(),
                       ));
                     },
                     child: Container(
@@ -103,8 +105,8 @@ class _AuthScreen extends State<AuthScreen> {
                 )
               ],
             ),
-            const SizedBox(
-              height: 56,
+            SizedBox(
+              height: isPortrait ? 56 : 28,
             ),
             const Text(
               'Welcome to Flockspot',
