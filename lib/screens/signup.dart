@@ -3,8 +3,6 @@ import 'package:first_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
   @override
@@ -23,9 +21,20 @@ class _SignupScreen extends State<SignupScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
 
+  Future<void> saveToLocalStorage(String key, String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, value);
+  }
+
+  Future<String> getStringFromLocalStorage(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key) ?? '';
+  }
+
   void _submit() async {
-    // prefs.then((value) => value.setString('apiToken', 'testToken'));
-    // print(prefs.then((value) => value.getString('apiToken')).toString());
+    // saveToLocalStorage('apiToken', 'apiToken');
+    var v = await getStringFromLocalStorage('apiToken');
+    print(v);
     final isValid = _form.currentState!.validate();
 
     if (isValid) {
@@ -41,9 +50,9 @@ class _SignupScreen extends State<SignupScreen> {
           lastName: _enteredLastName,
           password: _enteredPassword));
 
-      if (response != null) {
-        prefs.then((value) => value.setString('apiToken', response));
-      }
+      // if (response != null) {
+      //   prefs.then((value) => value.setString('apiToken', response));
+      // }
 
       Future.delayed(const Duration(seconds: 3)).then((value) {
         setState(() {
@@ -243,7 +252,7 @@ class _SignupScreen extends State<SignupScreen> {
     } else {
       if (_isRegister) {
         content = Text(
-          'Token: ${prefs.then((value) => value.getString('apiToken')).toString()}',
+          'Registration complete',
           style: TextStyle(
               color: Theme.of(context).colorScheme.onPrimaryContainer,
               fontSize: 20,
