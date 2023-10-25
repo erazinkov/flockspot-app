@@ -1,4 +1,4 @@
-import 'package:first_app/screens/signin.dart';
+import 'package:first_app/screens/signup.dart';
 import 'package:first_app/widgets/login_item.dart';
 import 'package:flutter/material.dart';
 
@@ -83,9 +83,9 @@ class _LoginScreen extends State<LoginScreen> {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => SigninScreen()));
+                        MaterialPageRoute(builder: (ctx) => SignupScreen()));
                   },
-                  child: const Text(' Sing In ',
+                  child: const Text(' Sing Up ',
                       style: TextStyle(
                           color: Color.fromRGBO(255, 255, 255, 0.75),
                           fontSize: 16,

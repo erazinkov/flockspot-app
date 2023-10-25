@@ -1,7 +1,6 @@
 import 'package:first_app/screens/login.dart';
-import 'package:first_app/screens/signin.dart';
+import 'package:first_app/screens/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -48,7 +47,7 @@ class _AuthScreen extends State<AuthScreen> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => SigninScreen(),
+                        builder: (ctx) => SignupScreen(),
                       ));
                     },
                     child: Container(
@@ -62,7 +61,7 @@ class _AuthScreen extends State<AuthScreen> {
                                 bottomRight: Radius.circular(4)),
                             color: Color.fromRGBO(255, 255, 255, 0.2)),
                         child: Text(
-                          'Sign In',
+                          'Sign Up',
                           style: TextStyle(
                               color: Theme.of(context)
                                   .colorScheme

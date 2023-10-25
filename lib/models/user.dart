@@ -16,7 +16,8 @@ class User {
   final UserRole? role; //@default(User)
   final String firstName;
   final String lastName;
-  final DateTime birthdate;
+  final String? password;
+  final DateTime? birthdate;
   final String? nickName;
   final UserPosition? position;
   final List<UserAvailability>? availabilities;
@@ -31,7 +32,8 @@ class User {
     this.role = UserRole.User,
     required this.firstName,
     required this.lastName,
-    required this.birthdate,
+    this.password,
+    this.birthdate,
     this.nickName,
     this.position,
     this.availabilities,
@@ -40,6 +42,17 @@ class User {
     this.ownVibes,
     this.photo,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (id != null) 'id': id,
+      'email': email,
+      'firstName': firstName,
+      'lastName': lastName,
+      'password': password,
+      // TODO add all
+    };
+  }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
