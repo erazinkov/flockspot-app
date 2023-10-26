@@ -1,7 +1,8 @@
 import 'package:first_app/models/user.dart';
 import 'package:first_app/services/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../utils/local_storage.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -15,26 +16,14 @@ class _SignupScreen extends State<SignupScreen> {
   var _isLoading = false;
   var _isRegister = false;
   final _form = GlobalKey<FormState>();
+  late String? _apiToken;
 
   var _enteredFirstName = '';
   var _enteredLastName = '';
   var _enteredEmail = '';
   var _enteredPassword = '';
 
-  Future<void> saveToLocalStorage(String key, String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, value);
-  }
-
-  Future<String> getStringFromLocalStorage(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key) ?? '';
-  }
-
   void _submit() async {
-    // saveToLocalStorage('apiToken', 'apiToken');
-    var v = await getStringFromLocalStorage('apiToken');
-    print(v);
     final isValid = _form.currentState!.validate();
 
     if (isValid) {
@@ -50,9 +39,12 @@ class _SignupScreen extends State<SignupScreen> {
           lastName: _enteredLastName,
           password: _enteredPassword));
 
-      // if (response != null) {
-      //   prefs.then((value) => value.setString('apiToken', response));
-      // }
+      if (response != null) {
+        await LocalStorage.saveToLocalStorage('apiToken', response);
+        await LocalStorage.saveToLocalStorage('newUser', 'true');
+
+        _apiToken = await LocalStorage.getStringFromLocalStorage('apiToken');
+      }
 
       Future.delayed(const Duration(seconds: 3)).then((value) {
         setState(() {
@@ -213,31 +205,23 @@ class _SignupScreen extends State<SignupScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => SignupScreen(),
-                      ));
+                      _submit();
                     },
-                    child: GestureDetector(
-                      onTap: () {
-                        _submit();
-                      },
-                      child: Container(
-                          height: 48,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              color: Color.fromRGBO(255, 255, 255, 0.2)),
-                          child: Text(
-                            'Ok',
-                            style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimaryContainer,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400),
-                          )),
-                    ),
+                    child: Container(
+                        height: 48,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            color: Color.fromRGBO(255, 255, 255, 0.2)),
+                        child: Text(
+                          'Ok',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400),
+                        )),
                   ),
                 ],
               ))
@@ -249,16 +233,16 @@ class _SignupScreen extends State<SignupScreen> {
       content = CircularProgressIndicator(
         color: Theme.of(context).colorScheme.onPrimaryContainer,
       );
-    } else {
-      if (_isRegister) {
-        content = Text(
-          'Registration complete',
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-              fontSize: 20,
-              fontWeight: FontWeight.w400),
-        );
-      }
+    } else if (_isRegister) {
+      content = Text(
+        'Registration complete. Token:  $_apiToken',
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            fontSize: 20,
+            fontWeight: FontWeight.w400),
+      );
     }
 
     return Scaffold(
