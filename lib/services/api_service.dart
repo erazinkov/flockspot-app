@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:first_app/models/user.dart';
+import 'package:first_app/utils/local_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:first_app/constants.dart';
@@ -46,11 +47,14 @@ class ApiService {
   }
 
   Future<List<Flock>?> getFlocks() async {
+    final String? apiToken =
+        await LocalStorage.getStringFromLocalStorage('apiToken');
     final List<Flock> loadedItems = [];
     final url = Uri.parse(ApiConstants.baseUrl + ApiConstants.flocksEndpoint);
+
     try {
       final response = await http.get(url, headers: {
-        HttpHeaders.authorizationHeader: 'Bearer ${ApiConstants.token}',
+        HttpHeaders.authorizationHeader: 'Bearer $apiToken',
         'Content-type': 'application/json',
       });
       if (response.statusCode == 200) {
@@ -66,5 +70,26 @@ class ApiService {
       log(error.toString());
     }
     return loadedItems;
+  }
+
+  Future<User?> getUser(int id) async {
+    final String? apiToken =
+        await LocalStorage.getStringFromLocalStorage('apiToken');
+    final url =
+        Uri.parse('ApiConstants.baseUrl + ApiConstants.userByIdEndpoint + $id');
+
+    try {
+      final response = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $apiToken',
+        'Content-type': 'application/json',
+      });
+      if (response.statusCode == 200) {
+        User data = User.fromJson(json.decode(response.body));
+        return data;
+      }
+    } catch (error) {
+      log(error.toString());
+    }
+    return null;
   }
 }

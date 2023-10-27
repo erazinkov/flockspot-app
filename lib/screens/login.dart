@@ -38,12 +38,12 @@ class _LoginScreen extends State<LoginScreen> {
       final response =
           await ApiService.authLogin(_enteredEmail, _enteredPassword);
 
-      // if (response != null) {
-      //   await LocalStorage.saveToLocalStorage('apiToken', response);
-      //   await LocalStorage.saveToLocalStorage('newUser', 'true');
+      if (response != null) {
+        await LocalStorage.saveToLocalStorage('apiToken', response);
+        await LocalStorage.saveToLocalStorage('newUser', 'false');
 
-      //   _apiToken = await LocalStorage.getStringFromLocalStorage('apiToken');
-      // }
+        _apiToken = await LocalStorage.getStringFromLocalStorage('apiToken');
+      }
 
       Future.delayed(const Duration(seconds: 3)).then((value) {
         setState(() {

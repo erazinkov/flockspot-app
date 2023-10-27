@@ -1,4 +1,5 @@
 import 'package:first_app/screens/auth.dart';
+import 'package:first_app/screens/vibes_board.dart';
 import 'package:first_app/screens/tabs.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,8 @@ class App extends StatelessWidget {
         ),
       ),
       // home: const TabsScreen(),
-      home: AuthScreen(),
+      // home: AuthScreen(),
+      home: VibesBoard(),
     );
   }
 }
