@@ -1,4 +1,8 @@
+import 'package:first_app/models/user.dart';
 import 'package:first_app/models/vibe.dart';
+import 'package:first_app/services/api_service.dart';
+import 'package:first_app/utils/local_storage.dart';
+import 'package:first_app/utils/parse_jwt.dart';
 import 'package:first_app/widgets/vibe_board_item.dart';
 import 'package:flutter/material.dart';
 
@@ -10,64 +14,103 @@ class VibesBoard extends StatefulWidget {
 }
 
 class _VibesBoardState extends State<VibesBoard> {
-  // final List<String> _unselected = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-  final List<Vibe> _unselected = [
-    const Vibe(
-      id: 0,
-      name: 'digital',
-      locations: [],
-      events: [],
-      places: [],
-      users: [],
-    ),
-    const Vibe(
-      id: 1,
-      name: 'artists',
-      locations: [],
-      events: [],
-      places: [],
-      users: [],
-    ),
-    const Vibe(
-      id: 2,
-      name: 'spanish',
-      locations: [],
-      events: [],
-      places: [],
-      users: [],
-    ),
-    const Vibe(
-      id: 0,
-      name: 'hip-hop',
-      locations: [],
-      events: [],
-      places: [],
-      users: [],
-    ),
-    const Vibe(
-      id: 1,
-      name: 'yoga',
-      locations: [],
-      events: [],
-      places: [],
-      users: [],
-    ),
-    const Vibe(
-      id: 2,
-      name: 'dancing',
-      locations: [],
-      events: [],
-      places: [],
-      users: [],
-    ),
-  ];
+  var _isLoading = true;
+  late List<Vibe> _loadedItems = [];
+  late List<Vibe> _unSelected = [];
   final List<Vibe> _selected = [];
 
-  final _unselectedListKey = GlobalKey<AnimatedListState>();
-  final _selectedListKey = GlobalKey<AnimatedListState>();
+  void _loadItems() async {
+    _unSelected = (await ApiService().getVibes())!;
+    Future.delayed(const Duration(seconds: 3)).then((value) => setState(() {
+          _isLoading = false;
+        }));
+    // _unSelected = _loadedItems;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadItems();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Widget contentUnSelected = Center(
+      child: Text(
+        'No items...',
+        style: TextStyle(
+            fontSize: 24,
+            color: Theme.of(context).colorScheme.onPrimaryContainer),
+      ),
+    );
+    if (_isLoading) {
+      contentUnSelected = Center(
+        child: CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.onPrimaryContainer),
+      );
+    }
+    if (_unSelected.isNotEmpty) {
+      contentUnSelected = SizedBox(
+          width: double.infinity,
+          child: Wrap(spacing: 8, runSpacing: 12, children: [
+            ..._unSelected.asMap().entries.map((entry) {
+              int idx = entry.key;
+              return GestureDetector(
+                onTap: () {
+                  if (_selected.contains(_unSelected[idx])) return;
+                  setState(() {
+                    _selected.add(_unSelected[idx]);
+                    _unSelected.remove(_unSelected[idx]);
+                  });
+                },
+                child: Item(vibe: entry.value),
+              );
+            })
+          ]));
+    }
+    Widget contentButton = Column(
+      children: [
+        const SizedBox(
+          height: 32,
+        ),
+        GestureDetector(
+          onTap: () async {
+            final String? apiToken =
+                await getStringFromLocalStorage('apiToken');
+            var id = parseJwt(apiToken!)['id'];
+            List<int> selectedIdxs = [];
+            for (var s in _selected) {
+              selectedIdxs.add(s.id!.toInt());
+            }
+            await ApiService().patchUser(
+                id,
+                User(
+                    email: 'test@email.com',
+                    firstName: 'testuser',
+                    lastName: 'testuser',
+                    vibes: selectedIdxs));
+
+            // Navigator.of(context).push(MaterialPageRoute(
+            //   builder: (ctx) => NextPage(),
+            // ));
+          },
+          child: Container(
+              height: 48,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color.fromRGBO(255, 255, 255, 0.2)),
+              child: Text(
+                'Continue',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400),
+              )),
+        ),
+      ],
+    );
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -82,23 +125,26 @@ class _VibesBoardState extends State<VibesBoard> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
-                // decoration: BoxDecoration(color: Colors.amber),
                 child: Wrap(spacing: 8, runSpacing: 12, children: [
                   ..._selected.asMap().entries.map((entry) {
                     int idx = entry.key;
                     return GestureDetector(
                       key: Key(entry.value.name),
-                      onTap: () {
+                      onTap: () async {
+                        // final String? apiToken =
+                        //     await getStringFromLocalStorage('apiToken');
+                        // var v = parseJwt(apiToken!);
+                        // print(v);
                         setState(() {
-                          _unselected.add(_selected[idx]);
+                          _unSelected.add(_selected[idx]);
                           _selected.remove(_selected[idx]);
                         });
                       },
                       child: VibeBoardItem(
                         vibe: entry.value,
-                        showCloseIcon: true,
+                        isSelected: true,
                       ),
                     );
                   })
@@ -120,90 +166,11 @@ class _VibesBoardState extends State<VibesBoard> {
               const SizedBox(
                 height: 32,
               ),
-              SizedBox(
-                width: double.infinity,
-                // decoration: BoxDecoration(color: Colors.amber),
-                child: Wrap(spacing: 8, runSpacing: 12, children: [
-                  ..._unselected.asMap().entries.map((entry) {
-                    int idx = entry.key;
-                    return GestureDetector(
-                      onTap: () {
-                        if (_selected.contains(_unselected[idx])) return;
-                        setState(() {
-                          _selected.add(_unselected[idx]);
-                          _unselected.remove(_unselected[idx]);
-                        });
-                      },
-                      child: Item(vibe: entry.value),
-                    );
-                  })
-                ]),
-              ),
+              contentUnSelected,
+              if (_selected.isNotEmpty) contentButton,
             ],
           ),
         ));
-  }
-
-  int _flyingCount = 0;
-
-  _moveItem({
-    required int fromIndex,
-    required List fromList,
-    required GlobalKey<AnimatedListState> fromKey,
-    required List toList,
-    required GlobalKey<AnimatedListState> toKey,
-    Duration duration = const Duration(milliseconds: 300),
-  }) {
-    final globalKey = GlobalKey();
-    final item = fromList.removeAt(fromIndex);
-    fromKey.currentState!.removeItem(
-      fromIndex,
-      (context, animation) {
-        return SizeTransition(
-          sizeFactor: animation,
-          child: Opacity(
-            key: globalKey,
-            opacity: 0.0,
-            child: Item(vibe: item),
-          ),
-        );
-      },
-      duration: duration,
-    );
-    _flyingCount++;
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      // Find the starting position of the moving item, which is exactly the
-      // gap its leaving behind, in the original list.
-      final box1 = globalKey.currentContext!.findRenderObject() as RenderBox;
-      final pos1 = box1.localToGlobal(Offset.zero);
-      // Find the destination position of the moving item, which is at the
-      // end of the destination list.
-      final box2 = toKey.currentContext!.findRenderObject() as RenderBox;
-      final box2height = box1.size.height * (toList.length + _flyingCount - 1);
-      final pos2 = box2.localToGlobal(Offset(0, box2height));
-      // Insert an overlay to "fly over" the item between two lists.
-      final entry = OverlayEntry(builder: (BuildContext context) {
-        return TweenAnimationBuilder(
-          tween: Tween<Offset>(begin: pos1, end: pos2),
-          duration: duration,
-          builder: (_, Offset value, child) {
-            return Positioned(
-              left: value.dx,
-              top: value.dy,
-              child: Item(vibe: item),
-            );
-          },
-        );
-      });
-
-      Overlay.of(context).insert(entry);
-      await Future.delayed(duration);
-      entry.remove();
-      toList.add(item);
-      toKey.currentState!.insertItem(toList.length - 1);
-      _flyingCount--;
-    });
   }
 }
 
@@ -219,20 +186,3 @@ class Item extends StatelessWidget {
     );
   }
 }
-
-// class Item extends StatelessWidget {
-//   final String text;
-
-//   const Item({Key? key, required this.text}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(4.0),
-//       child: CircleAvatar(
-//         child: Text(text),
-//         radius: 24,
-//       ),
-//     );
-//   }
-// }

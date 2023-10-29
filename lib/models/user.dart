@@ -22,7 +22,8 @@ class User {
   final UserPosition? position;
   final List<UserAvailability>? availabilities;
   final List<FlockUsers>? flocks;
-  final List<Vibe>? vibes; //@relation("UserVibes")
+  final List<int>? vibes;
+  // final List<Vibe>? vibes; //@relation("UserVibes")
   final List<Vibe>? ownVibes; //@relation("OwnVibes")
   final String? photo;
 
@@ -50,25 +51,28 @@ class User {
       'firstName': firstName,
       'lastName': lastName,
       'password': password,
+      if (vibes != null) 'vibes': vibes,
       // TODO add all
     };
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
+      // id: json['id'],
       email: json['email'],
       // role: json['role'],
       firstName: json['firstName'],
       lastName: json['lastName'],
-      birthdate: DateTime.parse(json['birthdate']),
+      // birthdate: DateTime.parse(json['birthdate']),
       // nickName: json['nickName'],
       // position: json['position'],
       // availabilities: json['availabilities'],
       // flocks: json['flocks'],
-      // vibes: json['vibes'],
+      // vibes: (json['vibes'] as List<dynamic>)
+      //     .map((e) => Vibe.fromJson(e))
+      //     .toList(),
       // ownVibes: json['ownVibes'],
-      photo: json['photo'] ?? '',
+      // photo: json['photo'] ?? '',
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:first_app/models/user.dart';
+import 'package:first_app/screens/vibes_board.dart';
 import 'package:first_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 
@@ -40,10 +41,10 @@ class _SignupScreen extends State<SignupScreen> {
           password: _enteredPassword));
 
       if (response != null) {
-        await LocalStorage.saveToLocalStorage('apiToken', response);
-        await LocalStorage.saveToLocalStorage('newUser', 'true');
+        await saveToLocalStorage('apiToken', response);
+        await saveToLocalStorage('newUser', 'true');
 
-        _apiToken = await LocalStorage.getStringFromLocalStorage('apiToken');
+        _apiToken = await getStringFromLocalStorage('apiToken');
       }
 
       Future.delayed(const Duration(seconds: 3)).then((value) {
@@ -234,14 +235,42 @@ class _SignupScreen extends State<SignupScreen> {
         color: Theme.of(context).colorScheme.onPrimaryContainer,
       );
     } else if (_isRegister) {
-      content = Text(
-        'Registration complete. Token:  $_apiToken',
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-            fontSize: 20,
-            fontWeight: FontWeight.w400),
+      content = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Registration complete. Token:  $_apiToken',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                fontSize: 20,
+                fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => const VibesBoard(),
+              ));
+            },
+            child: Container(
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: const Color.fromRGBO(255, 255, 255, 0.2)),
+                child: Text(
+                  'Continue',
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400),
+                )),
+          ),
+        ],
       );
     }
 

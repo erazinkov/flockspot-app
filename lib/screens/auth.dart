@@ -1,5 +1,6 @@
 import 'package:first_app/screens/login.dart';
 import 'package:first_app/screens/signup.dart';
+import 'package:first_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -45,9 +46,9 @@ class _AuthScreen extends State<AuthScreen> {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => SignupScreen(),
+                        builder: (ctx) => const SignupScreen(),
                       ));
                     },
                     child: Container(

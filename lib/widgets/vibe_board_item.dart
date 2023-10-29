@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:first_app/models/vibe.dart';
 import 'package:flutter/material.dart';
 
@@ -7,27 +5,27 @@ class VibeBoardItem extends StatelessWidget {
   const VibeBoardItem({
     super.key,
     required this.vibe,
-    this.showCloseIcon = false,
+    this.isSelected = false,
   });
 
   final Vibe vibe;
-  final bool showCloseIcon;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
-    Widget content = const Row(children: [
-      SizedBox(
+    Widget content = Row(children: [
+      const SizedBox(
         width: 8,
       ),
-      Icon(Icons.multiple_stop)
+      isSelected ? const Icon(Icons.close) : const Icon(Icons.check),
     ]);
     return Container(
       padding: const EdgeInsets.only(left: 12, top: 4, right: 8, bottom: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: showCloseIcon
+        color: isSelected
             ? Theme.of(context).colorScheme.onSecondary
-            : Color.fromRGBO(255, 255, 255, 0.5),
+            : const Color.fromRGBO(255, 255, 255, 0.5),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Text(
@@ -37,9 +35,8 @@ class VibeBoardItem extends StatelessWidget {
               fontSize: 24,
               fontWeight: FontWeight.w400),
         ),
-        if (showCloseIcon) content,
+        content,
       ]),
-      // if (showCloseIcon) content,
     );
   }
 }

@@ -29,6 +29,10 @@ class App extends StatelessWidget {
         useMaterial3: true,
         colorScheme: kColorScheme,
         scaffoldBackgroundColor: kColorScheme.primary,
+        textSelectionTheme: const TextSelectionThemeData().copyWith(
+          selectionHandleColor: kColorScheme.onPrimaryContainer,
+          selectionColor: kColorScheme.onPrimary,
+        ),
         appBarTheme: const AppBarTheme().copyWith(
           iconTheme: const IconThemeData().copyWith(
             color: kColorScheme.onPrimaryContainer,
@@ -51,8 +55,8 @@ class App extends StatelessWidget {
         ),
       ),
       // home: const TabsScreen(),
-      // home: AuthScreen(),
-      home: VibesBoard(),
+      home: AuthScreen(),
+      // home: VibesBoard(),
     );
   }
 }
