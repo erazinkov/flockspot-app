@@ -1,3 +1,4 @@
+import 'package:first_app/models/flock.dart';
 import 'package:first_app/models/flock_users.dart';
 import 'package:first_app/models/user_availability.dart';
 import 'package:first_app/models/user_position.dart';
@@ -7,7 +8,10 @@ enum UserRole {
   User,
   Admin,
   PlaceOwner,
-  Ambassador,
+  Ambassador;
+
+  String toJson() => name;
+  static UserRole fromJson(String json) => values.byName(json);
 }
 
 class User {
@@ -21,9 +25,9 @@ class User {
   final String? nickName;
   final UserPosition? position;
   final List<UserAvailability>? availabilities;
-  final List<FlockUsers>? flocks;
-  final List<int>? vibes;
-  // final List<Vibe>? vibes; //@relation("UserVibes")
+  final List<Flock>? flocks;
+  // final List<int>? vibes;
+  final List<Vibe>? vibes; //@relation("UserVibes")
   final List<Vibe>? ownVibes; //@relation("OwnVibes")
   final String? photo;
 
@@ -46,31 +50,35 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      if (id != null) 'id': id,
+      // if (id != null) 'id': id,
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
       'password': password,
-      if (vibes != null) 'vibes': vibes,
+      if (role != null) 'role': role!.toJson(),
+      // if (vibes != null) 'vibes': vibes,
       // TODO add all
     };
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      // id: json['id'],
+      id: json['id'],
       email: json['email'],
-      // role: json['role'],
+      role: UserRole.fromJson(json['role']),
       firstName: json['firstName'],
       lastName: json['lastName'],
+      password: json['password'],
       // birthdate: DateTime.parse(json['birthdate']),
       // nickName: json['nickName'],
       // position: json['position'],
       // availabilities: json['availabilities'],
-      // flocks: json['flocks'],
-      // vibes: (json['vibes'] as List<dynamic>)
-      //     .map((e) => Vibe.fromJson(e))
-      //     .toList(),
+      vibes: (json['vibes'] as List<dynamic>)
+          .map((e) => Vibe.fromJson(e))
+          .toList(),
+      flocks: (json['flocks'] as List<dynamic>)
+          .map((e) => Flock.fromJson(e))
+          .toList(),
       // ownVibes: json['ownVibes'],
       // photo: json['photo'] ?? '',
     );

@@ -4,13 +4,14 @@ import 'package:first_app/services/api_service.dart';
 import 'package:first_app/utils/local_storage.dart';
 import 'package:first_app/utils/parse_jwt.dart';
 import 'package:first_app/widgets/vibe_board_item.dart';
+import 'package:first_app/widgets/vibe_modal.dart';
 import 'package:flutter/material.dart';
 
 class VibesBoard extends StatefulWidget {
   const VibesBoard({Key? key}) : super(key: key);
 
   @override
-  _VibesBoardState createState() => _VibesBoardState();
+  State<VibesBoard> createState() => _VibesBoardState();
 }
 
 class _VibesBoardState extends State<VibesBoard> {
@@ -82,14 +83,10 @@ class _VibesBoardState extends State<VibesBoard> {
             for (var s in _selected) {
               selectedIdxs.add(s.id!.toInt());
             }
-            await ApiService().patchUser(
-                id,
-                User(
-                    email: 'test@email.com',
-                    firstName: 'testuser',
-                    lastName: 'testuser',
-                    vibes: selectedIdxs));
+            var user = await ApiService().getUserById(id);
 
+            await ApiService()
+                .putUser(id, {...user!.toJson(), 'vibes': selectedIdxs});
             // Navigator.of(context).push(MaterialPageRoute(
             //   builder: (ctx) => NextPage(),
             // ));
@@ -133,14 +130,24 @@ class _VibesBoardState extends State<VibesBoard> {
                     return GestureDetector(
                       key: Key(entry.value.name),
                       onTap: () async {
-                        // final String? apiToken =
-                        //     await getStringFromLocalStorage('apiToken');
-                        // var v = parseJwt(apiToken!);
-                        // print(v);
-                        setState(() {
-                          _unSelected.add(_selected[idx]);
-                          _selected.remove(_selected[idx]);
-                        });
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return Wrap(children: [
+                              VibeModal(
+                                name: _selected[idx].name,
+                                description: _selected[idx].description ?? '',
+                                background: _selected[idx].background,
+                              ),
+                            ]);
+                          },
+                        );
+
+                        // setState(() {
+                        //   _unSelected.add(_selected[idx]);
+                        //   _selected.remove(_selected[idx]);
+                        // });
                       },
                       child: VibeBoardItem(
                         vibe: entry.value,

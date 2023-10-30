@@ -4,7 +4,9 @@ class ApiConstants {
   static String registerEndpoint = '/auth/register';
   static String loginEndpoint = '/auth/login';
   static String flocksEndpoint = '/flocks/paging?take=10&skip=0';
+  static String locationsEndpoint = '/locations/paging?take=10&skip=0';
   static String userByIdEndpoint = '/users/';
+  static String locationByIdEndpoint = '/location/';
   static String allVibesEndpoint = '/vibes';
   static String token =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk4MDAwNzI3LCJleHAiOjE2OTgwODcxMjd9._OJiGv4g6MXoeIDRIbLHjhypwuTR-Erv_4e30gb_Mjc';

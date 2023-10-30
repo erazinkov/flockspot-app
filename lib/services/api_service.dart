@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:first_app/models/location.dart';
 import 'package:first_app/models/user.dart';
 import 'package:first_app/models/vibe.dart';
 import 'package:first_app/utils/local_storage.dart';
@@ -72,7 +73,7 @@ class ApiService {
     return loadedItems;
   }
 
-  Future<User?> getUser(int id) async {
+  Future<User?> getUserById(int id) async {
     final String? apiToken = await getStringFromLocalStorage('apiToken');
     final url =
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.userByIdEndpoint}$id');
@@ -82,7 +83,6 @@ class ApiService {
         HttpHeaders.authorizationHeader: 'Bearer $apiToken',
         'Content-type': 'application/json',
       });
-
       if (response.statusCode == 200) {
         User data = User.fromJson(json.decode(response.body));
         return data;
@@ -93,28 +93,76 @@ class ApiService {
     return null;
   }
 
-  Future<User?> patchUser(int id, User user) async {
+  Future<Location?> getLocationById(int id) async {
+    final String? apiToken = await getStringFromLocalStorage('apiToken');
+    final url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.locationByIdEndpoint}$id');
+
+    try {
+      final response = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $apiToken',
+        'Content-type': 'application/json',
+      });
+      if (response.statusCode == 200) {
+        Location data = Location.fromJson(json.decode(response.body));
+        print(data.name);
+        return data;
+      }
+    } catch (error) {
+      log(error.toString());
+    }
+    return null;
+  }
+
+  Future<List<Location>?> getAllLocations() async {
+    final String? apiToken = await getStringFromLocalStorage('apiToken');
+    final List<Location> loadedItems = [];
+    final url =
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.locationsEndpoint}');
+
+    try {
+      final response = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $apiToken',
+        'Content-type': 'application/json',
+      });
+
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        List<Location> listData = (json.decode(response.body)['data'] as List)
+            .map((data) => Location.fromJson(data))
+            .toList();
+
+        for (final item in listData) {
+          loadedItems.add(item);
+        }
+      }
+    } catch (error) {
+      log(error.toString());
+    }
+    return loadedItems;
+  }
+
+  Future<User?> putUser(int id, Map<String, dynamic> user) async {
     final String? apiToken = await getStringFromLocalStorage('apiToken');
     final url =
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.userByIdEndpoint}$id');
-
+    print(user);
     try {
-      final response = await http.patch(
+      final response = await http.put(
         url,
         headers: {
           HttpHeaders.authorizationHeader: 'Bearer $apiToken',
           'Content-type': 'application/json',
         },
-        body: json.encode(user.toJson()),
+        body: json.encode(user),
       );
-
       print(response.body);
-
-      if (response.statusCode == 200) {
-        User data = User.fromJson(json.decode(response.body));
-        print(data);
-        return data;
-      }
+      // print(json.encode(user));
+      // if (response.statusCode == 200) {
+      //   User data = User.fromJson(json.decode(response.body));
+      //   return data;
+      // }
     } catch (error) {
       log(error.toString());
     }
@@ -123,8 +171,6 @@ class ApiService {
 
   Future<List<Vibe>?> getVibes() async {
     final String? apiToken = await getStringFromLocalStorage('apiToken');
-    // final String apiToken =
-    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoiVXNlciIsImlhdCI6MTY5ODYwNzYzMiwiZXhwIjoxNjk4Njk0MDMyfQ.dvwTRO5CAZ5K7HmF4BYpjcpxJhpyDanyEGXx7sMFfWQ';
     final List<Vibe> loadedItems = [];
     final url = Uri.parse(ApiConstants.baseUrl + ApiConstants.allVibesEndpoint);
 

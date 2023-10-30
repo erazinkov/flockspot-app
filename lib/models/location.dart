@@ -4,14 +4,14 @@ import 'package:first_app/models/vibe.dart';
 class Location {
   final int? id; //@id @default(autoincrement())
   final String name; //@unique
-  // final List<Vibe>? vibes;
-  // final List<Place>? places;
+  final List<Vibe>? vibes;
+  final List<Place>? places;
 
   const Location({
     this.id,
     required this.name,
-    // this.vibes,
-    // this.places,
+    this.vibes,
+    this.places,
   });
 
   Map<String, dynamic> toJson() {
@@ -25,7 +25,9 @@ class Location {
     return Location(
       id: json['id'],
       name: json['name'],
-      // vibes: json['vibes'],
+      vibes: (json['vibes'] as List<dynamic>)
+          .map((e) => Vibe.fromJson(e))
+          .toList(),
       // places: json['places'],
     );
   }
