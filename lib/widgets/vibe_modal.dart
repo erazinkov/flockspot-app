@@ -50,16 +50,13 @@ class _VibeModalState extends State<VibeModal> {
                   topRight: Radius.circular(24),
                 ),
                 gradient: LinearGradient(
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    colors: [
-                      Colors.white.withOpacity(0.5),
-                      Colors.black,
-                    ],
-                    stops: const [
-                      0.0,
-                      1.0
-                    ]),
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  colors: [
+                    Colors.white.withOpacity(0.5),
+                    Colors.black,
+                  ],
+                ),
               ),
               width: screenSize.width,
               height: 0.8 * screenSize.width,
@@ -122,7 +119,6 @@ class _VibeModalState extends State<VibeModal> {
                   children: [
                     Expanded(
                         child: AnimatedCrossFade(
-                      sizeCurve: Curves.easeIn,
                       duration: const Duration(milliseconds: 500),
                       crossFadeState: _showFull
                           ? CrossFadeState.showFirst
