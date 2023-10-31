@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class VibeModal extends StatefulWidget {
   const VibeModal({
     super.key,
-    this.name,
+    required this.name,
     this.icon,
     this.background,
     this.description,
   });
 
-  final String? name;
+  final String name;
   final String? icon;
   final String? background;
   final String? description;
@@ -53,24 +53,16 @@ class _VibeModalState extends State<VibeModal> {
       child: Column(
         children: [
           Stack(alignment: Alignment.center, children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
-                gradient: LinearGradient(
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    colors: [
-                      Colors.white.withOpacity(0.5),
-                      Colors.black,
-                    ],
-                    stops: const [
-                      0.0,
-                      1.0
-                    ]),
-              ),
+            SizedBox(
+              // decoration: BoxDecoration(
+              //   borderRadius: const BorderRadiusDirectional.only(
+              //       topStart: Radius.circular(24), topEnd: Radius.circular(24)),
+              //   color: Colors.amber,
+              //   // image: DecorationImage(
+              //   //   fit: BoxFit.fill,
+              //   //   image: NetworkImage(widget.background!),
+              //   // ),
+              // ),
               width: screenSize.width,
               height: 0.8 * screenSize.width,
               child: ClipRRect(
@@ -78,7 +70,7 @@ class _VibeModalState extends State<VibeModal> {
                     topLeft: Radius.circular(24),
                     topRight: Radius.circular(24)),
                 child: Image.network(
-                  widget.background ?? '',
+                  widget.background!,
                   fit: BoxFit.fill,
                   errorBuilder: (context, exception, stackTrace) {
                     return const Text('');
@@ -86,20 +78,36 @@ class _VibeModalState extends State<VibeModal> {
                 ),
               ),
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+            Container(
+              width: screenSize.width,
+              height: 0.8 * screenSize.width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: [
+                    Colors.grey.withOpacity(0.0),
+                    Colors.black,
+                  ],
+                      stops: const [
+                    0.0,
+                    1.0
+                  ])),
+            ),
+            ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(
-                  sigmaX: 50.0,
-                  sigmaY: 50.0,
+                  sigmaX: 10.0,
+                  sigmaY: 10.0,
                 ),
                 child: Container(
-                  decoration: const BoxDecoration(
-                      color: Color.fromRGBO(255, 255, 255, 0.2)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color.fromRGBO(255, 255, 255, 0.2)),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Text(
-                    widget.name ?? '',
+                    widget.name,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                         fontSize: 56,

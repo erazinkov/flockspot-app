@@ -137,7 +137,7 @@ class _VibesBoardState extends State<VibesBoard> {
                             return Wrap(children: [
                               VibeModal(
                                 name: _selected[idx].name,
-                                description: _selected[idx].description ?? '',
+                                description: _selected[idx].description,
                                 background: _selected[idx].background,
                               ),
                             ]);
