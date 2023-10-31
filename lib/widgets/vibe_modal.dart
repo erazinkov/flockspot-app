@@ -21,27 +21,17 @@ class VibeModal extends StatefulWidget {
 }
 
 class _VibeModalState extends State<VibeModal> {
-  var _showFullText = false;
+  bool _showFull = false;
   double _turns = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size;
 
-    Widget text = Text(
+    Widget description = Text(
       widget.description ?? 'No description for this vibe.',
-      // 'Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.',
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
-          fontSize: 20,
-          fontWeight: FontWeight.w400),
-    );
-
-    Widget fullText = Text(
-      widget.description ?? 'No description for this vibe.',
-      // 'Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.',
+      maxLines: !_showFull ? 2 : null,
+      overflow: !_showFull ? TextOverflow.ellipsis : null,
       style: TextStyle(
           color: Theme.of(context).colorScheme.onPrimaryContainer,
           fontSize: 20,
@@ -132,19 +122,20 @@ class _VibeModalState extends State<VibeModal> {
                   children: [
                     Expanded(
                         child: AnimatedCrossFade(
+                      sizeCurve: Curves.easeIn,
                       duration: const Duration(milliseconds: 500),
-                      crossFadeState: _showFullText
+                      crossFadeState: _showFull
                           ? CrossFadeState.showFirst
                           : CrossFadeState.showSecond,
-                      firstChild: fullText,
-                      secondChild: text,
+                      firstChild: description,
+                      secondChild: description,
                     )),
                     Expanded(
                       flex: 0,
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            _showFullText = !_showFullText;
+                            _showFull = !_showFull;
                             _turns += 1.0 / 2.0;
                           });
                         },
