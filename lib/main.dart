@@ -3,6 +3,7 @@ import 'package:first_app/screens/locations_board.dart';
 
 import 'package:first_app/screens/vibes_board.dart';
 import 'package:first_app/screens/tabs.dart';
+import 'package:first_app/streams/auth_stream.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -58,9 +59,10 @@ class App extends StatelessWidget {
       ),
       // home: const TabsScreen(),
       // home: AuthScreen(),
-      home: VibesBoard(),
+      // home: VibesBoard(),
       // home: LocationsBoard(),
       // home: Test(),
+      home: StreamBuilderAuth(),
     );
   }
 }
