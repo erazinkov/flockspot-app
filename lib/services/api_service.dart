@@ -11,7 +11,7 @@ import 'package:first_app/constants.dart';
 import 'package:first_app/models/flock.dart';
 
 class ApiService {
-  static Future<String?> authLogin(String email, String password) async {
+  static Future<String?> login(String email, String password) async {
     final url = Uri.parse(ApiConstants.baseUrl + ApiConstants.loginEndpoint);
     try {
       final response = await http.post(

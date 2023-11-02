@@ -16,8 +16,7 @@ class _StreamBuilderAuthState extends State<StreamBuilderAuth> {
     controller = StreamController<String?>(
       onListen: () async {
         await Future<void>.delayed(const Duration(seconds: 1));
-        String? response =
-            await ApiService.authLogin('test@mail.com', 'Password1');
+        String? response = await ApiService.login('test@mail.com', 'Password1');
         controller.add(response);
         await Future<void>.delayed(const Duration(seconds: 5));
         await controller.close();

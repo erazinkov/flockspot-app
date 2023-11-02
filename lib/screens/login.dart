@@ -1,20 +1,26 @@
+import 'package:first_app/providers/user_credentials.dart';
+import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:first_app/models/user_credentials.dart';
 import 'package:first_app/screens/signup.dart';
+import 'package:first_app/screens/vibes_board.dart';
 import 'package:first_app/services/api_service.dart';
 import 'package:first_app/utils/local_storage.dart';
+import 'package:first_app/utils/parse_jwt.dart';
 import 'package:first_app/widgets/login_item.dart';
-import 'package:flutter/material.dart';
 
 import '../models/user.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<LoginScreen> createState() {
     return _LoginScreen();
   }
 }
 
-class _LoginScreen extends State<LoginScreen> {
+class _LoginScreen extends ConsumerState<LoginScreen> {
   var _isLoading = false;
   final _form = GlobalKey<FormState>();
   late String? _apiToken;
@@ -35,14 +41,24 @@ class _LoginScreen extends State<LoginScreen> {
         _isLoading = true;
       });
 
-      final response =
-          await ApiService.authLogin(_enteredEmail, _enteredPassword);
+      final response = await ApiService.login(_enteredEmail, _enteredPassword);
 
       if (response != null) {
         await saveToLocalStorage('apiToken', response);
         await saveToLocalStorage('newUser', 'false');
 
-        _apiToken = await getStringFromLocalStorage('apiToken');
+        var id = parseJwt(response)['id'];
+        var user = await ApiService().getUserById(id);
+        UserCredentials userCredentials = UserCredentials(
+          email: user!.email,
+          password: user.password,
+          token: response,
+        );
+        ref.read(userCredentialsProvider.notifier).set(userCredentials);
+        var uc = ref.watch(userCredentialsProvider);
+        print(uc.email);
+        // _apiToken = await getStringFromLocalStorage('apiToken');
+        // print(parseJwt(_apiToken!));
       }
 
       Future.delayed(const Duration(seconds: 3)).then((value) {
@@ -50,7 +66,9 @@ class _LoginScreen extends State<LoginScreen> {
           _isLoading = false;
           if (response != null) {
             print(response);
-            // _isRegister = true;
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (ctx) => VibesBoard(),
+            ));
           }
         });
       });
