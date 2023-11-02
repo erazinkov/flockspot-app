@@ -1,9 +1,10 @@
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:first_app/widgets/user_image_picker.dart';
+import 'package:first_app/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+
+import 'package:first_app/widgets/user_image_picker.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -21,21 +22,34 @@ class _AuthScreenState extends State<AuthScreen> {
 
   String _enteredEmail = '';
   String _enteredPassword = '';
+  String _enteredUsername = '';
   File? _selectedImage;
+  var _isAuthenticating = false;
 
   void _submit() async {
     final isValid = _form.currentState!.validate();
 
-    if (!isValid || !_isLogin && _selectedImage == null) {
-      // show error message...
+    if (!isValid) {
       return;
     }
+
+    // if (!isValid || !_isLogin && _selectedImage == null) {
+    //   return;
+    // }
 
     _form.currentState!.save();
 
     try {
+      setState(() {
+        _isAuthenticating = true;
+      });
       if (_isLogin) {
         final userCredentials = await _firebase.signInWithEmailAndPassword(
+            email: _enteredEmail, password: _enteredPassword);
+
+        print(userCredentials);
+      } else {
+        final userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
 
         final storageRef = FirebaseStorage.instance
@@ -44,13 +58,13 @@ class _AuthScreenState extends State<AuthScreen> {
             .child('${userCredentials.user!.uid}.jpg');
 
         await storageRef.putFile(_selectedImage!);
-        final imageUrl = storageRef.getDownloadURL();
-        print(imageUrl);
-        print(userCredentials);
-      } else {
-        final userCredentials = await _firebase.createUserWithEmailAndPassword(
-            email: _enteredEmail, password: _enteredPassword);
-        print(userCredentials);
+        final imageUrl = await storageRef.getDownloadURL();
+
+        await ApiService().postUser({
+          'username': _enteredUsername,
+          'email': _enteredEmail,
+          'image_url': imageUrl,
+        });
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {}
@@ -60,6 +74,9 @@ class _AuthScreenState extends State<AuthScreen> {
           content: Text(error.message ?? 'Authentification failed.'),
         ),
       );
+      setState(() {
+        _isAuthenticating = false;
+      });
     }
   }
 
@@ -115,6 +132,23 @@ class _AuthScreenState extends State<AuthScreen> {
                                 _enteredEmail = value!;
                               },
                             ),
+                            if (!_isLogin)
+                              TextFormField(
+                                decoration:
+                                    const InputDecoration(labelText: 'Userame'),
+                                enableSuggestions: false,
+                                keyboardType: TextInputType.text,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().length < 4) {
+                                    return 'Please enter a valid user name.';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  _enteredUsername = value!;
+                                },
+                              ),
                             TextFormField(
                               decoration:
                                   const InputDecoration(labelText: 'Password'),
@@ -132,27 +166,31 @@ class _AuthScreenState extends State<AuthScreen> {
                             const SizedBox(
                               height: 12,
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                _submit();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
+                            if (_isAuthenticating)
+                              const CircularProgressIndicator(),
+                            if (!_isAuthenticating) ...[
+                              ElevatedButton(
+                                onPressed: () async {
+                                  _submit();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                ),
+                                child: Text(_isLogin ? 'Login' : 'Signup'),
                               ),
-                              child: Text(_isLogin ? 'Login' : 'Signup'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  _isLogin = !_isLogin;
-                                });
-                              },
-                              child: Text(_isLogin
-                                  ? 'Create an account'
-                                  : 'I already have an account.'),
-                            )
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isLogin = !_isLogin;
+                                  });
+                                },
+                                child: Text(_isLogin
+                                    ? 'Create an account'
+                                    : 'I already have an account.'),
+                              )
+                            ],
                           ],
                         )),
                   ),
