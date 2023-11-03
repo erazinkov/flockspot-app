@@ -77,18 +77,41 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 1, bottom: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       child: Row(
         children: [
           Expanded(
               child: TextField(
             controller: _messageController,
+            style: const TextStyle(color: Colors.white, fontSize: 16),
             textCapitalization: TextCapitalization.sentences,
             autocorrect: true,
             enableSuggestions: true,
-            decoration: InputDecoration(labelText: 'Send a message...'),
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              labelStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              labelText: 'Send a message...',
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              border: const OutlineInputBorder().copyWith(
+                borderSide: const BorderSide(),
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+              ),
+            ),
           )),
-          IconButton(onPressed: _submitMessage, icon: const Icon(Icons.send))
+          const SizedBox(
+            width: 12,
+          ),
+          GestureDetector(
+            onTap: _submitMessage,
+            child: Image.asset('assets/images/new_message.png'),
+          ),
+          // IconButton(onPressed: _submitMessage, icon: const Icon(Icons.send))
         ],
       ),
     );
