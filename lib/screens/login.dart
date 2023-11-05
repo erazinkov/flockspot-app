@@ -75,11 +75,26 @@ class _LoginScreen extends State<LoginScreen> {
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                       fontWeight: FontWeight.w400),
                   decoration: InputDecoration(
-                    focusedBorder: const UnderlineInputBorder().copyWith(
-                        borderSide: const BorderSide().copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      borderSide: BorderSide(
+                          color: const Color.fromRGBO(255, 255, 255, 0.1)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      borderSide: BorderSide(
+                          color: const Color.fromRGBO(255, 255, 255, 0.1)),
+                    ),
+                    fillColor: const Color.fromRGBO(255, 255, 255, 0.1),
+                    filled: true,
+                    // disabledBorder: InputBorder.none,
+                    // focusedBorder: InputBorder.none,
+                    // border: InputBorder.none,
+                    // focusedBorder: const UnderlineInputBorder().copyWith(
+                    //     borderSide: const BorderSide().copyWith(
+                    //         color: Theme.of(context)
+                    //             .colorScheme
+                    //             .onPrimaryContainer)),
                     labelText: 'Email Address',
                     labelStyle: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -101,12 +116,17 @@ class _LoginScreen extends State<LoginScreen> {
                     _enteredEmail = newValue!;
                   },
                 ),
+                SizedBox(
+                  height: 16,
+                ),
                 TextFormField(
                   cursorColor: Theme.of(context).colorScheme.onPrimaryContainer,
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                       fontWeight: FontWeight.w400),
                   decoration: InputDecoration(
+                    fillColor: const Color.fromRGBO(255, 255, 255, 0.1),
+                    filled: true,
                     focusedBorder: const UnderlineInputBorder().copyWith(
                         borderSide: const BorderSide().copyWith(
                             color: Theme.of(context)
@@ -171,13 +191,11 @@ class _LoginScreen extends State<LoginScreen> {
           children: [
             Expanded(
               child: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/background.png'),
-                        fit: BoxFit.contain)),
+                decoration: const BoxDecoration(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    content,
                     Center(
                       child: Row(
                         children: [
@@ -211,7 +229,6 @@ class _LoginScreen extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    content,
                   ],
                 ),
               ),
@@ -226,8 +243,8 @@ class _LoginScreen extends State<LoginScreen> {
                         fontWeight: FontWeight.w400)),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => SignupScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (ctx) => const SignupScreen()));
                   },
                   child: const Text(' Sing Up ',
                       style: TextStyle(

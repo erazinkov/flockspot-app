@@ -57,8 +57,8 @@ class App extends StatelessWidget {
         ),
       ),
       // home: const TabsScreen(),
-      // home: AuthScreen(),
-      home: VibesBoard(),
+      home: AuthScreen(),
+      // home: VibesBoard(),
       // home: LocationsBoard(),
       // home: Test(),
     );
