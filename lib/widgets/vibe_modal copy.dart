@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class VibeModal extends StatefulWidget {
   const VibeModal({
     super.key,
-    this.name,
+    required this.name,
     this.icon,
     this.background,
     this.description,
   });
 
-  final String? name;
+  final String name;
   final String? icon;
   final String? background;
   final String? description;
@@ -21,17 +21,27 @@ class VibeModal extends StatefulWidget {
 }
 
 class _VibeModalState extends State<VibeModal> {
-  bool _showFull = false;
+  var _showFullText = false;
   double _turns = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    var screenSize = MediaQuery.of(context).size;
 
-    Widget description = Text(
+    Widget text = Text(
       widget.description ?? 'No description for this vibe.',
-      maxLines: !_showFull ? 2 : null,
-      overflow: !_showFull ? TextOverflow.ellipsis : null,
+      // 'Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.',
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+          fontSize: 20,
+          fontWeight: FontWeight.w400),
+    );
+
+    Widget fullText = Text(
+      widget.description ?? 'No description for this vibe.',
+      // 'Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.',
       style: TextStyle(
           color: Theme.of(context).colorScheme.onPrimaryContainer,
           fontSize: 20,
@@ -43,21 +53,16 @@ class _VibeModalState extends State<VibeModal> {
       child: Column(
         children: [
           Stack(alignment: Alignment.center, children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
-                gradient: LinearGradient(
-                  begin: FractionalOffset.topCenter,
-                  end: FractionalOffset.bottomCenter,
-                  colors: [
-                    Colors.white.withOpacity(0.5),
-                    Colors.black,
-                  ],
-                ),
-              ),
+            SizedBox(
+              // decoration: BoxDecoration(
+              //   borderRadius: const BorderRadiusDirectional.only(
+              //       topStart: Radius.circular(24), topEnd: Radius.circular(24)),
+              //   color: Colors.amber,
+              //   // image: DecorationImage(
+              //   //   fit: BoxFit.fill,
+              //   //   image: NetworkImage(widget.background!),
+              //   // ),
+              // ),
               width: screenSize.width,
               height: 0.8 * screenSize.width,
               child: ClipRRect(
@@ -65,7 +70,7 @@ class _VibeModalState extends State<VibeModal> {
                     topLeft: Radius.circular(24),
                     topRight: Radius.circular(24)),
                 child: Image.network(
-                  widget.background ?? '',
+                  widget.background!,
                   fit: BoxFit.fill,
                   errorBuilder: (context, exception, stackTrace) {
                     return const Text('');
@@ -73,20 +78,36 @@ class _VibeModalState extends State<VibeModal> {
                 ),
               ),
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+            Container(
+              width: screenSize.width,
+              height: 0.8 * screenSize.width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: [
+                    Colors.grey.withOpacity(0.0),
+                    Colors.black,
+                  ],
+                      stops: const [
+                    0.0,
+                    1.0
+                  ])),
+            ),
+            ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(
-                  sigmaX: 50.0,
-                  sigmaY: 50.0,
+                  sigmaX: 10.0,
+                  sigmaY: 10.0,
                 ),
                 child: Container(
-                  decoration: const BoxDecoration(
-                      color: Color.fromRGBO(255, 255, 255, 0.2)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color.fromRGBO(255, 255, 255, 0.2)),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Text(
-                    widget.name ?? '',
+                    widget.name,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                         fontSize: 56,
@@ -120,18 +141,18 @@ class _VibeModalState extends State<VibeModal> {
                     Expanded(
                         child: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 500),
-                      crossFadeState: _showFull
+                      crossFadeState: _showFullText
                           ? CrossFadeState.showFirst
                           : CrossFadeState.showSecond,
-                      firstChild: description,
-                      secondChild: description,
+                      firstChild: fullText,
+                      secondChild: text,
                     )),
                     Expanded(
                       flex: 0,
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            _showFull = !_showFull;
+                            _showFullText = !_showFullText;
                             _turns += 1.0 / 2.0;
                           });
                         },
