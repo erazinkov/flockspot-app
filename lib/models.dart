@@ -1,9 +1,19 @@
-class Number {
-  int value;
+class Album {
+  final int userId;
+  final int id;
+  final String title;
 
-  Number(this.value);
+  Album({
+    required this.userId,
+    required this.id,
+    required this.title,
+  });
 
-  factory Number.fromJSON(Map<String, dynamic> json) {
-    return Number(json['value']);
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      userId: json['userId'] as int,
+      id: json['id'] as int,
+      title: json['title'] as String,
+    );
   }
 }

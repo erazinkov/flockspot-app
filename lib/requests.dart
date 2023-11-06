@@ -1,17 +1,22 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
-import 'models.dart';
+import 'dart:math';
+import 'package:first_app/models.dart';
+import 'package:http/http.dart' as http;
 
-Future<Number> getNumber({int num = 20}) async {
-  http.Response res =
-      await http.get(Uri.http("dummyresponse.pythonanywhere.com", "/api/$num"));
-  return Number.fromJSON(json.decode(res.body));
-}
+Random r = Random();
 
-Stream<Number> getNumbers(Duration refreshTime) async* {
-  while (true) {
-    await Future.delayed(refreshTime);
-    yield await getNumber();
+class AlbumService {
+  Future<Album> fetchAlbum() async {
+    await Future.delayed(const Duration(seconds: 3));
+    int n = r.nextInt(9) + 1;
+    print('$n');
+    final response = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/$n'));
+
+    if (response.statusCode == 200) {
+      return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 }
