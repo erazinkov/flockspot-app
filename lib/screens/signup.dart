@@ -28,6 +28,7 @@ class _SignupScreen extends State<SignupScreen> {
     final isValid = _form.currentState!.validate();
 
     if (isValid) {
+      FocusScope.of(context).unfocus();
       _form.currentState!.save();
 
       setState(() {
@@ -60,7 +61,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    // var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     Widget content = SingleChildScrollView(
       child: Column(
@@ -71,158 +72,148 @@ class _SignupScreen extends State<SignupScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextFormField(
-                    cursorColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      focusedBorder: const UnderlineInputBorder().copyWith(
-                          borderSide: const BorderSide().copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer)),
-                      labelText: 'First Name',
-                      labelStyle: TextStyle(
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      cursorColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
+                      style: TextStyle(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.w400),
+                      decoration: TextFormFieldStyle.textFormFieldStyle(
+                          labelText: 'first name'),
+                      keyboardType: TextInputType.name,
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Please enter a valid first name';
+                        }
+                        return null;
+                      },
+                      onSaved: (newValue) {
+                        _enteredFirstName = newValue!;
+                      },
                     ),
-                    keyboardType: TextInputType.name,
-                    autocorrect: false,
-                    textCapitalization: TextCapitalization.none,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Please enter a valid first name';
-                      }
-                      return null;
-                    },
-                    onSaved: (newValue) {
-                      _enteredFirstName = newValue!;
-                    },
                   ),
-                  TextFormField(
-                    cursorColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      focusedBorder: const UnderlineInputBorder().copyWith(
-                          borderSide: const BorderSide().copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer)),
-                      labelText: 'Last Name',
-                      labelStyle: TextStyle(
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      cursorColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
+                      style: TextStyle(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.w400),
-                    ),
-                    keyboardType: TextInputType.name,
-                    autocorrect: false,
-                    textCapitalization: TextCapitalization.none,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Please enter a valid last name';
-                      }
+                      decoration: TextFormFieldStyle.textFormFieldStyle(
+                          labelText: 'last name'),
+                      keyboardType: TextInputType.name,
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Please enter a valid last name';
+                        }
 
-                      return null;
-                    },
-                    onSaved: (newValue) {
-                      _enteredLastName = newValue!;
-                    },
+                        return null;
+                      },
+                      onSaved: (newValue) {
+                        _enteredLastName = newValue!;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    cursorColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      focusedBorder: const UnderlineInputBorder().copyWith(
-                          borderSide: const BorderSide().copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer)),
-                      labelText: 'Email Address',
-                      labelStyle: TextStyle(
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      cursorColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
+                      style: TextStyle(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.w400),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    autocorrect: false,
-                    textCapitalization: TextCapitalization.none,
-                    validator: (value) {
-                      if (value == null ||
-                          value.trim().isEmpty ||
-                          !value.contains('@')) {
-                        return 'Please enter a valid email address';
-                      }
+                      decoration: TextFormFieldStyle.textFormFieldStyle(
+                          labelText: 'email address'),
+                      keyboardType: TextInputType.emailAddress,
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                      validator: (value) {
+                        if (value == null ||
+                            value.trim().isEmpty ||
+                            !value.contains('@')) {
+                          return 'Please enter a valid email address';
+                        }
 
-                      return null;
-                    },
-                    onSaved: (newValue) {
-                      _enteredEmail = newValue!;
-                    },
+                        return null;
+                      },
+                      onSaved: (newValue) {
+                        _enteredEmail = newValue!;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    cursorColor:
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      focusedBorder: const UnderlineInputBorder().copyWith(
-                          borderSide: const BorderSide().copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer)),
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      cursorColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
+                      style: TextStyle(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.w400),
-                    ),
-                    keyboardType: TextInputType.text,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.trim().length < 8
-                          // || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(value)
-                          ) {
-                        return 'Password must be at least 8 characters long';
-                      }
+                      decoration: TextFormFieldStyle.textFormFieldStyle(
+                          labelText: 'password'),
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.trim().length < 8
+                            // || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(value)
+                            ) {
+                          return 'Password must be at least 8 characters long';
+                        }
 
-                      return null;
-                    },
-                    onSaved: (newValue) {
-                      _enteredPassword = newValue!;
-                    },
+                        return null;
+                      },
+                      onSaved: (newValue) {
+                        _enteredPassword = newValue!;
+                      },
+                    ),
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 20,
                   ),
                   GestureDetector(
                     onTap: () {
                       _submit();
                     },
                     child: Container(
-                        height: 48,
-                        alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                            color: Color.fromRGBO(255, 255, 255, 0.2)),
-                        child: Text(
-                          'Ok',
-                          style: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400),
-                        )),
+                      height: 48,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Color.fromRGBO(255, 255, 255, 0.1)),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.5),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
                   ),
                 ],
               ))
@@ -248,7 +239,7 @@ class _SignupScreen extends State<SignupScreen> {
                 fontWeight: FontWeight.w400),
           ),
           const SizedBox(
-            height: 16,
+            height: 20,
           ),
           GestureDetector(
             onTap: () {
@@ -257,18 +248,19 @@ class _SignupScreen extends State<SignupScreen> {
               ));
             },
             child: Container(
-                height: 48,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: const Color.fromRGBO(255, 255, 255, 0.2)),
-                child: Text(
-                  'Continue',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400),
-                )),
+              height: 48,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Color.fromRGBO(255, 255, 255, 0.1)),
+              child: const Text(
+                'Continue',
+                style: TextStyle(
+                    color: Color.fromRGBO(255, 255, 255, 0.5),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
           ),
         ],
       );
@@ -284,18 +276,9 @@ class _SignupScreen extends State<SignupScreen> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: const AssetImage('assets/images/background.png'),
-                        fit: isPortrait ? BoxFit.contain : BoxFit.cover)),
-                child: Center(
-                  child: content,
-                ),
+              child: Center(
+                child: content,
               ),
-            ),
-            SizedBox(
-              height: isPortrait ? 56 : 28,
             ),
             const Text(
               'Welcome to Flockspot',
@@ -307,6 +290,64 @@ class _SignupScreen extends State<SignupScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TextFormFieldStyle {
+  static InputDecoration textFormFieldStyle({
+    String labelText = "",
+    String hintText = "",
+  }) {
+    return InputDecoration(
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      errorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      disabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      labelText: labelText.toUpperCase(),
+      labelStyle: const TextStyle(
+          color: Color.fromRGBO(255, 255, 255, 0.3),
+          fontWeight: FontWeight.w400),
     );
   }
 }

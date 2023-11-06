@@ -35,6 +35,7 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
     final isValid = _form.currentState!.validate();
 
     if (isValid) {
+      FocusScope.of(context).unfocus();
       _form.currentState!.save();
 
       setState(() {
@@ -55,8 +56,8 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
           token: response,
         );
         ref.read(userCredentialsProvider.notifier).set(userCredentials);
-        var uc = ref.watch(userCredentialsProvider);
-        print(uc.email);
+        // var uc = ref.watch(userCredentialsProvider);
+        // print(uc.email);
         // _apiToken = await getStringFromLocalStorage('apiToken');
         // print(parseJwt(_apiToken!));
       }
@@ -87,111 +88,89 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextFormField(
-                  cursorColor: Theme.of(context).colorScheme.onPrimaryContainer,
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      fontWeight: FontWeight.w400),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      borderSide: BorderSide(
-                          color: const Color.fromRGBO(255, 255, 255, 0.1)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      borderSide: BorderSide(
-                          color: const Color.fromRGBO(255, 255, 255, 0.1)),
-                    ),
-                    fillColor: const Color.fromRGBO(255, 255, 255, 0.1),
-                    filled: true,
-                    // disabledBorder: InputBorder.none,
-                    // focusedBorder: InputBorder.none,
-                    // border: InputBorder.none,
-                    // focusedBorder: const UnderlineInputBorder().copyWith(
-                    //     borderSide: const BorderSide().copyWith(
-                    //         color: Theme.of(context)
-                    //             .colorScheme
-                    //             .onPrimaryContainer)),
-                    labelText: 'Email Address',
-                    labelStyle: TextStyle(
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, 0.1),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextFormField(
+                    cursorColor:
+                        Theme.of(context).colorScheme.onPrimaryContainer,
+                    style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                         fontWeight: FontWeight.w400),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
-                  textCapitalization: TextCapitalization.none,
-                  validator: (value) {
-                    if (value == null ||
-                        value.trim().isEmpty ||
-                        !value.contains('@')) {
-                      return 'Please enter a valid email address';
-                    }
+                    decoration: TextFormFieldStyle.textFormFieldStyle(
+                        labelText: 'email address'),
+                    keyboardType: TextInputType.emailAddress,
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    validator: (value) {
+                      if (value == null ||
+                          value.trim().isEmpty ||
+                          !value.contains('@')) {
+                        return 'Please enter a valid email address';
+                      }
 
-                    return null;
-                  },
-                  onSaved: (newValue) {
-                    _enteredEmail = newValue!;
-                  },
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  cursorColor: Theme.of(context).colorScheme.onPrimaryContainer,
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      fontWeight: FontWeight.w400),
-                  decoration: InputDecoration(
-                    fillColor: const Color.fromRGBO(255, 255, 255, 0.1),
-                    filled: true,
-                    focusedBorder: const UnderlineInputBorder().copyWith(
-                        borderSide: const BorderSide().copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer)),
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.w400),
+                      return null;
+                    },
+                    onSaved: (newValue) {
+                      _enteredEmail = newValue!;
+                    },
                   ),
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.trim().length < 8
-                        // || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(value)
-                        ) {
-                      return 'Password must be at least 8 characters long';
-                    }
-
-                    return null;
-                  },
-                  onSaved: (newValue) {
-                    _enteredPassword = newValue!;
-                  },
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 8,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, 0.1),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextFormField(
+                    cursorColor:
+                        Theme.of(context).colorScheme.onPrimaryContainer,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.w400),
+                    decoration: TextFormFieldStyle.textFormFieldStyle(
+                        labelText: 'password'),
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.trim().length < 8
+                          // || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(value)
+                          ) {
+                        return 'Password must be at least 8 characters long';
+                      }
+
+                      return null;
+                    },
+                    onSaved: (newValue) {
+                      _enteredPassword = newValue!;
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 GestureDetector(
                   onTap: () {
                     _submit();
                   },
                   child: Container(
-                      height: 48,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: Color.fromRGBO(255, 255, 255, 0.2)),
-                      child: Text(
-                        'Ok',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400),
-                      )),
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        color: Color.fromRGBO(255, 255, 255, 0.1)),
+                    child: const Text(
+                      'Log In',
+                      style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 0.5),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
                 ),
               ],
             ))
@@ -208,47 +187,56 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Container(
-                decoration: const BoxDecoration(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    content,
-                    Center(
-                      child: Row(
-                        children: [
-                          LoginItem(
-                            label: 'Gmail',
-                            iconPath: 'assets/icons/google.png',
-                            onSelectItem: (label) {
-                              _setItem(label);
-                            },
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          LoginItem(
-                            label: 'Insta',
-                            iconPath: 'assets/icons/instagram.png',
-                            onSelectItem: (label) {
-                              _setItem(label);
-                            },
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          LoginItem(
-                            label: 'Meta',
-                            iconPath: 'assets/icons/facebook.png',
-                            onSelectItem: (label) {
-                              _setItem(label);
-                            },
-                          ),
-                        ],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  content,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'or use'.toUpperCase(),
+                    style: const TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.3),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      LoginItem(
+                        label: 'Gmail',
+                        iconPath: 'assets/icons/google.png',
+                        onSelectItem: (label) {
+                          _setItem(label);
+                        },
                       ),
-                    ),
-                  ],
-                ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      LoginItem(
+                        label: 'Insta',
+                        iconPath: 'assets/icons/instagram.png',
+                        onSelectItem: (label) {
+                          _setItem(label);
+                        },
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      LoginItem(
+                        label: 'Meta',
+                        iconPath: 'assets/icons/facebook.png',
+                        onSelectItem: (label) {
+                          _setItem(label);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Row(
@@ -275,6 +263,64 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TextFormFieldStyle {
+  static InputDecoration textFormFieldStyle({
+    String labelText = "",
+    String hintText = "",
+  }) {
+    return InputDecoration(
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      errorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      disabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      labelText: labelText.toUpperCase(),
+      labelStyle: const TextStyle(
+          color: Color.fromRGBO(255, 255, 255, 0.3),
+          fontWeight: FontWeight.w400),
     );
   }
 }

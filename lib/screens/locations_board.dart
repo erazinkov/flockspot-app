@@ -46,58 +46,51 @@ class _LocationsBoardState extends State<LocationsBoard> {
       );
     }
     if (_loadedItems.isNotEmpty) {
-      content = SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: [
-            ..._loadedItems.map((e) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => VibesBoard(),
-                  ));
-                },
-                child: Container(
-                    margin: EdgeInsets.only(bottom: 8),
-                    height: 48,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: const Color.fromRGBO(255, 255, 255, 0.2)),
-                    child: Text(
-                      e.name,
+      content = Expanded(
+        child: ListView.builder(
+          itemCount: _loadedItems.length,
+          itemBuilder: (ctx, index) {
+            return AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromRGBO(255, 255, 255, 0.2)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _loadedItems[index].name,
                       style: TextStyle(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer,
                           fontSize: 20,
                           fontWeight: FontWeight.w400),
-                    )),
-              );
-            }),
-          ],
+                    ),
+                    Text(
+                      'vibes list',
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       );
-      // content = SizedBox(
-      //     width: double.infinity,
-      //     child: Column(children: [
-      //       ..._loadedItems.asMap().entries.map((entry) {
-      //         int idx = entry.key;
-      //         return GestureDetector(
-      //           onTap: () {},
-      //           child: Text(entry.value.name,
-      //               style: TextStyle(
-      //                   color: Colors.white,
-      //                   fontSize: 16,
-      //                   fontWeight: FontWeight.w400)),
-      //         );
-      //       })
-      //     ]));
     }
 
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'select your location'.toUpperCase(),
+            'choose location'.toUpperCase(),
             style: const TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 0.3),
                 fontSize: 12,
@@ -108,25 +101,110 @@ class _LocationsBoardState extends State<LocationsBoard> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const SizedBox(
-                height: 76,
-              ),
-              const SizedBox(
-                width: double.infinity,
-                child: Text(
-                  'Select',
-                  style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 0.3),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
+              Form(
+                // key: _form,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, 0.1),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextFormField(
+                    cursorColor:
+                        Theme.of(context).colorScheme.onPrimaryContainer,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.w400),
+                    decoration: TextFormFieldStyle.textFormFieldStyle(
+                        labelText: 'search your location'),
+                    keyboardType: TextInputType.emailAddress,
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Field is empty.';
+                      }
+
+                      return null;
+                    },
+                    onChanged: (newValue) {},
+                    // onSaved: (newValue) {
+                    //   _enteredEmail = newValue!;
+                    // },
+                  ),
                 ),
               ),
               const SizedBox(
-                height: 32,
+                height: 20,
               ),
               content,
             ],
           ),
         ));
+  }
+}
+
+class TextFormFieldStyle {
+  static InputDecoration textFormFieldStyle({
+    String labelText = "",
+    String hintText = "",
+  }) {
+    return InputDecoration(
+      prefixIconColor: Colors.white,
+      prefixIcon: const ImageIcon(
+        size: 24,
+        color: Colors.white,
+        AssetImage('assets/icons/search.png'),
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      errorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      disabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          width: 0,
+          color: Color.fromRGBO(255, 255, 255, 0.0),
+        ),
+      ),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      labelText: labelText.toUpperCase(),
+      labelStyle: const TextStyle(
+          fontSize: 14,
+          color: Color.fromRGBO(255, 255, 255, 0.3),
+          fontWeight: FontWeight.w400),
+    );
   }
 }

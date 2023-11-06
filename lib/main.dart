@@ -59,9 +59,9 @@ class App extends StatelessWidget {
         ),
       ),
       // home: const TabsScreen(),
-      home: AuthScreen(),
+      // home: AuthScreen(),
       // home: VibesBoard(),
-      // home: LocationsBoard(),
+      home: LocationsBoard(),
       // home: Test(),
       // home: StreamBuilderAuth(),
     );
