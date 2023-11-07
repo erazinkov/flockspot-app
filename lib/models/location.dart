@@ -25,10 +25,16 @@ class Location {
     return Location(
       id: json['id'],
       name: json['name'],
-      vibes: (json['vibes'] as List<dynamic>)
-          .map((e) => Vibe.fromJson(e))
-          .toList(),
-      // places: json['places'],
+      vibes: json['vibes'] != null
+          ? (json['vibes'] as List<dynamic>)
+              .map((e) => Vibe.fromJson(e))
+              .toList()
+          : <Vibe>[],
+      places: json['places'] != null
+          ? (json['places'] as List<dynamic>)
+              .map((e) => Place.fromJson(e))
+              .toList()
+          : <Place>[],
     );
   }
 }

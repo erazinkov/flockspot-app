@@ -22,10 +22,15 @@ class VibeBoardItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 12, top: 4, right: 8, bottom: 4),
       decoration: BoxDecoration(
+        image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(
+              vibe.background ?? 'https://via.placeholder.com/600/91c952',
+            )),
         borderRadius: BorderRadius.circular(12),
         color: isSelected
             ? Theme.of(context).colorScheme.onSecondary
-            : const Color.fromRGBO(255, 255, 255, 0.5),
+            : Color.fromARGB(126, 151, 151, 151),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Text(
