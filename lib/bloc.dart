@@ -8,13 +8,17 @@ class AlbumBLoC {
   //   yield await AlbumService().fetchAlbum();
   // }
 
-  Stream<Album> get album async* {
-    yield await AlbumService().fetchAlbum();
-  }
+  // Stream<Album> get album async* {
+  //   while (true) {
+  //     await Future.delayed(const Duration(seconds: 3));
+  //     yield await AlbumService().fetchAlbum();
+  //   }
+  // }
 
-  final StreamController<Album> _data = StreamController<Album>();
+  Stream<Album> get album => Stream.periodic(Duration(milliseconds: 1000))
+      .asyncMap((event) async => await AlbumService().fetchAlbum());
 
-  Stream<Album> get data => _data.stream;
+  final StreamController _data = StreamController();
 
   AlbumBLoC() {
     album.listen(

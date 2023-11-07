@@ -7,9 +7,9 @@ Random r = Random();
 
 class AlbumService {
   Future<Album> fetchAlbum() async {
-    await Future.delayed(const Duration(seconds: 3));
     int n = r.nextInt(9) + 1;
-    print('$n');
+    // int n = 2;
+
     final response = await http
         .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/$n'));
 
