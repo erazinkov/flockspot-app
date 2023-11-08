@@ -35,11 +35,18 @@ class _SignupScreen extends State<SignupScreen> {
         _isLoading = true;
       });
 
-      final response = await ApiService.getToken(User(
-          email: _enteredEmail,
-          firstName: _enteredFirstName,
-          lastName: _enteredLastName,
-          password: _enteredPassword));
+      final response = await ApiService.register(
+        _enteredEmail,
+        _enteredPassword,
+        _enteredFirstName,
+        _enteredLastName,
+      );
+
+      // final response = await ApiService.getToken(User(
+      //     email: _enteredEmail,
+      //     firstName: _enteredFirstName,
+      //     lastName: _enteredLastName,
+      //     password: _enteredPassword));
 
       if (response != null) {
         await saveToLocalStorage('apiToken', response);

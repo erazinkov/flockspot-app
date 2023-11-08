@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:first_app/screens/auth.dart';
-import 'package:first_app/screens/locations_board.dart';
+import 'package:first_app/screens/boards/locations.dart';
 import 'package:first_app/screens/vibes_board.dart';
 import 'package:first_app/screens/tabs.dart';
 import 'package:first_app/streams/auth_stream.dart';
@@ -61,7 +61,7 @@ class App extends StatelessWidget {
       // home: const TabsScreen(),
       // home: AuthScreen(),
       // home: VibesBoard(),
-      home: LocationsBoard(),
+      home: Locations(),
       // home: Test(),
       // home: StreamBuilderAuth(),
     );

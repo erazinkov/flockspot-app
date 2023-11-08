@@ -8,6 +8,7 @@ class ApiConstants {
   static String loginEndpoint = '/auth/login';
   static String flocksEndpoint = '/flocks/paging?take=10&skip=0';
   static String locationsEndpoint = '/locations/paging?take=10&skip=0';
+  static String locationsPagingEndpoint = '/locations/paging?take=10&skip=0';
   static String userByIdEndpoint = '/users/';
   static String locationByIdEndpoint = '/location/';
   static String allVibesEndpoint = '/vibes';

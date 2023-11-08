@@ -12,19 +12,19 @@ import 'package:first_app/widgets/vibe_item.dart';
 
 const int usersLimit = 4;
 
-class LocationsBoard extends StatefulWidget {
-  const LocationsBoard({Key? key}) : super(key: key);
+class Locations extends StatefulWidget {
+  const Locations({Key? key}) : super(key: key);
 
   @override
-  State<LocationsBoard> createState() => _LocationsBoardState();
+  State<Locations> createState() => _LocationsState();
 }
 
-class _LocationsBoardState extends State<LocationsBoard> {
+class _LocationsState extends State<Locations> {
   var _isLoading = true;
   late List<Location> _loadedItems = [];
 
   void _loadItems() async {
-    _loadedItems = (await ApiService().getAllLocations())!;
+    _loadedItems = (await ApiService().getLocations())!;
     Future.delayed(const Duration(seconds: 3)).then((value) => setState(() {
           _isLoading = false;
         }));
