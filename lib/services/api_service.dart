@@ -108,7 +108,7 @@ class ApiService {
         'Content-type': 'application/json',
       });
       if (response.statusCode == 200) {
-        List<Location> listData = (json.decode(response.body)['data'] as List)
+        List<Location> listData = (json.decode(response.body) as List)
             .map((data) => Location.fromJson(data))
             .toList();
 
@@ -221,7 +221,7 @@ class ApiService {
   Future<List<Vibe>?> getVibes() async {
     final String? apiToken = await getStringFromLocalStorage('apiToken');
     final List<Vibe> loadedItems = [];
-    final url = Uri.parse(ApiConstants.baseUrl + ApiConstants.allVibesEndpoint);
+    final url = Uri.parse(ApiConstants.baseUrl + ApiConstants.vibesEndpoint);
 
     print(url);
 

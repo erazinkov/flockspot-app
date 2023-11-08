@@ -38,12 +38,12 @@ class _LocationsState extends State<Locations> {
   }
 
   void _handleSearch(String pattern) async {
-    Future.delayed(
-      const Duration(seconds: 1),
-    );
     setState(() {
       _isLoading = true;
     });
+    Future.delayed(
+      const Duration(seconds: 1),
+    );
     _loadedItems = (await ApiService().getLocationsByNameContains(pattern))!;
     setState(() {
       _isLoading = false;
