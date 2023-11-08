@@ -15,7 +15,7 @@ enum UserRole {
 }
 
 class User {
-  final int? id; //@id @default(autoincrement())
+  final String? id; //@id @default(autoincrement())
   final String email; //@unique
   final UserRole? role; //@default(User)
   final String firstName;

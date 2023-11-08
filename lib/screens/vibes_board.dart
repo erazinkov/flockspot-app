@@ -79,9 +79,9 @@ class _VibesBoardState extends State<VibesBoard> {
             final String? apiToken =
                 await getStringFromLocalStorage('apiToken');
             var id = parseJwt(apiToken!)['id'];
-            List<int> selectedIdxs = [];
+            List<String> selectedIdxs = [];
             for (var s in _selected) {
-              selectedIdxs.add(s.id!.toInt());
+              selectedIdxs.add(s.id!);
             }
             var user = await ApiService().getUserById(id);
 

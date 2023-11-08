@@ -1,17 +1,10 @@
+import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:first_app/widgets/boards/location_item.dart';
-import 'package:first_app/widgets/vibe_modal.dart';
-import 'package:flutter/material.dart';
-import 'package:first_app/data/dummy_data.dart';
 import 'package:first_app/models/location.dart';
-import 'package:first_app/screens/vibes_board.dart';
 import 'package:first_app/services/api_service.dart';
-import 'package:first_app/utils/local_storage.dart';
-import 'package:first_app/utils/parse_jwt.dart';
-import 'package:first_app/widgets/vibe_item.dart';
-
-const int usersLimit = 4;
 
 class Locations extends StatefulWidget {
   const Locations({Key? key}) : super(key: key);
@@ -24,10 +17,11 @@ class _LocationsState extends State<Locations> {
   final _form = GlobalKey<FormState>();
   var _isLoading = true;
   late List<Location> _loadedItems = [];
-  final List<Location> _searchResults = [];
+  Timer? _debounce;
 
   void _loadItems() async {
     _loadedItems = (await ApiService().getLocations())!;
+
     Future.delayed(
       const Duration(seconds: 3),
     ).then(
@@ -37,16 +31,20 @@ class _LocationsState extends State<Locations> {
     );
   }
 
-  void _handleSearch(String pattern) async {
-    setState(() {
-      _isLoading = true;
-    });
-    Future.delayed(
-      const Duration(seconds: 1),
-    );
-    _loadedItems = (await ApiService().getLocationsByNameContains(pattern))!;
-    setState(() {
-      _isLoading = false;
+  void _handleOnChanged(String query) async {
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
+    }
+
+    _debounce = Timer(const Duration(milliseconds: 1500), () async {
+      setState(() {
+        _loadedItems.clear();
+        _isLoading = true;
+      });
+      _loadedItems = (await ApiService().getLocationsByNameContains(query))!;
+      setState(() {
+        _isLoading = false;
+      });
     });
   }
 
@@ -54,6 +52,12 @@ class _LocationsState extends State<Locations> {
   void initState() {
     super.initState();
     _loadItems();
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -79,7 +83,6 @@ class _LocationsState extends State<Locations> {
         },
       );
     }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -105,7 +108,7 @@ class _LocationsState extends State<Locations> {
                   cursorColor: Colors.white,
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w400),
-                  decoration: TextFormFieldStyle.textFormFieldStyle(
+                  decoration: TextFormFieldStyles.textFormFieldStyles(
                       labelText: 'search your location'),
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
@@ -117,7 +120,7 @@ class _LocationsState extends State<Locations> {
 
                     return null;
                   },
-                  onChanged: _handleSearch,
+                  onChanged: _handleOnChanged,
                 ),
               ),
             ),
@@ -205,8 +208,8 @@ class _LocationsState extends State<Locations> {
   }
 }
 
-class TextFormFieldStyle {
-  static InputDecoration textFormFieldStyle({
+class TextFormFieldStyles {
+  static InputDecoration textFormFieldStyles({
     String labelText = "",
     String hintText = "",
   }) {

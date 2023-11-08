@@ -3,35 +3,35 @@ import 'package:first_app/models/vibe.dart';
 
 List<User> dummyUsers = [
   const User(
-    id: 0,
+    id: '0',
     email: 'test@mail.com',
     firstName: 'firstName',
     lastName: 'lastName',
     photo: 'https://via.placeholder.com/600/b0f7cc',
   ),
   const User(
-    id: 1,
+    id: '1',
     email: 'test@mail.com',
     firstName: 'firstName',
     lastName: 'lastName',
     photo: 'https://via.placeholder.com/600/92c952',
   ),
   const User(
-    id: 2,
+    id: '2',
     email: 'test@mail.com',
     firstName: 'firstName',
     lastName: 'lastName',
     photo: 'https://via.placeholder.com/600/771796',
   ),
   const User(
-    id: 3,
+    id: '3',
     email: 'test@mail.com',
     firstName: 'firstName',
     lastName: 'lastName',
     photo: 'https://via.placeholder.com/600/24f355',
   ),
   const User(
-    id: 4,
+    id: '4',
     email: 'test@mail.com',
     firstName: 'firstName',
     lastName: 'lastName',
@@ -41,7 +41,7 @@ List<User> dummyUsers = [
 
 List<Vibe> dummyVibes = [
   const Vibe(
-    id: 0,
+    id: '0',
     name: 'hip-hop',
     status: VibeStatus.Approved,
     icon: 'string',
@@ -49,10 +49,10 @@ List<Vibe> dummyVibes = [
     description:
         "Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.",
     optimalFlockSize: 5,
-    creatorId: 0,
+    creatorId: '0',
   ),
   const Vibe(
-    id: 1,
+    id: '1',
     name: 'design',
     status: VibeStatus.Approved,
     icon: 'string',
@@ -60,10 +60,10 @@ List<Vibe> dummyVibes = [
     description:
         "Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.",
     optimalFlockSize: 5,
-    creatorId: 0,
+    creatorId: '0',
   ),
   const Vibe(
-    id: 2,
+    id: '2',
     name: 'digital',
     status: VibeStatus.Approved,
     icon: 'string',
@@ -71,10 +71,10 @@ List<Vibe> dummyVibes = [
     description:
         "Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.",
     optimalFlockSize: 5,
-    creatorId: 0,
+    creatorId: '0',
   ),
   const Vibe(
-    id: 3,
+    id: '3',
     name: 'startup',
     status: VibeStatus.Approved,
     icon: 'string',
@@ -82,10 +82,10 @@ List<Vibe> dummyVibes = [
     description:
         "Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.",
     optimalFlockSize: 5,
-    creatorId: 0,
+    creatorId: '0',
   ),
   const Vibe(
-    id: 4,
+    id: '4',
     name: 'nofly',
     status: VibeStatus.Approved,
     icon: 'string',
@@ -93,10 +93,10 @@ List<Vibe> dummyVibes = [
     description:
         "Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.",
     optimalFlockSize: 5,
-    creatorId: 0,
+    creatorId: '0',
   ),
   const Vibe(
-    id: 5,
+    id: '5',
     name: 'book',
     status: VibeStatus.Approved,
     icon: 'string',
@@ -104,6 +104,6 @@ List<Vibe> dummyVibes = [
     description:
         "Hip hop or hip-hop, also known as rap, and formerly known as disco rap, is a genre of popular music that originated in the early 1970s by African Americans.",
     optimalFlockSize: 5,
-    creatorId: 0,
+    creatorId: '0',
   ),
 ];

@@ -100,7 +100,7 @@ class ApiService {
     final String? apiToken = await getStringFromLocalStorage('apiToken');
     final List<Location> loadedItems = [];
     final url = Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.locationsEndpoint}?name.contains=$pattern');
+        '${ApiConstants.baseUrl}${ApiConstants.locationsPagingEndpoint}?name.contains=$pattern');
 
     try {
       final response = await http.get(url, headers: {
@@ -108,7 +108,7 @@ class ApiService {
         'Content-type': 'application/json',
       });
       if (response.statusCode == 200) {
-        List<Location> listData = (json.decode(response.body) as List)
+        List<Location> listData = (json.decode(response.body)['data'] as List)
             .map((data) => Location.fromJson(data))
             .toList();
 
@@ -167,7 +167,7 @@ class ApiService {
     final String? apiToken = await getStringFromLocalStorage('apiToken');
     final List<Location> loadedItems = [];
     final url = Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.locationsPagingEndpoint}');
+        '${ApiConstants.baseUrl}${ApiConstants.locationsPagingEndpoint}?take=10&skip=0');
 
     try {
       final response = await http.get(url, headers: {

@@ -10,14 +10,14 @@ enum VibeStatus {
 }
 
 class Vibe {
-  final int? id; //@id @default(autoincrement())
+  final String? id; //@id @default(autoincrement())
   final String name; //@unique
   final VibeStatus? status; //@default(Unapproved)
   final String? icon;
   final String? background;
   final String? description;
   final int? optimalFlockSize;
-  final int? creatorId;
+  final String? creatorId;
   final User?
       creator; //@relation("OwnVibes", fields: [creatorId], references: [id], onDelete: SetNull)
   final List<Location>? locations;

@@ -77,8 +77,8 @@ class _VibeModalState extends State<VibeModal> {
               borderRadius: BorderRadius.circular(20),
               child: BackdropFilter(
                 filter: ImageFilter.blur(
-                  sigmaX: 50.0,
-                  sigmaY: 50.0,
+                  sigmaX: 10.0,
+                  sigmaY: 10.0,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
