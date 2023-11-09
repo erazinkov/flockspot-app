@@ -74,6 +74,7 @@ flutter:
     - assets/icons/home.png
     - assets/icons/instagram.png
     - assets/icons/menu.png
+    - assets/icons/plus.png
     - assets/icons/search.png
     - assets/icons/settings.png
     - assets/images/background.png

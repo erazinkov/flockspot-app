@@ -18,7 +18,6 @@ class LocationItem extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

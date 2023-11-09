@@ -17,6 +17,7 @@ class _LocationsState extends State<Locations> {
   final _form = GlobalKey<FormState>();
   var _isLoading = true;
   late List<Location> _loadedItems = [];
+  late int _selectedIndex = 0;
   Timer? _debounce;
 
   void _loadItems() async {
@@ -79,7 +80,47 @@ class _LocationsState extends State<Locations> {
         physics: const BouncingScrollPhysics(),
         itemCount: _loadedItems.length,
         itemBuilder: (ctx, index) {
-          return LocationItem(location: _loadedItems[index]);
+          return Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                        color: index == _selectedIndex
+                            ? const Color.fromRGBO(251, 255, 54, 1.0)
+                            : Colors.transparent)),
+                child: LocationItem(
+                  location: _loadedItems[index],
+                ),
+              ),
+              if (_selectedIndex != index) ...[
+                Positioned(
+                  top: 28,
+                  right: 28,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Color.fromRGBO(0, 0, 0, 0.5),
+                      ),
+                      child: const ImageIcon(
+                        size: 16,
+                        color: Colors.white,
+                        AssetImage('assets/icons/plus.png'),
+                      ),
+                    ),
+                  ),
+                ),
+              ]
+            ],
+          );
         },
       );
     }
@@ -94,38 +135,41 @@ class _LocationsState extends State<Locations> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            Form(
-              key: _form,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(255, 255, 255, 0.1),
-                    borderRadius: BorderRadius.circular(20)),
-                child: TextFormField(
-                  cursorColor: Colors.white,
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w400),
-                  decoration: TextFormFieldStyles.textFormFieldStyles(
-                      labelText: 'search your location'),
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
-                  textCapitalization: TextCapitalization.none,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Field is empty.';
-                    }
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Form(
+                key: _form,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, 0.1),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextFormField(
+                    cursorColor: Colors.white,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w400),
+                    decoration: TextFormFieldStyles.textFormFieldStyles(
+                        labelText: 'search your location'),
+                    keyboardType: TextInputType.text,
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Field is empty.';
+                      }
 
-                    return null;
-                  },
-                  onChanged: _handleOnChanged,
+                      return null;
+                    },
+                    onChanged: _handleOnChanged,
+                  ),
                 ),
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 12,
             ),
             Expanded(
               child: content,
