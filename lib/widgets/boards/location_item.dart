@@ -24,7 +24,7 @@ class LocationItem extends StatelessWidget {
           color: const Color.fromRGBO(255, 255, 255, 0.2),
           image: DecorationImage(
             image: Image.network(
-              'https://via.placeholder.com/600/5e3a73',
+              'https://via.placeholder.com/600/474645',
               errorBuilder: (context, exception, stackTrace) {
                 return const Text('');
               },
